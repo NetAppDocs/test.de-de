@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: cs_automated_response_policies.html 
+keywords: alert, snapshot, ransomware, attack 
+summary: 'Sie können automatische Antwortrichtlinien für potenzielle Angriffe (z. B. Ransomware) und/oder Warnungen zu Aktivitäten festlegen' 
+---
+= Automatisierte Antwortrichtlinien
+:allow-uri-read: 
+
+
+[role="lead"]
+Antwortrichtlinien lösen Aktionen aus, wie z. B. das Erstellen eines Snapshots oder das Einschränken des Benutzerzugriffs bei einem Angriff oder einem anormalen Benutzerverhalten.
+
+Sie können Richtlinien für bestimmte Geräte oder alle Geräte festlegen. Um eine Antwortrichtlinie festzulegen, wählen Sie *Admin > Automated Response Policies* und klicken Sie auf die entsprechende *+Policy+ Schaltfläche. Sie können Richtlinien für Angriffe oder Warnungen erstellen.
+
+image:AutomatedAttackPolicy.png["Angriffsrichtlinie Erstellen"]
+
+Sie müssen die Richtlinie mit einem eindeutigen Namen speichern.
+
+Um eine automatische Antwortzeit zu deaktivieren (z. B. Snapshot erstellen), überprüfen Sie einfach die Aktion und speichern Sie die Richtlinie.
+
+Wenn eine Warnung für die angegebenen Geräte (oder alle Geräte, falls ausgewählt) ausgelöst wird, erstellt die Richtlinie zur automatischen Reaktion einen Snapshot Ihrer Daten. Sie können den Snapshot-Status auf der sehen link:cs_alert_data.html#the-alert-details-page["Details zu Warnmeldungen"].
+
+Siehe link:cs_restrict_user_access.html["Einschränken Des Benutzerzugriffs"] Seite für weitere Details zur Einschränkung des Benutzerzugriffs durch IP.
+
+Sie können eine Richtlinie für automatische Reaktionen ändern oder anhalten, indem Sie die Option im Dropdown-Menü der Richtlinie auswählen.
+
+Cloud Secure löscht automatisch Snapshots einmal pro Tag basierend auf den Einstellungen des Snapshot Löschen.
+
+image:CloudSecure_SnapshotPurgeSettings.png["Einstellungen Für Snapshot Löschen"]

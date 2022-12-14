@@ -1,0 +1,157 @@
+---
+sidebar: sidebar 
+permalink: task_dc_brocade_fc_switch.html 
+keywords: data collector, Brocade, FC switch, 
+summary: Konfigurieren des Datensammlers von Brocade FC Switches. 
+---
+= Datensammler Brocade FC Switch
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights verwendet die Brocade FC Switch (SSH) Datenquelle, um Inventar für Brocade oder umbenannte Switch-Geräte zu ermitteln, auf denen FOS-Firmware (FOS) 4.2 und höher ausgeführt wird. Geräte werden sowohl im FC-Switch- als auch im Access Gateway-Modus unterstützt.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen vom Datensammler des Brocade FC Switch. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Switch | Switch 
+
+
+| Port | Port 
+
+
+| Virtual Fabric, Physische Fabric | Fabric 
+
+
+| Zone | Zone 
+
+
+| Logischer Switch | Logischer Switch 
+
+
+| Virtual Volume | Datenmenge 
+
+
+| LSAN-Zone zu erreichen | IVR-Zone 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Anforderungen
+
+* Die Cloud Insights Acquisition Unit (AU) leitet Verbindungen zum TCP-Port 22 auf Brocade Switches ein, um Bestandsdaten zu erfassen. Die AU wird auch Verbindungen zu UDP Port 161 für die Sammlung von Leistungsdaten initiieren.
+* Für alle Switches in der Fabric muss eine IP-Konnektivität vorhanden sein. Wenn Sie das Kontrollkästchen Alle Switches in der Fabric erkennen auswählen, erkennt Cloud Insights alle Switches in der Fabric. Für die Erkennung ist jedoch eine IP-Konnektivität für diese zusätzlichen Switches erforderlich.
+* Weltweit ist dasselbe Konto über alle Switches in der Fabric erforderlich. Sie können PuTTY (Open Source Terminal Emulator) verwenden, um den Zugriff zu bestätigen.
+* Die Ports 161 und 162 müssen offen sein für alle Switches im Fabric für SNMP-Performance-Abfragen.
+* SNMP Read-Only Community String
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Switch-IP | IP-Adresse oder vollqualifizierter Domänenname des EFC-Servers 
+
+
+| Benutzername | Benutzername für den Switch 
+
+
+| Passwort | Passwort für den Switch 
+
+
+| SNMP | SNMP-Version 
+
+
+| SNMP-Community-Zeichenfolge | SNMP read-only Community String verwendet, um auf den Switch zugreifen 
+
+
+| SNMP-Benutzername | SNMP-Benutzername 
+
+
+| SNMP-Kennwort | SNMP-Passwort 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Fabric-Name | Der Fabric-Name wird vom Data Collector gemeldet. Lassen Sie das Feld leer, um den Fabric-Namen als WWN zu melden. 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 15. 
+
+
+| Ausgeschlossene Geräte | Kommagetrennte Liste der Geräte-IDs, die von der Abfrage ausgeschlossen werden sollen 
+
+
+| Admin-Domänen Aktiv | Wählen Sie, wenn Sie Admin-Domains verwenden 
+
+
+| MPR-Daten abrufen | Wählen Sie diese Option aus, um Routing-Daten von Ihrem Multiprotokoll-Router zu erhalten. 
+
+
+| Trapping Aktivieren | Wählen Sie diese Option aus, um die Erfassung beim Empfang eines SNMP-Trap vom Gerät zu aktivieren. Wenn Sie Trapping aktivieren auswählen, müssen Sie auch SNMP aktivieren. 
+
+
+| Mindestzeit zwischen Traps (s) | Mindestzeit zwischen durch Traps ausgelösten Erfassungsversuchen. Der Standardwert ist 10. 
+
+
+| Erkennung aller Switches in der Fabric | Wählen Sie diese Option, um alle Switches in der Fabric zu erkennen 
+
+
+| Entscheiden Sie sich für HBA vs Zonenaliase | Wählen Sie, ob HBA- oder Zonenaliasen bevorzugt werden sollen 
+
+
+| Leistungsintervall (Sek.) | Intervall zwischen Performance-Abstimmungen Der Standardwert ist 300. 
+
+
+| SNMP-Auth-Protokoll | SNMP-Authentifizierungsprotokoll (nur SNMP v3) 
+
+
+| SNMP-Datenschutzkennwort | SNMP-Datenschutzkennwort (nur SNMP v3) 
+
+
+| SNMP wird erneut verwendet | Anzahl der SNMP-Wiederholungsversuche 
+|===
+
+
+== Fehlerbehebung
+
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+
+
+==== Inventar
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Fehler: „Cloud Insights hat ungültige Gehäuserolle erhalten“ | Vergewissern Sie sich, dass dem in dieser Datenquelle konfigurierten Benutzer die Berechtigung für die Gehäuserolle erteilt wurde. 
+
+
+| Fehler: „IP-Adresse des Gehäuses nicht stimmt überein“ | Ändern Sie die Konfiguration der Datenquelle, um die Gehäuse-IP-Adresse zu verwenden. 
+
+
+| Sie erhalten eine Meldung, dass mehr als 1 Knoten am Access Gateway-Port angemeldet ist | Überprüfen Sie, ob das NPV-Gerät ordnungsgemäß funktioniert und dass alle verbundenen WWNs erwartet werden. Erwerben Sie das NPV-Gerät nicht direkt. Stattdessen erfasst die Akquisition des Core Fabric Switch die NPV Geräte-Daten. 
+|===
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

@@ -1,0 +1,64 @@
+---
+sidebar: sidebar 
+permalink: faq-config-support.html 
+keywords: FAQ, Frequently asked questions, questions, configuration, 
+summary:  
+---
+= Konfiguration und unterstützte Geräte
+:allow-uri-read: 
+
+
+[role="lead"]
+In diesem FAQ werden häufig gestellte Fragen zur Cloud Insights-Konfiguration und zu unterstützten Geräten beantwortet.
+
+
+
+== Nimmt Cloud Insights Änderungen an meiner Umgebung vor?
+
+Nein Cloud Insights ist ein schreibgeschütztes Tool, das Informationen über Ihre Umgebung sammelt. Cloud Insights nimmt keine Änderungen an Ihren Assets oder Konfigurationen vor.
+
+
+
+== Welchen Zugriff auf Zugriffsberechtigungen benötigt Cloud Insights für meine Geräte?
+
+In den meisten Fällen, in denen das Gerät es unterstützt, ist ein schreibgeschützter Zugriff alles erforderlich. Es gibt einige Lösungen, die keinen schreibgeschützten Zugriff erlauben und somit die entsprechenden erhöhten Berechtigungen benötigen würden.
+
+
+
+== Wie oft erfasst Cloud Insights Daten?
+
+Cloud Insights sammelt in der Regel alle 5 Minuten Performance-Daten und jede ½ Stunde die logischen und physischen Konstrukte Cloud Insights legt die standardmäßigen Abfrageintervalle gemäß den vorgeschlagenen Best Practices und der Skalierbarkeit fest. Es ermöglicht jedoch eine vollständige Kontrolle über diese Intervalle.
+
+
+
+== Welche Auswirkungen hat Cloud Insights auf meine Umgebung?
+
+Die agentenlose Out-of-Band- und passive IP-Kommunikation von Cloud Insights trägt zur Minimierung von Einrichtung, Wartung und Auswirkungen auf das Datacenter-Ecosystem bei. Das Performance-Entwicklungsteam von Cloud Insights ergreift große Maßnahmen, um die Auswirkungen auf die Performance des Datacenters auf die Monitoring-Aktivitäten selbst zu minimieren. Die Auswirkungen werden in normalen Betriebsumgebungen als unwesentlich angesehen und können in stark ausgelasteten oder leistungsschwächer ausgelasteten Technologieplattformen entspannt oder verschärft werden. Weitere Informationen finden Sie im Cloud Insights Installationsleitfaden.
+
+
+
+== Wie kann ich alle Hosts/VM's in Cloud Insights auflisten?
+
+Cloud Insights’s Kompliment von Widgets und Abfrageliste Möglichkeiten können verwendet werden, um Inventarlisten für Data Center Assets zu bieten. Einträge von virtuellen Maschinen bis auf die Spindeln und zahlreiche Konstrukte dazwischen können alle Anfragen, Widgets, Dashboards und Data Warehouse-Berichterstellung zur Verfügung gestellt werden und sind über die RESTful API zugänglich.
+
+
+
+== Bietet Cloud Insights dieselbe Unterstützung für verwandte Hosts ohne Hypervisor (z. B. physische Server)?
+
+Hypervisoren wie VMware können detaillierte Informationen zu ESXI Hosts und ihren Virtual Machines (VMs) bereitstellen. Für physische Server sammelt Cloud Insights Metriken bis zum Host HBA. Cloud Insights verwendet eine einzigartige Methode, bei der physische Server mithilfe einer zum Patent angemeldeten Technologie erkannt werden. Sobald Storage und/oder Switches erkannt wurden, sind Hostnamen für physische Server in den Fabric-Alias-Informationen enthalten. Cloud Insights wählt diese Host-Namen aus, stimmt sie in DNS ab und führt die Hosts automatisch in den Cloud Insights. Durch diese Technik wird die Notwendigkeit von manuellen Aktualisierungen bei der Eingabe und der Wartung des Werkzeugbestands erheblich reduziert.
+
+
+
+== Bietet Cloud Insights dieselbe Device-metrische Tiefe (Parität) für heterogene Umgebungen?
+
+Die Standardisierung, die Gemeinsamkeit und Terminologie bei Plattformen und Technologien von Drittanbietern gibt es immer unterschiedliches Maß. Cloud Insights versucht, die Daten zu Kapazität und Performance in einem konsistenten Framework zu normalisieren. Einige Kapazitäts- und Performance-Kennzahlen werden nativ von den Zählern des Geräts bereitgestellt, wie z. B. IOPS, Latenz und Rohkapazität. Wenn keine Zähler zur Verfügung gestellt werden, kann Cloud Insights versuchen, die Werte zu zusammenfassen (z. B. durch Summe der IOPS oder Kapazitäten der zugrunde liegenden Volumes). In Fällen, in denen keine verfügbar ist, versucht Cloud Insights, die Messwerte durch verschiedene Berechnungsalgorithmen abzuleiten. Cloud Insights bietet eine generische SNMP-Integrationsfunktion, um zusätzliche Metriken zu integrieren, die derzeit von Cloud Insights nicht erfasst wurden.
+
+
+
+== Unterstützt Cloud Insights Fibre Channel Switches?
+
+Ja, neben dem Erfassen von Daten aus Storage Assets erfasst Cloud Insights auch Bestands- und Performance-Daten von Cisco, Brocade und QLogic Switches in der Umgebung.
+
+==sind Topologieansichten der gesamten Infrastruktur verfügbar? Zeigt Cloud Insights „End-to-End-Transparenz“?
+
+Ja, Cloud Insights erkennt und ordnet die logischen und physischen Konstrukte dynamisch zu und stellt so eine interaktive End-to-End-Topologieansicht von Computing, Fabrics, Virtualizer und Back-End Storage bereit. Topologiesymbole ermöglichen die schnelle Navigation zu betroffenen Ressourcen und unterstützen die Identifikation von Workloads und Verstößen in Shared Storage-Umgebungen.

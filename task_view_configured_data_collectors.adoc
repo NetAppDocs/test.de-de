@@ -1,0 +1,114 @@
+---
+sidebar: sidebar 
+permalink: task_view_configured_data_collectors.html 
+keywords: acquisition, AU, data collector, collector, bulk edit, postpone polling, resume polling 
+summary: Eine Zusammenfassung. 
+---
+= Verwalten von konfigurierten Datensammlern
+:allow-uri-read: 
+
+
+[role="lead"]
+Die Seite installierte Datensammler bietet Zugriff auf die für Cloud Insights konfigurierten Datensammler. Auf dieser Seite können Sie vorhandene Datensammler ändern.
+
+.Schritte
+. Klicken Sie im Menü Cloud Insights auf *Admin > Datensammler*
++
+Der Bildschirm Verfügbare Datensammler wird angezeigt.
+
+. Klicken Sie Auf *Installierte Datensammler*
++
+Eine Liste aller installierten Datensammler wird angezeigt. Die Liste enthält den Sammlungsnamen, den Status, die IP-Adresse, auf die der Sammler zugreift, und den Zeitpunkt, zu dem Daten vom Gerät erfasst wurden. Zu den Aktionen, die auf diesem Bildschirm ausgeführt werden können, gehören:
+
++
+** Kontrolle der Abfrage
+** Ändern der Zugangsdaten für die Datensammlung
+** Datensammler klonen
+
+
+
+
+
+
+== Kontrollieren der Data Collector-Umfrage
+
+Nachdem Sie eine Änderung an einem Datensammler vorgenommen haben, können Sie es möglicherweise sofort abfragen, um Ihre Änderungen zu überprüfen, oder Sie möchten die Datenerfassung auf einem Datensammler um ein, drei oder fünf Tage verschieben, während Sie an einem Problem arbeiten.
+
+.Schritte
+. Klicken Sie im Menü Cloud Insights auf *Admin > Datensammler*
+. Klicken Sie Auf *Installierte Datensammler*
+. Aktivieren Sie das Kontrollkästchen links neben dem zu ändernden Data Collector
+. Klicken Sie auf *Massenaktionen* und wählen Sie die Abfrageraktion aus, die Sie durchführen möchten.
++
+Massenaktionen können gleichzeitig auf mehreren Datensammlern durchgeführt werden. Wählen Sie die Datensammler aus, und wählen Sie die Aktion aus dem Menü *Massenaktion* aus.
+
+
+
+
+
+== Bearbeiten von Daten-Collector-Informationen
+
+Sie können vorhandene Daten-Collector-Setup-Informationen bearbeiten.
+
+.So bearbeiten Sie einen einzelnen Datensammler:
+. Klicken Sie im Menü Cloud Insights auf *Admin > Datensammler*, um die Liste der installierten Datensammler zu öffnen.
+. Klicken Sie im Optionsmenü rechts neben dem Datensammler, den Sie ändern möchten, auf *Bearbeiten*.
++
+Das Dialogfeld Collector bearbeiten wird geöffnet.
+
+. Geben Sie die Änderungen ein und klicken Sie auf *Testkonfiguration*, um die neue Konfiguration zu testen, oder klicken Sie auf *Speichern*, um die Konfiguration zu speichern.
+
+
+Sie können auch mehrere Datensammler bearbeiten:
+
+. Aktivieren Sie das Kontrollkästchen links von jedem Datensammler, den Sie ändern möchten.
+. Klicken Sie auf die Schaltfläche *Massenaktionen* und wählen Sie *Bearbeiten*, um das Dialogfeld „Data Collector bearbeiten“ zu öffnen.
+. Ändern Sie die Felder wie oben beschrieben.
++
+
+NOTE: Die ausgewählten Datensammler müssen derselbe Anbieter und dasselbe Modell sein und sich auf derselben Akquisitionseinheit befinden.
+
++
+Beim Bearbeiten mehrerer Datensammler zeigt das Feld Name des Data Collectors „gemischt“ an und kann nicht bearbeitet werden. Andere Felder wie Benutzername und Passwort zeigen „gemischt“ und können bearbeitet werden. Felder, die denselben Wert in den ausgewählten Datenkollektoren haben, zeigen die aktuellen Werte an und können bearbeitet werden.
+
++
+Wenn Sie mehrere Datensammler bearbeiten, steht die Schaltfläche *Testkonfiguration* nicht zur Verfügung.
+
+
+
+
+
+== Klonen von Datensammlern
+
+Mit der Clone Facility können Sie schnell eine Datenquelle hinzufügen, die dieselben Anmeldedaten und Attribute wie eine andere Datenquelle enthält. Klonen ermöglicht Ihnen die einfache Konfiguration mehrerer Instanzen desselben Gerätetyps.
+
+.Schritte
+. Klicken Sie im Menü Cloud Insights auf *Admin > Datensammler*.
+. Klicken Sie Auf *Installierte Datensammler*.
+. Klicken Sie auf das Kontrollkästchen links neben dem zu kopierenden Datensammler.
+. Klicken Sie im Optionsmenü rechts neben dem ausgewählten Datensammler auf *Clone*.
++
+Das Dialogfeld Data Collector klonen wird angezeigt.
+
+. Geben Sie die neuen Informationen in die erforderlichen Felder ein.
+. Klicken Sie Auf *Speichern*.
+
+
+.Nachdem Sie fertig sind
+Der Klonvorgang kopiert alle anderen Attribute und Einstellungen, um den neuen Datensammler zu erstellen.
+
+
+
+== Ausführen von Massenaktionen auf Datensammlern
+
+Sie können gleichzeitig einige Informationen für mehrere Datensammler bearbeiten. Mit dieser Funktion können Sie eine Umfrage starten, Abfragen verschieben und das Abfragen für mehrere Datensammler fortsetzen. Außerdem können Sie mehrere Datensammler löschen.
+
+.Schritte
+. Klicken Sie im Menü Cloud Insights auf *Admin > Datensammler*
+. Klicken Sie Auf *Installierte Datensammler*
+. Klicken Sie auf das Kontrollkästchen links neben den Datensammlern, die Sie ändern möchten.
+. Klicken Sie im Optionsmenü rechts auf die gewünschte Option.
+
+
+.Nachdem Sie fertig sind
+Die ausgewählte Operation wird auf den Datensammlern durchgeführt. Wenn Sie Datensammler löschen möchten, wird ein Dialogfeld angezeigt, in dem Sie die Aktion anpassen müssen.

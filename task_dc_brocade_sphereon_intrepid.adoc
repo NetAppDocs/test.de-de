@@ -1,0 +1,95 @@
+---
+sidebar: sidebar 
+permalink: task_dc_brocade_sphereon_intrepid.html 
+keywords: data collector, Brocade, Sphereon Intrepid, 
+summary: Konfigurieren des Datensammlers Brocade Sphereon/Intrepid Switch 
+---
+= Konfigurieren des Datensammlers Brocade Sphereon/Intrepid Switch
+:toc: macro
+:hardbreaks:
+:toclevels: 2
+:allow-uri-read: 
+:toc: 
+:toclevels: 2
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+:toc-position: content
+
+
+[role="lead"]
+Cloud Insights nutzt die Datensammlung von Brocade Sphereon/Intrepid Switch (SNMP), um den Bestand an Brocade Sphereon- oder Intrepid-Switches zu ermitteln.
+
+
+
+== Anforderungen
+
+Zur Konfiguration dieses Datensammlers müssen die folgenden Anforderungen erfüllt sein:
+
+* Für alle Switches in der Fabric muss eine IP-Konnektivität vorhanden sein. Wenn Sie das Kontrollkästchen Alle Switches in der Fabric erkennen auswählen, erkennt Cloud Insights alle Switches in der Fabric. Für die Erkennung ist jedoch eine IP-Konnektivität für diese zusätzlichen Switches erforderlich.
+* Schreibgeschützte Community-Zeichenfolge bei Verwendung von SNMP V1 oder SNMP V2
+* HTTP-Zugriff auf den Switch, um Zoning-Informationen zu erhalten.
+* Zugriffsvalidierung durch Ausführen des snmpwalk-Dienstprogramms zum Switch (siehe _<install_path>\bin\_).
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Sphereon Switch | IP-Adresse oder vollqualifizierter Domain-Name des Switches 
+
+
+| SNMP-Version | SNMP-Version 
+
+
+| SNMP-Community-Zeichenfolge | SNMP read-only Community String verwendet, um auf den Switch zugreifen 
+
+
+| SNMP-Benutzername | SMI-S-Benutzername für den Switch (nur SNMP v3) 
+
+
+| SNMP-Kennwort | SMI-S-Kennwort für den Switch (nur SNMP v3) 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 15 Minuten. 
+
+
+| SNMP-Auth-Protokoll | SNMP-Authentifizierungsprotokoll (nur SNMP v3) 
+
+
+| SNMP-Datenschutzkennwort | SNMP-Datenschutzkennwort (nur SNMP v3) 
+
+
+| SNMP-Anzahl der Wiederholungen | Anzahl der SNMP-Wiederholungsversuche 
+
+
+| Fabric-Name | Der Fabric-Name wird vom Data Collector gemeldet. Lassen Sie das Feld leer, um den Fabric-Namen als WWN zu melden. 
+
+
+| Trapping Aktivieren | Wählen Sie diese Option aus, um die Erfassung beim Empfang eines SNMP-Trap vom Gerät zu aktivieren. Wenn Sie Trapping aktivieren auswählen, müssen Sie auch SNMP aktivieren. 
+
+
+| Mindestzeit zwischen Traps (Sekunden) | Mindestzeit zwischen durch Traps ausgelösten Erfassungsversuchen. Der Standardwert beträgt 10 Sekunden. 
+
+
+| Leistungsintervall (Sek.) | Intervall zwischen Performance-Abstimmungen Der Standardwert beträgt 300 Sekunden. 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

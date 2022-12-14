@@ -1,0 +1,104 @@
+---
+sidebar: sidebar 
+permalink: concept_dashboards_overview.html 
+summary: Übersicht über Dashboards in Cloud Insights. 
+keywords: dashboard, widget, custom, view, data 
+---
+= Übersicht Über Dashboards
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights bietet Benutzern die Flexibilität, Betriebsansichten von Infrastrukturdaten zu erstellen. So können Sie benutzerdefinierte Dashboards mit einer Vielzahl von Widgets erstellen, die jeweils eine umfangreiche Flexibilität bei der Anzeige und Dokumentation Ihrer Daten bieten.
+
+
+IMPORTANT: Die Beispiele in diesen Abschnitten dienen nur zu erklärenden Zwecken und decken nicht alle möglichen Szenarien ab. Die hierin enthaltenen Konzepte und Schritte können dazu verwendet werden, eigene Dashboards zu erstellen, um die Daten auf Ihre speziellen Bedürfnisse hin hervorzuheben.
+
+
+toc::[]
+
+
+== Erstellen eines Dashboards
+
+Sie erstellen ein neues Dashboard an einem von zwei Stellen:
+
+* *Dashboards > [+Neues Dashboard]*
+* *Dashboards > Alle Dashboards anzeigen >* Klicken Sie auf die Schaltfläche *[+Dashboard]*
+
+
+
+
+== Dashboard-Steuerelemente
+
+Der Dashboard-Bildschirm verfügt über mehrere Bedienelemente:
+
+* *Zeitauswahl*: Ermöglicht die Anzeige von Dashboard-Daten für einen Zeitraum von 15 Minuten bis zu den letzten 30 Tagen oder einen benutzerdefinierten Zeitbereich von bis zu 31 Tagen. Sie können diesen globalen Zeitbereich in einzelnen Widgets überschreiben.
+* *Bearbeiten* Schaltfläche: Wenn Sie diese Option auswählen, wird der Bearbeitungsmodus aktiviert, sodass Sie Änderungen am Dashboard vornehmen können. Neue Dashboards werden standardmäßig im Bearbeitungsmodus geöffnet.
+* *Speichern*-Taste: Ermöglicht das Speichern oder Löschen des Dashboards.
++
+Sie können das aktuelle Dashboard umbenennen, indem Sie einen neuen Namen eingeben, bevor Sie auf *Speichern* klicken.
+
+
+
+* *Widget*-Schaltfläche hinzufügen, mit der Sie eine beliebige Anzahl von Tabellen, Diagrammen oder anderen Widgets zum Dashboard hinzufügen können.
++
+Widgets können geändert und an verschiedene Positionen im Dashboard verschoben werden, um Ihnen die beste Ansicht Ihrer Daten entsprechend Ihren aktuellen Anforderungen zu geben.
+
+
+
+
+
+== Widget-Typen
+
+Sie können aus den folgenden Widgets wählen:
+
+* *Tabelle Widget*: Eine Tabelle, die Daten nach den gewählten Filtern und Spalten anzeigt. Tabellendaten können in Gruppen zusammengefasst werden, die ausgeblendet und erweitert werden können.
++
+image:TableWidgetPerformanceData.png["Tabellenwidget"]
+
+* *Linie, Spline, Bereich, gestapelte Flächendiagramme*: Dies sind Zeitreihenkarten-Widgets, auf denen Sie Leistung und andere Daten über die Zeit anzeigen können.
++
+image:Time-Series Charts.png["Bereich, Gestapelte Fläche, Linie, Spline-Diagramme"]
+
+* *Single Value Widget*: Ein Widget, mit dem Sie einen einzelnen Wert anzeigen können, der entweder direkt von einem Zähler abgeleitet oder mithilfe einer Abfrage oder eines Ausdrucks berechnet werden kann. Sie können Schwellenwerte für die Farbformatierung definieren, um anzuzeigen, ob der Wert in „erwartet“, „Warnung“ oder „kritischer Bereich“ liegt.
++
+image:Single-Value Widgets.png["Single-Value Widgets mit und ohne Formatierung"]
+
+* *Widget messen*: Zeigt Daten mit einem einzigen Wert in einem herkömmlichen (festen) Manometer oder einer Kugel an, mit Farben, die auf "Warnung" oder "kritische" Werte basieren link:concept_dashboard_features.adoc#formatting-gauge-widgets["Anpassen"].
++
+image:Gauge Widgets.png["Einzelwert mit Formatierung, traditionelle Messanzeige, Leuchtanzeige"]
+
+* *Balken, Spaltendiagramme*: Zeigt die oberen oder unteren N-Werte an, z. B. die Top 10-Storage nach Kapazität oder die unteren 5-Volumes nach IOPS.
++
+image:Bar and Column Charts.png["Balken- und Spaltendiagramme"]
+
+* *Box Plot Chart*: Eine Darstellung des min., max., Median und des Bereichs zwischen dem unteren und dem oberen Quartil der Daten in einem einzigen Diagramm.
++
+image:Box Plot.png["Box-Darstellung"]
+
+* *Scatter Plot Chart*: Zeichnet verwandte Daten als Punkte, zum Beispiel IOPS und Latenz. In diesem Beispiel sind Assets mit hohem Durchsatz und niedrigen IOPS schnell zu finden.
++
+image:Scatter Plot.png["Streudiagramm"]
+
+* *Pie Chart*: Ein traditionelles Kreisdiagramm, um Daten als Teil der Gesamtmenge anzuzeigen.
++
+image:Pie Chart.png["Kreisdiagramm"]
+
+* *Widgets Anmerkung*: Bis zu 1000 Zeichen Freitext.
++
+image:Note Widget.png["Notizwidget"]
+
+* *Warnungstabelle*: Zeigt bis zu den letzten 1,000 Warnungen an.
+
+
+Ausführlichere Erläuterungen zu diesen und anderen Dashboard-Funktionen finden Sie link:concept_dashboard_features.html["Klicken Sie hier"].
+
+
+
+== Einrichten eines Dashboards als Startseite
+
+Sie können wählen, welches Dashboard als *Startseite* Ihrer Umgebung eingestellt werden soll. Verwenden Sie dazu eine der folgenden Methoden:
+
+* Gehen Sie zu *Dashboards > Alle Dashboards anzeigen*, um die Liste der Dashboards in Ihrer Umgebung anzuzeigen. Klicken Sie auf das Optionsmenü rechts neben dem gewünschten Dashboard und wählen Sie *als Startseite festlegen*.
+* Klicken Sie in der Liste auf ein Dashboard, um das Dashboard zu öffnen. Klicken Sie in der oberen Ecke auf das Dropdown-Menü und wählen Sie *als Startseite festlegen*.
+

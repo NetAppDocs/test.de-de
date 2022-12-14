@@ -1,0 +1,123 @@
+---
+sidebar: sidebar 
+permalink: task_dc_ibm_svc.html 
+keywords: IBM, SVC,SAN 
+summary: Konfigurieren des IBM SAN-Volume-Controller-Datensammlers. 
+---
+= Konfigurieren des IBM SAN Volume Controller-Datensammlers
+:allow-uri-read: 
+
+
+[role="lead"]
+Der IBM SAN Volume Controller (SVC)-Datensammler sammelt Bestands- und Performancedaten mithilfe von SSH und unterstützt eine Vielzahl von Geräten, auf denen das SVC-Betriebssystem ausgeführt wird.
+
+Die Liste der unterstützten Geräte umfasst Modelle wie SVC, v7000, v5000 und v3700. In der Cloud Insights Supportmatrix finden Sie weitere Informationen zu unterstützten Modellen und Firmware-Versionen.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen vom IBM SVC Datensammler. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Laufwerk | Festplatte 
+
+
+| Cluster | Storage 
+
+
+| Knoten | Storage-Node 
+
+
+| Mdisk-Gruppe | Storage-Pool 
+
+
+| Vdisk | Datenmenge 
+
+
+| Mdisk | Back-End-LUNs und -Pfade 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+=== Inventaranforderungen
+
+* IP-Adresse jedes SVC-Clusters
+* Port 22 verfügbar
+* Schreibgeschützter Benutzername und Kennwort
+
+
+
+
+=== Performance-Anforderungen Erfüllt
+
+* SVC-Konsole, die für jeden SVC-Cluster obligatorisch und für das Foundation-Paket für die SVC-Erkennung erforderlich ist
+* Mit den Anmeldedaten ist nur Administratorzugriff erforderlich, um Performance-Dateien von Cluster-Nodes auf den Konfigurations-Node zu kopieren.
+* Aktivieren Sie die Datensammlung, indem Sie über SSH eine Verbindung zum SVC-Cluster herstellen und ausführen: _Svctask startstats -Interval 1_
++
+Hinweis: Alternativ können Sie die Datenerfassung über die SVC Management-Benutzeroberfläche aktivieren.
+
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Cluster-IP-Adressen | IP-Adressen oder vollqualifizierte Domain-Namen des SVC-Speichers 
+
+
+| Benutzername Des Inventurbenutzers | Benutzername für die SVC-CLI 
+
+
+| Inventurpasswort | Passwort für die SVC-CLI 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 40 Minuten. 
+
+
+| Leistungsintervall (Sek.) | Intervall zwischen Performance-Abstimmungen Der Standardwert beträgt 300 Sekunden. 
+
+
+| Um dumpte Statistikdateien zu bereinigen | Aktivieren Sie dieses Kontrollkästchen, um heruntergelegte Statistikdateien zu bereinigen 
+|===
+
+
+== Fehlerbehebung
+
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Fehler: „Der Befehl kann nicht initiiert werden, da er nicht auf dem Konfigurations-Node ausgeführt wurde.“ | Der Befehl muss auf dem Konfigurationsknoten ausgeführt werden. 
+|===
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Fehler: „Der Befehl kann nicht initiiert werden, da er nicht auf dem Konfigurations-Node ausgeführt wurde.“ | Der Befehl muss auf dem Konfigurationsknoten ausgeführt werden. 
+|===
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

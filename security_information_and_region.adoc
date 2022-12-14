@@ -1,0 +1,93 @@
+---
+sidebar: sidebar 
+permalink: security_information_and_region.html 
+summary: Cloud Insights befolgt die Best Practices für die Sicherheit während des gesamten Release-Lebenszyklus. 
+keywords: security, risk, protection 
+---
+= Informationen und Region
+:allow-uri-read: 
+
+
+[role="lead"]
+NetApp nimmt die Sicherheit von Kundeninformationen sehr ernst. So und wo Cloud Insights Ihre Informationen speichert:
+
+
+
+== Welche Informationen speichert Cloud Insights?
+
+Cloud Insights speichert folgende Informationen:
+
+* Performance-Daten
++
+Performancedaten sind Zeitreihendaten, die Informationen zur Leistung des überwachten Geräts/der überwachten Quelle liefern. Dazu zählen beispielsweise die Anzahl der von einem Speichersystem bereitgestellten iOS, der Durchsatz eines FibreChannel-Ports, die Anzahl der von einem Webserver bereitgestellten Seiten, die Reaktionszeit einer Datenbank und vieles mehr.
+
+* Bestandsdaten
++
+Bestandsdaten bestehen aus Metadaten, die das überwachte Gerät/die Quelle beschreiben und wie es konfiguriert wird. Dazu gehören beispielsweise installierte Hardware- und Softwareversionen, Festplatten und LUNs in einem Storage-System, CPU-Kerne, RAM und Festplatten einer Virtual Machine, die Tabellen einer Datenbank, die Anzahl und die Art der Ports auf einem SAN Switch, Verzeichnis-/Dateinamen (wenn Cloud Secure aktiviert ist) usw.
+
+* Konfigurationsdaten
++
+Dies fasst vom Kunden bereitgestellte Konfigurationsdaten zusammen, die zur Verwaltung von Kundeninventar und -Vorgängen verwendet werden, z. B. Hostnamen oder IP-Adressen der überwachten Geräte, Abfrageintervalle, Zeitlimits usw.
+
+* Secrets
++
+Secrets bestehen aus den Anmeldeinformationen, die von der Cloud Insights-Erfassungseinheit für den Zugriff auf Kundengeräte und -Dienste verwendet werden. Diese Anmeldedaten werden mit AES-256 verschlüsselt, die privaten Schlüssel werden nur in den Acquisition Units gespeichert und verlassen nie die Kundenumgebung. Selbst privilegierte Cloud Insights SREs können aufgrund dieses Designs nicht in Klartext auf Kundengeheimnisse zugreifen.
+
+* Funktionale Daten
++
+Diese Daten werden durch die Bereitstellung des Cloud Data Service durch NetApp generiert, der NetApp über die Entwicklung, Implementierung, den Betrieb, die Wartung und die Sicherung des Cloud Data Service informiert. Funktionale Daten enthalten weder Kundendaten noch personenbezogene Daten.
+
+* Benutzerdaten
++
+Authentifizierung und Zugriffsinformationen, mit denen NetApp Cloud Central mit regionalen Cloud Insights-Standorten kommunizieren kann, einschließlich Daten, die sich auf die Benutzerautorisierung beziehen.
+
+* Daten Des Cloud Secure Benutzerverzeichnisses
++
+Wenn die Cloud Secure-Funktion aktiviert ist UND der Kunde den Benutzer-Directory-Collector aktivieren möchte, speichert das System Anzeigenamen, Unternehmens-E-Mail-Adressen und andere Informationen, die aus Active Directory gesammelt wurden.
+
+
+
+
+NOTE: Benutzerverzeichnisdaten beziehen sich auf Benutzerverzeichnisdaten, die vom Datensammler des Cloud Secure-Benutzerverzeichnisses erfasst werden, nicht auf Daten der Benutzer von Cloud Insights/Cloud Secure selbst.
+
+*Es werden keine expliziten personenbezogenen Daten* aus Infrastruktur- und Dienstleistungsressourcen erhoben. Die erfassten Daten bestehen aus Performance-Kennzahlen, Konfigurationsdaten und Infrastrukturmetadaten, ähnlich wie viele Telefonanbieter mit NetApp Auto-Support und ActiveIQ. Abhängig von den Namenskonventionen des Kunden werden jedoch Daten für Shares, Volumes, VMs, qtrees, Anwendungen usw. können personenbezogene Informationen enthalten.
+
+Wenn Cloud Secure aktiviert ist, werden zusätzlich Datei- und Verzeichnisnamen auf SMB- oder anderen Freigaben angezeigt, die personenbezogene Informationen enthalten können. Wenn Kunden den Cloud Secure-Benutzerverzeichnissammler aktivieren (der im Wesentlichen Windows-SIDs über Active Directory Benutzernamen einordnet), werden der Anzeigename, die Unternehmens-E-Mail-Adresse und alle ausgewählten zusätzlichen Attribute von Cloud Insights erfasst und gespeichert.
+
+Darüber hinaus werden Zugriffsprotokolle an Cloud Insights erstellt und enthalten die IP- und E-Mail-Adressen der Benutzer, die bei der Anmeldung beim Service verwendet werden.
+
+
+
+== Wo werden meine Informationen gespeichert?
+
+Cloud Insights speichert Informationen je nach Region, in der Ihre Umgebung erstellt wird.
+
+Folgende Informationen werden in der Host-Region gespeichert:
+
+* Telemetrie- und Asset-/Objektdaten, einschließlich Zähler und Performance-Kennzahlen
+* Informationen zu den Erfassungseinheiten
+* Funktionale Daten
+* Audit-Informationen zu Benutzeraktivitäten in Cloud Insights
+* Cloud Secure Active Directory-Informationen
+* Cloud Secure Audit-Informationen
+
+
+Die folgenden Informationen befinden sich in den USA, unabhängig davon, in welcher Region Sie Ihre Cloud Insights-Umgebung hosten:
+
+* Angaben zum Umgebungsstandort (manchmal auch „Mandant“ genannt), z. B. Standort-/Kontoinhaber.
+* Informationen, über die NetApp Cloud Central mit regionalen Cloud Insights-Standorten kommunizieren kann, einschließlich Hinweisen zur Benutzerautorisierung.
+* Informationen in Bezug auf die Beziehung zwischen dem Cloud Insights-Benutzer und dem Mandanten.
+
+
+
+
+== Weitere Informationen
+
+Weitere Informationen zu Datenschutz und Sicherheit von NetApp finden Sie unter folgenden Links:
+
+* link:https://www.netapp.com/us/company/trust-center/index.aspx["Trust Center"]
+* link:https://www.netapp.com/us/company/trust-center/privacy/data-location-cross-border-transfers.aspx["Grenzüberschreitende Datenübertragungen"]
+* link:https://www.netapp.com/us/company/trust-center/privacy/bcr-binding-corporate-rules.aspx["Binding Corporate Rules"]
+* link:https://www.netapp.com/us/company/trust-center/transparency/third-party-data-requests.aspx["Reaktion auf Datenanfragen von Drittanbietern"]
+* link:https://www.netapp.com/us/company/trust-center/privacy/privacy-principles-security-safeguards.aspx["NetApp Datenschutzgrundsätze"]
+

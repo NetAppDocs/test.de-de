@@ -1,0 +1,45 @@
+---
+sidebar: sidebar 
+permalink: task_cs_getting_started.html 
+keywords: collectors, data collectors, configure, introduction, browsers 
+summary: Mit nur wenigen einfachen Schritten können Sie die Verwendung von Cloud Secure beginnen 
+---
+= Erste Schritte mit Cloud Secure
+:allow-uri-read: 
+
+
+Es müssen Konfigurationsaufgaben abgeschlossen werden, bevor Sie mit Cloud Secure beginnen können, um die Benutzeraktivitäten zu überwachen.
+
+Das Cloud Secure-System verwendet einen Agent, um Zugangsdaten von Speichersystemen und Benutzerinformationen von Directory Services Servern zu erfassen.
+
+Sie müssen Folgendes konfigurieren, bevor Sie mit dem Erfassen von Daten beginnen können:
+
+[cols="2*"]
+|===
+
+
+| Aufgabe | Verwandte Informationen 
+
+
+| Konfigurieren eines Agenten  a| 
+link:concept_cs_agent_requirements.html["Anforderungen An Den Agenten"]
+
+link:task_cs_add_agent.html["Agent Hinzufügen"]
+
+link:https://netapp.hubs.vidyard.com/watch/Lce7EaGg7NZfvCUw4Jwy5P?["*Video*: Agentenbereitstellung"]
+
+
+
+| Konfigurieren Sie einen User Directory Connector | link:task_config_user_dir_connect.html["Fügen Sie Den User Directory Connector Hinzu"]
+
+link:https://netapp.hubs.vidyard.com/watch/NEmbmYrFjCHvPps7QMy8me?["*Video*: Active Directory-Verbindung"] 
+
+
+| Konfigurieren Sie Datensammler | Klicken Sie auf *Admin > Datensammler* Klicken Sie auf den Datensammler, den Sie konfigurieren möchten. Weitere Informationen finden Sie im Abschnitt Data Collector Vendor Reference in der Dokumentation.link:https://netapp.hubs.vidyard.com/watch/YSQrcYA7DKXbj1UGeLYnSF?["*Video*: ONTAP SVM Verbindung"] 
+
+
+| Erstellen Von Benutzerkonten | link:concept_user_roles.html["Benutzerkonten Verwalten"] 
+
+
+| Fehlerbehebung | link:https://netapp.hubs.vidyard.com/watch/Fs8N2w9wBtsFGrhRH9X85U?["*Video*: Fehlerbehebung"] 
+|===

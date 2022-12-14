@@ -1,0 +1,61 @@
+---
+sidebar: sidebar 
+permalink: task_dc_google_cloud.html 
+summary: Konfigurieren Sie Google Compute Data Collector 
+keywords: data collector, queries, create 
+---
+= NetApp Google Compute Data Collector
+:allow-uri-read: 
+
+
+[role="lead"]
+Dieser Datensammler unterstützt Inventar- und Performance-Erfassung aus Google Compute Cloud-Plattformkonfigurationen. Dieser Sammler wird versuchen, alle Computing-Ressourcen in allen Projekten innerhalb einer Google-Organisation zu entdecken. Wenn Sie mehrere Google-Organisationen haben, die Sie mit Cloud Insights entdecken möchten, möchten Sie einen Cloud Insights-Collector pro Organisation bereitstellen.
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Organisation-ID | Die Organisations-ID, die Sie mit diesem Sammler entdecken möchten. Dieses Feld ist erforderlich, wenn Ihr Servicekonto mehr als eine Organisation sehen kann 
+
+
+| Wählen Sie „Ausschließen“ oder „Einschließen“, um GCP-Projekte nach IDs zu filtern | Wenn Sie begrenzen möchten, welche Projektressourcen in Cloud Insights bereitgestellt werden. 
+
+
+| Projekt-IDs | Die Liste der Projekt-IDs, die Sie in oder aus der Erkennung filtern möchten, hängt vom Wert des Werts "Ausschließen"... ab. Die Standardliste ist leer 
+
+
+| Client-ID | Client-ID für die Konfiguration der Google Cloud Platform 
+
+
+| Kopieren Sie den Inhalt Ihrer Google Credential-Datei hier | Kopieren Sie Ihre Google-Anmeldedaten für das Cloud-Plattform-Konto in dieses Feld 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 60 Minuten 
+
+
+| Wählen Sie „Exclude“ oder „include“, um VMs nach Etiketten filtern zu können | Geben Sie an, ob VM's by Labels beim Sammeln von Daten einbezogen oder ausgeschlossen werden sollen. Wenn ‘include’ ausgewählt ist, kann das Feld Label Key nicht leer sein. 
+
+
+| Bezeichnungsschlüssel und Werte, auf denen VMs gefiltert werden sollen | Klicken Sie auf *+ Filter Label*, um die VMs (und zugehörigen Festplatten) auszuwählen, die durch Filtern nach Schlüsseln und Werten, die Schlüssel und Werte der Labels auf der VM entsprechen, einzuschließen bzw. auszuschließen. Etikettenschlüssel ist erforderlich, Etikettenwert ist optional. Wenn der Etikettenwert leer ist, wird die VM solange gefiltert, wie sie dem Etikettenschlüssel entspricht. 
+
+
+| Leistungsintervall (Sek.) | Der Standardwert ist 1800 Sekunden 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

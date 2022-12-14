@@ -1,0 +1,59 @@
+---
+sidebar: sidebar 
+permalink: task_device_resolution_preferences.html 
+keywords: Automatic, AR, AHR, Host, automatic device resolution, FC, Identify 
+summary:  
+---
+= Einstellungen auf der Registerkarte Einstellungen
+:allow-uri-read: 
+
+
+[role="lead"]
+Auf der Registerkarte „Voreinstellungen für die Geräteauflösung“ können Sie einen Zeitplan für die automatische Auflösung erstellen, Speicher- und Bandanbieter angeben, die die Identifizierung einschließen oder ausschließen sollen, und DNS-Suchoptionen festlegen.
+
+
+
+=== Zeitplan für die automatische Auflösung
+
+Ein Zeitplan für die automatische Auflösung kann festlegen, wann die automatische Gerätelaufauflösung ausgeführt wird:
+
+|===
+
+
+| Option | Beschreibung 
+
+
+| Alle | Verwenden Sie diese Option, um die automatische Geräteauflösung in Intervallen von Tagen, Stunden oder Minuten durchzuführen. 
+
+
+| Jeden Tag | Verwenden Sie diese Option, um die automatische Geräteauflösung täglich zu einem bestimmten Zeitpunkt auszuführen. 
+
+
+| Manuell | Verwenden Sie diese Option, um nur die automatische Geräteauflösung manuell auszuführen. 
+
+
+| Bei jeder Umgebungsänderung | Verwenden Sie diese Option, um bei jeder Änderung der Umgebung eine automatische Geräteauflösung auszuführen. 
+|===
+Wenn Sie _manuell_ angeben, wird die nächtliche automatische Geräteauflösung deaktiviert.
+
+
+
+=== DNS-Verarbeitungsoptionen
+
+Mit den DNS-Verarbeitungsoptionen können Sie die folgenden Funktionen auswählen:
+
+* Wenn die Verarbeitung der DNS-Suchtresultat aktiviert ist, können Sie eine Liste von DNS-Namen hinzufügen, die an aufgelöste Geräte angehängt werden sollen.
+* Sie können die Option Automatische Auflösung von IPs auswählen: Ermöglicht die automatische Hostauflösung für iSCSI-Initiatoren und Hosts, die über DNS-Lookup auf NFS-Freigaben zugreifen. Wenn dies nicht angegeben wird, wird nur FC-basierte Auflösung ausgeführt.
+* Sie können Unterstriche in Hostnamen zulassen und anstelle des Standard-Port-Alias in Results einen Alias „Connected to“ verwenden.
+
+
+
+
+=== Einschließlich oder mit Ausnahme bestimmter Storage- und Tape-Anbieter
+
+Zur automatischen Lösung können Sie bestimmte Speicher- und Bandanbieter ein- oder ausschließen. Möglicherweise möchten Sie bestimmte Anbieter ausschließen, wenn Sie beispielsweise wissen, dass ein bestimmter Host zu einem veralteten Host wird und von Ihrer neuen Umgebung ausgeschlossen werden sollte. Sie können auch Anbieter, die Sie zuvor ausgeschlossen haben, erneut hinzufügen, möchten aber nicht mehr ausgeschlossen werden.
+
+
+NOTE: Die Regeln zur Geräteauflösung für Bänder funktionieren nur für WWNs, bei denen der Hersteller für diesen WWN in den Anbietereinstellungen auf _nur als Band eingeschlossen eingestellt ist.
+
+Siehe auch: link:concept_device_resolution_regex_examples.html["Beispiele Für Reguläre Ausdrücke"]

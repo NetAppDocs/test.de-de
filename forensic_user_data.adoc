@@ -1,0 +1,92 @@
+---
+sidebar: sidebar 
+permalink: forensic_user_data.html 
+keywords: Forensic, user, user detail 
+summary: Daten aus forensischen Benutzern 
+---
+= Daten Von Forensischen Benutzern
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media
+
+
+[role="lead"]
+Auf der Seite Benutzer werden die von Cloud Secure überwachten Benutzer angezeigt.
+
+Die auf dieser Seite verfügbaren Daten umfassen Folgendes:
+
+* Jeder Benutzer, der von Cloud Secure überwacht wird, verfügt über einen Link zum link:user_profile.html["Benutzerprofil"].
+* Warnmeldungen, die von den vom Benutzer durchgeführten Aktivitäten des Benutzers ausgegeben werden. Der Schweregrad der Warnmeldung wird wie folgt identifiziert: Bild::kritisch.png[kritisch] + \ Bild::Warnung.png[Warnung] + \ Bild::niedrig.png[Niedrig] + \
+* Die letzte vom Benutzer durchgeführte Aktivität.
+* Standort des Benutzers – Land und Bundesland.
+* Die Anzahl der Communities, in denen der Benutzer Mitglied ist.
+
+
+
+
+== Filtern Von Forensischen Benutzerdaten
+
+Sie können Daten des Forensischen Vorgangsverlaufs folgendermaßen filtern:
+
+* Meldungen
++
+** Keine
+** Niedrig
+** Warnung
+** Kritisch
+
+
+* Zugehörige Community
++
+** NOCH AUSSTEHEND
+
+
+* Community-Anzahl
++
+** Numerischer Wert oder Bereich
+
+
+* Letzte Aktivität
++
+** Ein Zeit- oder Zeitbereich
+
+
+* Standort
++
+** IP-Adresse, von der die Aktivität durchgeführt wurde
+
+
+* Meldungen
++
+** Keine
+** Niedrig
+** Warnung
+** Kritisch
+** Zugehörige Community
+
+
+* Community-Anzahl
++
+** Numerischer Wert oder Bereich
+
+
+* Letzte Aktivität
++
+** Ein Zeit- oder Zeitbereich
+
+
+* Standort
++
+** IP-Adresse, von der die Aktivität durchgeführt wurde *
+** Benutzer
+** Benutzer-ID
+
+
+* Standort, auf den das Unternehmen von zugegriffen wurde
+* Pfad der Einheit
+* Uhrzeit, zu der die Aktivität stattgefunden hat
+* Benutzer, der die Aktivität durchführt
+

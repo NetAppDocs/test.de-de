@@ -1,0 +1,119 @@
+---
+sidebar: sidebar 
+permalink: concept_forensic.html 
+keywords: Forensic, user, entity, community 
+summary: Forensische Übersicht 
+---
+= Forensische Informationen
+:toc: macro
+:hardbreaks:
+:toclevels: 1
+:allow-uri-read: 
+:history: Review 1/17,
+:toc: 
+:toclevels: 1
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+:toc-position: content
+
+
+[role="lead"]
+Die Ansicht „Forensic“ bietet Zugriff auf die Informationen zu Benutzer, Entität, Community und Benutzeraktivität.
+
+
+
+== Benutzerinformationen Werden Geprüft
+
+Klicken Sie auf *Forensic > User*, um die Benutzeransicht aufzurufen.
+
+Diese Ansicht zeigt allgemeine Benutzerinformationen an:
+
+* Name des Benutzers mit einem Link zu detaillierteren Informationen für den Benutzer.
+* Warnungen, die von den Aktivitäten des Benutzers angesprochen wurden
+* Anzahl der Communities, zu denen der Benutzer Mitglied ist, mit einem Link zur Seite der Community
+* Standort des Benutzers
+* Letzte Einheit, auf die der Benutzer zugreifen kann
+
+
+Klicken Sie auf den Benutzernamen, um auf weitere detaillierte Informationen im zuzugreifen link:forensic_user_detail.html["Benutzerübersicht"]
+
+
+
+== Untersuchung Von Informationen Zur Einheit
+
+Klicken Sie auf *Forensic > Entity*, um die Ansicht Entity aufzurufen.
+
+Auf dieser Seite werden allgemeine Informationen zu Einheiten angezeigt, auf die Benutzer Zugriff haben:
+
+Beschreibt die folgenden Details:
+
+* Entitätsname
+* Entitätstyp
+
+
+* Beziehung zwischen der Gemeinschaft und der Entität
+* Entity-Pfad
+* Zeitpunkt des letzten Zugriffs
+* Größe der Einheit
+
+
+Klicken Sie auf den Namen der Entität, um auf weitere detaillierte Informationen im zuzugreifen link:forensic_entity_detail.html["Übersicht Der Einheit"]
+
+Klicken Sie auf die Community-Zählung, um anzuzeigen, welche Communities die Entität enthalten.
+
+
+
+== Informationen Zu Communitys Werden Geprüft
+
+Klicken Sie auf *Forensic > Communities*, um die Seite Communities aufzurufen.
+
+Diese Ansicht bietet:
+
+* Community-Namen
+* Warnmeldungen in Bezug auf die Community
+* Benutzeranzahl für die Community
+* Entitäten zählen für die Community
+
+
+Klicken oder suchen Sie einen Community-Namen, um auf die Seite mit den Community-Details zuzugreifen.
+
+Community-Profil:: Listet die Standorte der Community-Benutzer und die anderen nächstgelegenen Communitys auf.
+Verhalten Der Gemeinschaft:: Zeigt die Anzahl der aufgerufenen Einheiten an und zeigt Lese-, Schreib- und metea-Datenzugriffsoperationen an.
+Benutzer und Einheiten:: Identifiziert die Gesamtzahl der Benutzer und der gesamten Einheiten in der Community.
+Community-Analyse::
++
+--
+* Trend der Community-Benutzer
+* Vorgänge, die an Entitäten durchgeführt werden
+* Alarmtrend
+
+
+--
+
+
+Klicken Sie auf den Community-Namen, um auf ausführlichere Informationen im zuzugreifen link:forensic_community_detail.html["Community-Details"]
+
+
+
+== Informationen Zu Benutzeraktivitäten Werden Geprüft
+
+Klicken Sie auf *Forensic > Benutzeraktivität*, um auf die Ansicht Benutzeraktivität zuzugreifen.
+
+In dieser Ansicht wird für jeden überwachten Benutzer Folgendes beschrieben:
+
+* Zugriffszeit der Einheit
+* Benutzer, der mit einem Link zur Benutzerübersicht auf das Unternehmen zugegriffen hat
+* Ausgeführte Aktivität:
++
+** Lesen
+** Schreiben
+** Erstellen
+** Umbenennen
+
+
+* Entity-Pfad
+* Entitätstyp
+* Standort aufrufen Klicken Sie auf den Benutzernamen, um auf weitere Informationen im zuzugreifen link:forensic_user_detail.html["Angaben Zur Einheit"]
+

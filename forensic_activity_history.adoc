@@ -1,0 +1,150 @@
+---
+sidebar: sidebar 
+permalink: forensic_activity_history.html 
+keywords: Forensic, activity history, activity data, history 
+summary: Verlaufsdaten für forensische Aktivitäten 
+---
+= Forensik - Alle Aktivitäten
+:allow-uri-read: 
+
+
+[role="lead"]
+Auf der Seite „Alle Aktivitäten“ finden Sie Informationen zu den Aktionen, die an Einheiten der Cloud Secure-Umgebung durchgeführt werden.
+
+
+
+== Alle Aktivitätsdaten Werden Untersucht
+
+Klicken Sie auf *Forensics > Vorgangsforensics* und klicken Sie auf die Registerkarte *Alle Aktivitäten*, um die Seite Alle Aktivitäten aufzurufen. Diese Seite bietet einen Überblick über Aktivitäten in Ihrer Umgebung und hebt die folgenden Informationen hervor:
+
+* Ein Diagramm mit „_Aktivitätsverlauf_“ (Zugriff pro Minute/pro 5 Minuten/pro 10 Minuten basierend auf dem ausgewählten globalen Zeitbereich)
++
+Sie können das Diagramm vergrößern, indem Sie ein Rechteck im Diagramm herausziehen. Die gesamte Seite wird geladen, um den vergrößerten Zeitbereich anzuzeigen. Wenn der Zoom vergrößert wird, wird eine Schaltfläche angezeigt, mit der der Benutzer zoomen kann.
+
+* Ein Diagramm mit „_Aktivitätstypen_“. Um die Vorgangshistorie-Daten nach Aktivitätstyp zu erhalten, klicken Sie auf den entsprechenden x-Achse-Label-Link.
+* Ein Diagramm der Aktivität auf_Entity Types_. Um Vorgangsdaten nach Entitätstyp zu erhalten, klicken Sie auf den entsprechenden Link für die X-Achse-Bezeichnung.
+* Eine Liste der Daten „_Alle Aktivitäten_“
+
+
+Die Tabelle _*Alle Aktivitäten*_ enthält die folgenden Informationen. Beachten Sie, dass standardmäßig nicht alle dieser Spalten angezeigt werden. Sie können die anzuzeigenden Spalten auswählen, indem Sie auf das Zahnrad-Symbol klicken image:GearIcon.png["Zahnrad-Symbol"].
+
+* Die *Zeit*, auf die ein Unternehmen zugegriffen wurde, einschließlich Jahr, Monat, Tag und Uhrzeit des letzten Zugriffs.
+* Der * Benutzer*, der mit einem Link auf das Entity zugegriffen hat link:forensic_user_overview.html["Benutzerinformationen"].
+
+
+* Die *Aktivität*, die der Benutzer durchgeführt hat. Folgende Typen werden unterstützt:
++
+** *Gruppeneigentum ändern* - Gruppeneigentum ist von Datei oder Ordner geändert. Weitere Informationen zu Gruppeneigentum finden Sie unter link:https://docs.microsoft.com/en-us/previous-versions/orphan-topics/ws.11/dn789205(v=ws.11)?redirectedfrom=MSDN["Dieser Link."]
+** *Eigentümer ändern* - das Eigentum an Datei oder Ordner wird zu einem anderen Benutzer geändert.
+** *Berechtigung ändern* - Datei- oder Ordnerrechte wurde geändert.
+** *Erstellen* - Erstellen Sie Datei oder Ordner.
+** *Löschen* - Datei oder Ordner löschen. Wenn ein Ordner gelöscht wird, werden _delete_ Ereignisse für alle Dateien in diesem Ordner und Unterordnern abgerufen.
+** *Lesen* - Datei wird gelesen.
+** *Metadaten lesen* - nur bei Option zur Ordnerüberwachung. Wird beim Öffnen eines Ordners unter Windows erzeugt oder „ls“ innerhalb eines Ordners unter Linux ausgeführt.
+** *Umbenennen* - Umbenennen Sie die Datei oder den Ordner.
+** *Schreiben* - Daten werden in eine Datei geschrieben.
+** *Metadaten schreiben* - Dateimetadaten werden geschrieben, zum Beispiel, Berechtigung geändert.
+** *Andere Änderung* - jedes andere Ereignis, das oben nicht beschrieben wird. Alle nicht zugeordneten Ereignisse werden dem Aktivitätstyp „andere Änderung“ zugeordnet. Gilt für Dateien und Ordner.
+
+
+* Der *Pfad* zur Entität mit einem Link zum link:forensic_entity_detail.html["Entity Detail-Daten"]
+* *Entity Type*, einschließlich der Endung Entity (d. h. Datei) (.doc, .docx, .tmp usw.)
+* Das *Gerät*, in dem sich die Entitäten befinden
+* Das *Protokoll* zum Abrufen von Ereignissen.
+* Der *Original-Pfad*, der bei der Umbenennung der Originaldatei verwendet wird. Diese Spalte ist in der Tabelle standardmäßig nicht sichtbar. Verwenden Sie die Spaltenauswahl, um diese Spalte zur Tabelle hinzuzufügen.
+* Das *Volumen*, in dem sich die Entitäten befinden. Diese Spalte ist in der Tabelle standardmäßig nicht sichtbar. Verwenden Sie die Spaltenauswahl, um diese Spalte zur Tabelle hinzuzufügen.
+
+
+
+
+== Filtern Forensischer Vorgangshistorie-Daten
+
+Es gibt zwei Methoden, mit denen Sie Daten filtern können.
+
+. Bewegen Sie den Mauszeiger über das Feld in der Tabelle, und klicken Sie auf das angezeigte Filtersymbol. Der Wert wird den entsprechenden Filtern in der oberen Liste _Filter by_ hinzugefügt.
+. Filtern Sie die Daten, indem Sie das Feld _Filter by_ eingeben:
++
+Wählen Sie den entsprechenden Filter aus dem oberen Widget ‘Filtern nach’ aus, indem Sie auf die Schaltfläche *[+]* klicken:
+
++
+image:Forensic_Activity_Filter.png["Entity Filer, width=500"]
+
++
+Geben Sie den Suchtext ein
+
++
+Drücken Sie die Eingabetaste, oder klicken Sie außerhalb des Filterfelds, um den Filter anzuwenden.
+
+
+
+Sie können forensische Aktivitätsdaten nach folgenden Feldern filtern:
+
+* Der Typ *Aktivität*.
+
+
+* *Quell-IP*, auf die das Element zugegriffen wurde. Sie müssen eine gültige Quell-IP-Adresse in doppelten Anführungszeichen angeben, z. B. „10.1.1.1.“. Unvollständige IPs wie „10.1.1.*“, „10.1.*.*“ usw. funktionieren nicht.
+* *Protokoll* zum Abrufen protokollspezifischer Aktivitäten.
+
+
+* *Benutzername* des Benutzers, der die Aktivität ausführt. Sie müssen den genauen Benutzernamen angeben, um sie zu filtern. Die Suche mit teilweisen Nutzernamen oder teilweisen Nutzernamen, vorfixiert oder mit ‘*’ abgestickt, funktioniert nicht.
+* *Rauschunterdrückung* zum Filtern von neu erstellten Dateien, die vom Benutzer erstellt wurden (d.h. in den letzten 2 Stunden). Sie wird auch zum Filtern temporärer Dateien (z. B. .tmp-Dateien) verwendet, auf die der Benutzer Zugriff hat.
+
+
+Die folgenden Felder unterliegen speziellen Filterregeln:
+
+* *Entity Type*, mit Entity (file) Extension
+* *Pfad* der Entität
+* *Benutzer* die Aktivität durchführen
+* *Gerät* (SVM), in dem sich Entitäten befinden
+* *Volumen*, in dem sich Entitäten befinden
+* Der *Original-Pfad*, der bei der Umbenennung der Originaldatei verwendet wird.
+
+
+Die vorhergehenden Felder unterliegen beim Filtern folgenden Kriterien:
+
+* Der genaue Wert sollte in Anführungszeichen liegen: Beispiel: "suchtext"
+* Platzhalter-Strings dürfen keine Anführungszeichen enthalten: Beispiel: suchtext, \*suchtext*, filtert nach Zeichenfolgen, die ‘seartext’ enthalten.
+* String mit einem Präfix, Beispiel: suchtext* , sucht alle Strings, die mit ‘seartext’ beginnen.
+
+
+
+
+== Forensische Vorgangshistorie-Daten Sortieren
+
+Sie können Vorgangshistorie-Daten nach_Time, User, Source IP, Activity, Path_ und_Entity Type_ sortieren. Standardmäßig wird die Tabelle nach absteigender_Time_-Reihenfolge sortiert, was bedeutet, dass die neuesten Daten zuerst angezeigt werden. Die Sortierung ist für die Felder _Device_ und _Protocol_ deaktiviert.
+
+
+
+== Alle Aktivitäten Werden Exportiert
+
+Sie können den Vorgangsverlauf in eine CSV-Datei exportieren, indem Sie über der Tabelle „Vorgangsverlauf“ auf die Schaltfläche „_Export_“ klicken. Beachten Sie, dass nur die 10,000 wichtigsten Datensätze exportiert werden.
+
+
+
+== Spaltenauswahl für Alle Aktivitäten
+
+In der Tabelle _Alle Aktivitäten_ werden standardmäßig ausgewählte Spalten angezeigt. Um die Spalten hinzuzufügen, zu entfernen oder zu ändern, klicken Sie auf das Zahnradsymbol rechts neben der Tabelle und wählen Sie aus der Liste der verfügbaren Spalten aus.
+
+image:CloudSecure_ActivitySelection.png["Aktivitätsauswahl, width=30%"]
+
+
+
+== Aufbewahrung Des Aktivitätsverlaufs
+
+Der Aktivitätsverlauf wird 13 Monate lang in aktiven Cloud Secure Umgebungen aufbewahrt.
+
+
+
+== Fehlerbehebung
+
+|===
+
+
+| Problem | Versuchen Sie Dies 
+
+
+| In der Tabelle „Alle Aktivitäten“ in der Spalte ‘Benutzer“ wird der Benutzername wie folgt angezeigt: „ldap:HQ.COMPANYNAME.COM:S-1-5-21-3577637-1906459482-1437260136-1831817” oder LDAP:default:80038003“ | Mögliche Gründe sind: 1. Es wurden noch keine User Directory Collectors konfiguriert. Um einen hinzuzufügen, gehen Sie zu *Admin > Data Collectors > User Directory Collectors* und klicken Sie auf *+User Directory Collector*. Wählen Sie _Active Directory_ oder _LDAP Directory Server_. 2. Ein Benutzerverzeichnissammler wurde konfiguriert, ist jedoch angehalten oder befindet sich im Fehlerzustand. Gehen Sie zu *Admin > Data Collectors > User Directory Collectors* und überprüfen Sie den Status. Siehe link:http://docs.netapp.com/us-en/cloudinsights/task_config_user_dir_connect.html#troubleshooting-user-directory-collector-configuration-errors["Fehlerbehebung für Benutzerverzeichnissammler"] Der Dokumentation für Tipps zur Fehlerbehebung. Nach der ordnungsgemäßen Konfiguration wird der Name innerhalb von 24 Stunden automatisch behoben. Wenn die Lösung immer noch nicht behoben wird, überprüfen Sie, ob Sie den korrekten Benutzer-Data Collector hinzugefügt haben. Stellen Sie sicher, dass der Benutzer tatsächlich Teil des hinzugefügten Active Directory/LDAP Directory Servers ist. 
+
+
+| Einige NFS-Ereignisse werden in der UI nicht angezeigt. | Überprüfen Sie Folgendes: 1. Ein Benutzer-Verzeichnis-Collector für AD-Server mit POSIX-Attributen sollte mit dem unixid-Attribut ausgeführt werden, das über UI aktiviert ist. 2. Jeder Benutzer, der NFS-Zugang macht, sollte angezeigt werden, wenn er in der Benutzerseite von UI 3 durchsucht wird. RAW-Ereignisse (Ereignisse, für die der Benutzer noch nicht erkannt wurde) werden für NFS 4 nicht unterstützt. Anonymer Zugriff auf den NFS-Export wird nicht überwacht. 5. Stellen Sie sicher, dass die NFS-Version in weniger als NFS4.1 verwendet wird. 
+|===

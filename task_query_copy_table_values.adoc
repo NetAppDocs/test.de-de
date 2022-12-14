@@ -1,0 +1,23 @@
+---
+sidebar: sidebar 
+permalink: task_query_copy_table_values.html 
+summary: Sie können Werte aus einer Tabelle in die Zwischenablage kopieren, um sie in anderen Anwendungen verwenden zu können. 
+keywords: query, queries, copy, values, clipboard 
+---
+= Tabellenwerte werden kopiert
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie können Werte in Tabellen zur Verwendung in Suchfeldern oder anderen Anwendungen in die Zwischenablage kopieren.
+
+.Über diese Aufgabe
+Es gibt zwei Methoden, mit denen Sie Werte aus Tabellen kopieren oder Ergebnisse in die Zwischenablage abfragen können.
+
+.Schritte
+. Methode 1: Markieren Sie den gewünschten Text mit der Maus, kopieren Sie ihn und fügen Sie ihn in Suchfelder oder andere Anwendungen ein.
+. Methode 2: Bewegen Sie den Mauszeiger über das Feld, und klicken Sie auf das Clipboard-Symbol image:ClipboardIcon.png["Zwischenablage"] Das erscheint. Der Wert wird zur Verwendung in Suchfeldern oder anderen Anwendungen in die Zwischenablage kopiert.
++
+Beachten Sie, dass nur Werte, die Verknüpfungen zu Assets sind, mit dieser Methode kopiert werden können. Nur Felder, die einzelne Werte enthalten (d. h. nicht-Listen), haben das Kopiensymbol.
+
+

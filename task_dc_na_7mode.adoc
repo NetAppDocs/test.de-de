@@ -1,0 +1,206 @@
+---
+sidebar: sidebar 
+permalink: task_dc_na_7mode.html 
+keywords: data collector, 7-mode, NetApp 
+summary: NetApp 7-Mode Datensammler konfigurieren. 
+---
+= NetApp Data ONTAP mit 7-Mode Datensammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Bei Storage-Systemen mit Data ONTAP Software im 7-Mode verwenden Sie den 7-Mode Datensammler, der mit der CLI Kapazitäts- und Performance-Daten bezieht.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen vom NetApp 7-Mode Data Collector. Für jeden erfassten Asset-Typ wird die am häufigsten für dieses Dokument verwendete Terminologie angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Festplatte | Festplatte 
+
+
+| Raid-Gruppe | Festplattengruppe 
+
+
+| Filer | Storage 
+
+
+| Filer | Storage-Node 
+
+
+| Aggregat | Storage-Pool 
+
+
+| LUN | Datenmenge 
+
+
+| Datenmenge | Internes Volumen 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Anforderungen
+
+Sie benötigen Folgendes, um diesen Datensammler zu konfigurieren und zu verwenden:
+
+* IP-Adressen des FAS Storage Controllers und des Partners.
+* Port 443
+* Ein benutzerdefinierter Benutzername und Passwort für den Admin-Level für den Controller und den Partner-Controller mit den folgenden Rollenfunktionen für 7-Mode:
++
+** „api-*“: Nutzen Sie diese, um OnCommand Insight die Ausführung aller NetApp Storage-API-Befehle zu ermöglichen.
+** „login-http-admin“: Hiermit kann OnCommand Insight über HTTP eine Verbindung mit dem NetApp Storage herstellen.
+** „Security-API-vfiler“: Nutzen Sie dies, um OnCommand Insight zu ermöglichen, NetApp Storage API Befehle auszuführen, um vFiler Einheitsinformationen abzurufen.
+** „cli-Optionen“: Hier können Sie Storage-Systemoptionen lesen.
+** „cli-lun“: Greifen Sie auf diese Befehle zum Verwalten von LUNs zu. Zeigt den Status (LUN-Pfad, Größe, Online/Offline-Zustand und Shared-Zustand) der angegebenen LUN oder Klasse von LUNs an.
+** „cli-df“: Verwenden Sie dies, um freien Speicherplatz anzuzeigen.
+** „cli-ifconfig“: Verwenden Sie diese, um Schnittstellen und IP-Adressen anzuzeigen.
+
+
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Adresse des Storage-Systems | IP-Adresse oder vollqualifizierter Domain-Name für das NetApp Storage-System 
+
+
+| Benutzername | Benutzername für das NetApp Storage-System 
+
+
+| Passwort | Passwort für das NetApp Storage-System 
+
+
+| Adresse des HA-Partners im Cluster | IP-Adresse oder vollqualifizierter Domain-Name für den HA-Partner 
+
+
+| Benutzername des HA-Partners in Cluster | Benutzername für den HA-Partner 
+
+
+| Passwort des HA Partner Filer in Cluster | Passwort für den HA-Partner 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 20 Minuten. 
+
+
+| Verbindungstyp | HTTPS oder HTTP: Zeigt auch den Standardport an 
+
+
+| Verbindungs-Port Überschreiben | Wenn Sie leer sind, verwenden Sie den Standardport im Feld Verbindungstyp. Andernfalls geben Sie den zu verwendenden Anschluss ein 
+
+
+| Leistungsintervall (Sek.) | Intervall zwischen Performance-Abstimmungen Der Standardwert beträgt 300 Sekunden. 
+|===
+
+
+== Storage-Systemverbindung
+
+Als Alternative zur Nutzung des Standard-Administrationsbenutzers für diesen Datensammler können Sie einen Benutzer mit Administratorrechten direkt auf den NetApp Storage-Systemen konfigurieren, sodass dieser Datensammler Daten von NetApp Storage-Systemen erfassen kann.
+
+Für die Verbindung zu NetApp Storage-Systemen muss der Benutzer, der beim Erwerb der Haupt-pfiler angegeben ist (auf dem das Speichersystem vorhanden ist), die folgenden Bedingungen erfüllen:
+
+* Der Benutzer muss auf vfiler0 (root Filer/pfiler) sein.
++
+Storage-Systeme werden beim Erwerb der Haupt-Filer erworben.
+
+* Mit den folgenden Befehlen werden die Fähigkeiten der Benutzerrolle definiert:
++
+** „api-*“: Nutzen Sie diese, um Cloud Insights die Ausführung aller NetApp Storage-API-Befehle zu ermöglichen.
++
+Dieser Befehl ist erforderlich, um das ZAPI zu verwenden.
+
+** „login-http-admin“: Hiermit kann Cloud Insights über HTTP eine Verbindung mit dem NetApp Storage herstellen. Dieser Befehl ist erforderlich, um das ZAPI zu verwenden.
+** „Security-API-vfiler“: Nutzen Sie dies, um Cloud Insights zu ermöglichen, NetApp Storage API Befehle auszuführen, um vFiler Einheitsinformationen abzurufen.
+** „cli-Opes“: Zum Befehl „Opes“, der für Partner-IP und aktivierte Lizenzen verwendet wird.
+** „cli-lun“: Greifen Sie auf diesen Befehl zum Verwalten von LUNs zu. Zeigt den Status (LUN-Pfad, Größe, Online/Offline-Zustand und Shared-Zustand) der angegebenen LUN oder Klasse von LUNs an.
+** „cli-df“: Für „df -s“, „df -r“, „df -A -r“ und für die Anzeige des freien Speicherplatzes
+** „cli-ifconfig“: Für „ifconfig -a“ Befehl und verwendet für das Abrufen von Filer IP Adresse.
+** "cli-rdfile": Für den Befehl "rdfile /etc/netgroup" und für das Abrufen von Netzgruppen verwendet.
+** „cli-Datum“: Für den Befehl „Datum“ und mit dem vollständigen Datum für das Abrufen von Snapshot Kopien.
+** „cli-Snap“: Für den Befehl „Snap list“ und zum Abrufen von Snapshot Kopien verwendet.
+
+
+
+
+Wenn cli-Datum oder cli-Snap Berechtigungen nicht bereitgestellt werden, kann die Erfassung abgeschlossen werden. Snapshot Kopien werden jedoch nicht gemeldet.
+
+Um eine 7-Mode Datenquelle erfolgreich zu erhalten und keine Warnungen auf dem Speichersystem zu generieren, sollten Sie eine der folgenden Befehlstrings verwenden, um Ihre Benutzerrollen zu definieren. Der zweite hier aufgeführte String ist eine optimierte Version des ersten:
+
+* login-http-admin,API-*,Security-API-vfile,cli-rdfile,cli-options,cli-df,cli-lun,cli-ifconfig,cli-date,cli-Snap,_
+* login-http-admin,API-*,Security-API-vfile,cli-
+
+
+
+
+== Fehlerbehebung
+
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+
+
+==== Inventar
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Erhalten Sie 401 HTTP-Antwort oder 13003 ZAPI-Fehlercode und ZAPI gibt „unzureichende Berechtigungen“ oder „nicht autorisiert für diesen Befehl“ zurück | Benutzernamen und Kennwort sowie Benutzerrechte/Berechtigungen überprüfen. 
+
+
+| Fehler „Befehl konnte nicht ausgeführt werden“ | Prüfen Sie, ob der Benutzer über die folgende Berechtigung auf dem Gerät verfügt: • API-* • cli-date • cli-df • cli-ifconfig • cli-lun • cli-Operations • cli-rdfile • cli-Snap • Login-http-admin • Security-API-vfiler prüfen Sie auch, ob die ONTAP-Version von Cloud Insights unterstützt wird und überprüfen Sie, ob die verwendeten Anmeldedaten mit den Geräteanmeldeinformationen übereinstimmen 
+
+
+| Cluster-Version ist < 8.1 | Die unterstützte Version für das Cluster-Minimum ist 8.1. Upgrade auf die unterstützte Mindestversion. 
+
+
+| ZAPI gibt zurück „Cluster-Rolle ist keine Cluster_Mgmt LIF“ | AU muss mit Cluster Management IP sprechen. Überprüfen Sie die IP und wechseln Sie ggf. auf eine andere IP 
+
+
+| Fehler: „7 Modus Filer werden nicht unterstützt“ | Dies kann passieren, wenn Sie diese Datensammler benutzen, um 7 Modus Filer zu entdecken. Ändern Sie IP, um stattdessen auf cdot Filer zu verweisen. 
+
+
+| ZAPI-Befehl schlägt nach dem erneuten Versuch fehl | AU hat ein Kommunikationsproblem mit dem Cluster. Überprüfen Sie Netzwerk, Port-Nummer und IP-Adresse. Der Benutzer sollte auch versuchen, einen Befehl von der Befehlszeile aus dem AU-Rechner auszuführen. 
+
+
+| AU konnte Verbindung zum ZAPI nicht herstellen | IP/Port-Konnektivität prüfen und ZAPI-Konfiguration bestätigen. 
+
+
+| AU konnte über HTTP keine Verbindung mit ZAPI herstellen | Prüfen Sie, ob der ZAPI-Port Klartext akzeptiert. Wenn AU versucht, Klartext an einen SSL-Socket zu senden, schlägt die Kommunikation fehl. 
+
+
+| Die Kommunikation schlägt mit SSLException fehl | AU versucht, SSL an einen Klartext Port auf einem Filer zu senden. Überprüfen Sie, ob der ZAPI-Port SSL akzeptiert, oder verwenden Sie einen anderen Port. 
+
+
+| Weitere Verbindungsfehler: ZAPI-Antwort hat Fehlercode 13001, „Datenbank ist nicht geöffnet“ ZAPI-Fehlercode ist 60 und die Antwort enthält „API hat nicht auf Zeit beendet“ ZAPI-Antwort enthält „initialize_Session() zurückgegebene Null-Umgebung“ ZAPI-Fehlercode ist 14007 und die Antwort enthält „Knoten ist nicht gesund“ | Überprüfen Sie Netzwerk, Port-Nummer und IP-Adresse. Der Benutzer sollte auch versuchen, einen Befehl von der Befehlszeile aus dem AU-Rechner auszuführen. 
+
+
+| Socket-Zeitüberschreitungsfehler mit ZAPI | Prüfen Sie die Filer-Konnektivität und/oder erhöhen Sie die Zeitüberschreitung. 
+
+
+| „C-Modus-Cluster werden nicht durch den 7-Mode-Datenquelle unterstützt“-Fehler | Überprüfen Sie die IP und ändern Sie die IP in ein 7-Mode-Cluster. 
+
+
+| Fehler „Verbindung zum vFiler konnte nicht hergestellt werden“ | Überprüfen Sie, ob die Fähigkeiten des Erwerbs von Benutzern mindestens folgende Fähigkeiten enthalten: api-* Security-API-vfiler Login-http-admin Bestätigen Sie, dass Filer mindestens ONTAPI Version 1.7 läuft. 
+|===
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

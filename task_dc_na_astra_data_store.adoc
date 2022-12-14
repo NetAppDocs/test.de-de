@@ -1,0 +1,140 @@
+---
+sidebar: sidebar 
+permalink: task_dc_na_astra_data_store.html 
+summary: Konfigurieren Sie den NetApp Astra Data Store 
+keywords: data collector, queries, create, astra, data, store, 
+---
+= NetApp Astra Data Store Datensammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Dieser Datensammler erfasst Bestands- und Performance-Daten für einen einzelnen Astra Data Store Cluster. Zusätzlich zum Datensammler konfiguriert der Überwachungsverwalter _Telegraf_, um erweiterte Metriken zu sammeln und _fluent Bit_ Protokolle zu sammeln.
+
+
+TIP: Diese Installationsanweisungen und weitere Informationen finden Sie auch in der Astra Data Store-Dokumentation:link:https://docs.netapp.com/us-en/astra-data-store/use/monitor-with-cloud-insights.html["Monitoring von Kennzahlen mit Cloud Insights"]
+link:https://docs.netapp.com/us-en/astra-data-store/get-started/quick-start.html["Starten Sie jetzt mit dem Astra Data Store"]
+
+
+
+== Terminologie
+
+Cloud Insights erfasst Bestands- und Performancedaten dieses Datensammlers. Für jeden erworbenen Asset-Typ wird die am häufigsten für das Asset verwendete Terminologie angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| AstraDSVolume | Internes Volumen 
+
+
+| AstraDSNodeInfo.Status.Drives | Festplatte 
+
+
+| AstraDSNodeInfo | Storage-Node 
+
+
+| AstraDSExportrichtlinie | Initiator Freigeben/Freigeben 
+
+
+| AstraDSCluster | Storage 
+|===
+
+
+== Anforderungen
+
+* Der NetApp Monitoring Operator muss im Kubernetes Cluster mit Astra Data Store installiert sein. Wenn dies während der Installation des Astra Data Store nicht installiert wurde, installieren Sie bitte den Überwachungsperoperator gemäß den Installationsanweisungen des Astra Data Store.
+* Das Plugin _kubectl-astrads_ kubectl muss installiert sein. Wenn er nicht installiert ist, installieren Sie die Binärdatei _kubectl-astrads_ gemäß den Installationsanweisungen für den Astra Data Store.
+* Folgende Befehle müssen verfügbar sein: _Awk, curl, grep und jq_.
+
+
+
+
+== Installation
+
+Das Installationsskript führt Sie durch die Installation des Astra Data Store Datensammlers. Befolgen Sie die Anweisungen auf dem Bildschirm. Die Installation dauert einige Minuten. Nach Abschluss kann es einige Minuten dauern, bis die Daten im Cloud Insights angezeigt werden.
+
+Das Skript führt Sie durch die folgenden Schritte:
+
+. Wählen Sie ein API-Zugriffstoken.
+. Kopieren Sie das Installer-Skript aus dem Installationsdialog und speichern Sie es als Datei mit dem Namen _nunginsights-ads-Monitoring.sh_. Sie können auf das Clipboard-Symbol klicken, um das Skript schnell in die Zwischenablage zu kopieren.
+. Öffnen Sie ein Bash-Fenster, ändern Sie das Verzeichnis zum Speicherort des Skripts _nebinsights-ads-Monitoring.sh_.
+. Kopieren Sie den Berechtigungsbefehlblock aus dem Installationsdialog. Sie können auf das Clipboard-Symbol klicken, um den Befehl schnell in die Zwischenablage zu kopieren.
+. Fügen Sie den Befehl Berechtigungen in das Fenster Bash ein, und drücken Sie die Eingabetaste.
+. Kopieren Sie den Installationsbefehl aus dem Installationsdialogfeld. Sie können auf das Clipboard-Symbol klicken, um den Befehl schnell in die Zwischenablage zu kopieren.
+. Fügen Sie den Befehl install in das Fenster Bash ein.
+. Ersetzen Sie <KUBERNETES_IP> durch die IP-Adresse des Kubernetes API Servers.
+. <KUBERNETES_TOKEN> durch das Kubernetes-API-Token ersetzen
+. Drücken Sie Die Eingabetaste.
++
+Das Installationsskript wird: * Überprüfen Sie, ob der Überwachungsoperator installiert und konfiguriert ist. * Konfigurieren Sie Fließendes Bit. * Telegraf Konfigurieren. * Erfassungseinheit installieren. * Installieren Sie den Astra Data Store Collector, sobald die Acquisition Unit läuft.
+
+. Klicken Sie Auf _Setup Abschließen_.
+
+
+Wenn das Installationsskript aufgrund eines Fehlers beendet wird, können Sie es erneut ausführen, sobald der Fehler behoben ist. Das Installationsskript unterstützt zusätzliche Parameter wie den Namespace für den Überwachungsverwalter und den Kubernetes API-Serverport, wenn in Ihrer Umgebung die Standardeinstellungen nicht verwendet werden. Eine vollständige Liste der verfügbaren Optionen finden Sie unten.
+
+
+
+=== Installationsskript-Optionen:
+
+Beachten Sie, dass der Cloud Insights-Domänenname und der ausgewählte API-Zugriffsschlüssel beim Herunterladen in das Installationsskript eingebettet werden.
+
+....
+$ ./cloudinsights-ads-monitoring.sh -h
+USAGE: cloudinsights-ads-monitoring.sh [OPTIONS]
+Configure monitoring of Astra Data Store by Cloud Insights.
+OPTIONS:
+ -h                      Display this help message.
+ -d ci_domain_name       Cloud Insights tenant domain name.
+ -i kubernetes_ip        Kubernetes API server IP address.
+ -k ci_api_key           Cloud Insights API Access Key.
+ -n namespace            Namespace for monitoring components. (default: netapp-monitoring)
+ -p kubernetes_port      Kubernetes API server port. (default: 6443)
+ -r root_pv_dir          Create 3 Persistent Volumes in this directory for the Acquisition Unit.
+                         Only specify this option if there is no Storage Provisioner installed and the PVs do not already exist.
+ -s storage_class        Storage Class name for provisioning Acquisition Unit PVs. If not specified, the default storage class will be used.
+ -t kubernetes_token     Kubernetes API server token.
+....
+
+
+== Fehlerbehebung
+
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+
+
+==== Datensammler Astra Data Store
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Sie sehen eine „nicht autorisierte“ Nachricht | Vergewissern Sie sich, dass das Kubernetes API-Token die Berechtigung zum Aufruf von APIs in der _astrads.netapp.io_-iGroup hat 
+
+
+| „Unbekannter Host: Astrads-metrics-Service.astrads-System.svc.Cluster.local: Name oder Dienst nicht bekannt“ | Vergewissern Sie sich, dass der Collector in einem Pod der Akquisitionseinheit installiert ist, der im ADS Kubernetes-Cluster ausgeführt wird. Überprüfen Sie, ob der astrads-metrics-Service den Namespace für das astrads-System ausführt. 
+|===
+
+
+==== Installationsskript
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Der Überwachungsoperator wird im Namespace <Namespace> nicht ausgeführt. | Befolgen Sie die Anweisungen zur Installation des Astra Data Store 
+
+
+| Der POD <pod> der Erfassungseinheit wurde nach 300 Sekunden nicht erfolgreich gestartet. | Get the Name of the Acquisition unit POD: Kubectl get Pods --Namespace netapp-Monitoring / grep „au-pod“ Überprüfen Sie die Pod-Ereignisse auf Fehler: Kubectl beschreibe POD --Namespace netapp-Monitoring <POD_NAME> 
+
+
+| Die Installation der Erfassungseinheit wurde nach 900 Sekunden nicht abgeschlossen | Get the Name of the Acquisition unit POD: Kubectl get Pods --Namespace netapp-Monitoring / grep „au-pod“ Überprüfen Sie die POD-Protokolle auf Fehler: Kubectl logs -- Namespace netapp-Monitoring <POD_NAME> Wenn keine Fehler auftreten und die Protokolle mit der Meldung „Main - Acquisition is up and running!“ enden, wurde die Installation erfolgreich, jedoch zu länger als erwartet. Führen Sie das Installationsskript erneut aus. 
+
+
+| Fehler beim Abrufen der Erfassungseinheit-id von Cloud Insights | Überprüfen Sie, ob die Erfassungseinheit in Cloud Insights angezeigt wird. Gehen Sie zu Admin > Data Collectors, und klicken Sie auf die Registerkarte Acquisition Units. Vergewissern Sie sich, dass der Cloud Insights-API-Schlüssel über die Berechtigung für die Erfassungseinheit verfügt. 
+|===
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

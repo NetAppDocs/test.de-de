@@ -1,0 +1,105 @@
+---
+sidebar: sidebar 
+permalink: task_dc_hds_nas.html 
+keywords: data collector, HDS HNAS, HDS NAS 
+summary: 'Konfiguration des HDS NAS (HNAS) Data Collector' 
+---
+= Konfiguration des Hitachi Vantara NAS Data Collector
+:allow-uri-read: 
+
+
+[role="lead"]
+Der Hitachi Vantara NAS Data Collector ist ein Bestands- und Konfigurationsdatensammler, der die Erkennung von HDS NAS-Clustern unterstützt. Cloud Insights unterstützt die Erkennung von NFS- und CIFS-Freigaben, Dateisystemen (interne Volumes) und Spannungs (Storage-Pools).
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen vom HNAS-Datensammler. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Ebene | Festplattengruppe 
+
+
+| Cluster | Storage 
+
+
+| Knoten | Storage-Node 
+
+
+| Span | Storage-Pool 
+
+
+| Systemlaufwerk | Back-End Lun 
+
+
+| File System | Internes Volumen 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Anforderungen
+
+* IP-Adresse des Geräts
+* Port 22, SSH-Protokoll
+* Benutzername und Passwort - Berechtigungsebene: Supervisor
+* Hinweis: Dieser Datensammler ist SSH-basiert, also muss die AU, die auf dem HNAS selbst SSH-Sitzungen auf TCP 22 oder auf der Systemverwaltungseinheit (SMU) initiieren können, mit der das Cluster verbunden ist.
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| HNAS-Host | IP-Adresse oder vollqualifizierter Domain-Name des HNAS Management Host 
+
+
+| Benutzername | Benutzername für HNAS CLI 
+
+
+| Passwort | Passwort, das für HNAS-CLI verwendet wird 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 30 Minuten. 
+|===
+
+
+== Fehlerbehebung
+
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+
+
+==== Inventar
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| „Fehler beim Verbinden“ mit Fehlermeldungen „Fehler beim Einrichten des Shell-Kanals:“ oder „Fehler beim Öffnen des Shell-Kanals“ | Wahrscheinlich verursacht durch Probleme mit der Netzwerkverbindung oder SSH ist falsch konfiguriert. Bestätigen Sie die Verbindung mit dem alternativen SSH-Client 
+
+
+| „Timeout“ oder „Fehler beim Abrufen von Daten“ mit Fehlermeldungen „Befehl: XXX hat Timeout.“ | * Versuchen Sie den Befehl mit dem alternativen SSH-Client * Erhöhen Sie die Zeitüberschreitung 
+
+
+| „Fehler beim Verbindungsaufbau“ oder „Ungültige Anmeldeinformationen“ mit Fehlermeldungen „konnte nicht mit dem Gerät kommunizieren:“ | * IP-Adresse prüfen * Benutzername und Passwort überprüfen * Verbindung mit alternativem SSH-Client bestätigen 
+|===
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

@@ -1,0 +1,200 @@
+---
+sidebar: sidebar 
+permalink: task_create_monitor.html 
+keywords: monitors, alerts, log, metric, system-defined, system, metric, 
+summary: Erstellen von Monitoren, damit bei Performance- oder Bestandsschwellenwerten sowie bei metrischen oder Protokollbedingungen eine Warnmeldung ausgegeben wird 
+---
+= Warnfunktionen mit Monitoren
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie erstellen Monitore zum Festlegen von Schwellenwerten, die Alarme auslösen, um Sie über Probleme im Zusammenhang mit den Ressourcen im Netzwerk zu informieren. Beispielsweise können Sie einen Monitor erstellen, der für eine beliebige Vielzahl an Protokollen eine Warnung bezüglich „_Node Write Latency_“ ausgegeben wird.
+
+
+TIP: Monitore und Alarmfunktionen sind in der Cloud Insights Standard Edition und höher erhältlich.
+
+Wenn der überwachte Schwellenwert und die Bedingungen erreicht oder überschritten werden, erstellt Cloud Insights eine Warnmeldung. Ein Monitor kann einen Schwellenwert _Warnung_, einen Schwellenwert _kritisch_ oder beide haben.
+
+Über Monitore können Sie Schwellenwerte auf „Infrastruktur“-Objekten wie Storage, VM, EC2 und Ports festlegen sowie Daten zur Integration verwenden, beispielsweise für Kubernetes, erweiterte ONTAP-Kennzahlen und Telegraf-Plug-ins. Überwacht den Alarm, wenn Grenzwerte überschritten werden, und Sie können Schwellenwerte für Warnmeldungen auf Warnebene, kritische Warnmeldungen oder beides festlegen.
+
+Siehe unten für link:#system-defined-monitors["Systemdefinierte Monitore"] Dokumentation.
+
+
+
+== Erstellen Sie den Monitor
+
+. Klicken Sie im Menü Cloud Insights auf *Alarme > Monitore verwalten*
++
+Die Listenseite Monitore wird angezeigt und zeigt die derzeit konfigurierten Monitore an.
+
+. Um einen vorhandenen Monitor zu ändern, klicken Sie in der Liste auf den Monitornamen.
+. Um einen Monitor hinzuzufügen, klicken Sie auf *+ Monitor*.
++
+image:Monitor_log_or_metric.png["Wählen Sie System- oder Protokollüberwachung"]
+
++
+Wenn Sie einen neuen Monitor hinzufügen, werden Sie aufgefordert, einen Metric Monitor oder einen Protokollmonitor zu erstellen.
+
++
+** _Metric_ überwacht Warnmeldungen zu Infrastruktur- oder Performance-bezogenen Triggern
+** _Log_ überwacht die Warnung bei protokollbezogenen Aktivitäten
+
+
++
+Nachdem Sie den Monitortyp ausgewählt haben, wird das Dialogfeld Monitorkonfiguration angezeigt.
+
+
+
+
+
+==== Metrischer Monitor
+
+. Suchen Sie im Dropdown-Menü nach einem Objekttyp und einer Metrik, die überwacht werden soll, und wählen Sie diesen aus.
+
+
+Filter können eingesetzt werden, um festzulegen, welche Objektattribute oder Metriken überwacht werden sollen.
+
+image:MonitorMetricFilter.png["Filtern Von Metriken"]
+
+Beim Arbeiten mit Integrationsdaten (Kubernetes, erweiterte ONTAP Daten usw.) werden durch Metrikfilterung die einzelnen/nicht Punkte der aufgezeichneten Datenreihe entfernt, im Gegensatz zu Infrastrukturdaten (Storage, VM, Ports usw.). Dort arbeiten Filter am aggregierten Wert der Datenserie und entfernen das gesamte Objekt aus dem Diagramm.
+
+
+TIP: Um einen Monitor mit mehreren Bedingungen zu erstellen (z. B. IOPS > X und Latenz > Y), definieren Sie die erste Bedingung als Schwellenwert und die zweite Bedingung als Filter.
+
+
+
+===== Definieren Sie die Bedingungen des Monitors.
+
+. Nachdem Sie das zu überwachende Objekt und die Kennzahl ausgewählt haben, legen Sie die Schwellenwerte für Warnstufe und/oder kritische Stufe fest.
+. Geben Sie für die Stufe _Warnung_ 200 für unser Beispiel ein. Die gestrichelte Linie, die diese Warnstufe angibt, wird im Beispieldiagramm angezeigt.
+. Geben Sie für die Stufe _Critical_ 400 ein. Die gestrichelte Linie, die diesen kritischen Level angibt, wird im Beispieldiagramm angezeigt.
++
+Im Diagramm werden Verlaufsdaten angezeigt. Die Zeilen Warnung und kritische Ebene im Diagramm sind eine visuelle Darstellung des Monitors, sodass Sie leicht sehen können, wann der Monitor in jedem Fall eine Warnmeldung auslöst.
+
+. Wählen Sie für das Auftreten des Intervalls _kontinuierlich_ für einen Zeitraum von _15 Minuten_ aus.
++
+Sie können eine Warnung auslösen, sobald ein Schwellenwert überschritten wird, oder warten, bis der Schwellenwert für einen bestimmten Zeitraum kontinuierlich verletzt wurde. In unserem Beispiel möchten wir nicht jedes Mal benachrichtigt werden, wenn die IOPS-Punkte insgesamt über dem Warnungs- oder kritischen Level liegen, sondern nur, wenn ein überwachtes Objekt mindestens 15 Minuten lang einen dieser Werte überschreitet.
+
++
+image:Monitor_metric_conditions.png["Definieren Sie die Bedingungen des Monitors"]
+
+
+
+
+
+=== Protokollüberwachung
+
+Beim Erstellen eines *Protokollmonitors* wählen Sie zunächst aus der verfügbaren Protokollliste aus, welches Protokoll überwacht werden soll. Sie können dann nach den verfügbaren Attributen wie oben filtern.
+
+Sie können beispielsweise nach dem Nachrichtentyp „Object.Store.unerreichbar“ in der Quelle logs.netapp.ems filtern:
+
+
+NOTE: Der Filter Protokollmonitor darf nicht leer sein.
+
+image:Monitor_log_monitor_filter.png["Wählen Sie das zu überwachende Protokoll aus, und setzen Sie einen Filter"]
+
+
+
+==== Definieren des Warnungsverhaltens
+
+Wählen Sie aus, wie Sie eine Meldung ausgeben möchten, wenn eine Protokollbenachrichtigung ausgelöst wird. Sie können den Monitor gemäß den oben festgelegten Filterbedingungen mit dem Schweregrad „_Warnung_“, „_kritisch_“ oder „_informativ_“ warnen.
+
+image:Monitor_log_alert_behavior.png["Definieren Sie das zu überwachenden Protokollverhalten"]
+
+
+
+==== Definieren Sie das Verhalten für die Alarmauflösung
+
+Sie können festlegen, wie eine Meldung zur Protokollüberwachung behoben wird. Sie erhalten drei Möglichkeiten:
+
+* *Sofort beheben*: Der Alarm wird sofort behoben, ohne dass weitere Maßnahmen erforderlich sind
+* *Auflösung basierend auf Zeit*: Der Alarm wird nach Ablauf der angegebenen Zeit gelöst
+* *Auflösung basierend auf Protokolleintrag*: Der Alarm wird aufgelöst, wenn eine nachfolgende Log-Aktivität stattgefunden hat. Beispiel: Wenn ein Objekt als „verfügbar“ protokolliert wird.
+
+
+image:Monitor_log_monitor_resolution.png["Alarmauflösung"]
+
+
+
+==== Wählen Sie Benachrichtigungstyp und Empfänger aus
+
+Im Abschnitt „ Team Notification(s)_ einrichten“ können Sie auswählen, ob Sie Ihr Team per E-Mail oder Webhook benachrichtigen möchten.
+
+image:Webhook_Choose_Monitor_Notification.png["Wählen Sie die Alarmmethode"]
+
+*Alerting via Email:*
+
+Geben Sie die E-Mail-Empfänger für Benachrichtigungen an. Bei Bedarf können Sie verschiedene Empfänger für Warnungen oder kritische Warnungen auswählen.
+
+image:email_monitor_alerts.png["Empfänger Für E-Mail-Benachrichtigung"]
+
+*Alerting via Webhook:*
+
+Legen Sie die Webhook(s) für Benachrichtigungen für Warnmeldungen fest. Bei Bedarf können Sie verschiedene Webhooks für Warnung oder kritische Alarme auswählen.
+
+image:Webhook_Monitor_Notifications.png["Webhook Alerting"]
+
+
+
+==== Einstellen von Korrekturmaßnahmen oder zusätzlichen Informationen
+
+Sie können eine optionale Beschreibung sowie zusätzliche Erkenntnisse und/oder Korrekturmaßnahmen hinzufügen, indem Sie den Abschnitt *Alarm hinzufügen Beschreibung* ausfüllen. Die Beschreibung kann bis zu 1024 Zeichen lang sein und wird mit der Warnmeldung gesendet. Das Feld „Insights/Korrekturmaßnahmen“ kann bis zu 67,000 Zeichen lang sein und wird im Übersichtsbereich der Landing Page für die Warnmeldung angezeigt.
+
+In diesen Feldern können Sie Hinweise, Links oder Schritte angeben, die Sie zur Korrektur oder anderweitigen Adresse der Warnmeldung ergreifen können.
+
+image:Monitors_Alert_Description.png["Warnungen Korrekturmaßnahmen und Beschreibung"]
+
+
+
+==== Speichern Sie den Monitor
+
+. Auf Wunsch können Sie eine Beschreibung des Monitors hinzufügen.
+. Geben Sie dem Monitor einen aussagekräftigen Namen und klicken Sie auf *Speichern*.
++
+Ihr neuer Monitor wird zur Liste der aktiven Monitore hinzugefügt.
+
+
+
+
+
+==== Monitorliste
+
+Auf der Seite „Monitor“ werden die derzeit konfigurierten Monitore angezeigt, die Folgendes anzeigen:
+
+* Monitorname
+* Status
+* Objekt/Metrik, die überwacht wird
+* Bedingungen des Monitors
+
+
+Sie können die Überwachung eines Objekttyps vorübergehend anhalten, indem Sie auf das Menü rechts neben dem Monitor klicken und *Pause* wählen. Wenn Sie bereit sind, die Überwachung fortzusetzen, klicken Sie auf *Fortsetzen*.
+
+Sie können einen Monitor kopieren, indem Sie im Menü * Duplizieren* wählen. Anschließend können Sie den neuen Monitor ändern und das Objekt/die Metrik, den Filter, die Bedingungen, E-Mail-Empfänger usw. ändern
+
+Wenn ein Monitor nicht mehr benötigt wird, können Sie ihn löschen, indem Sie im Menü *Löschen* wählen.
+
+Standardmäßig werden zwei Gruppen angezeigt:
+
+* * Alle Monitore* listet alle Monitore auf.
+* *Benutzerdefinierte Monitore* listet nur von Benutzern erstellte Monitore auf.
+
+
+Standardmäßig werden zwei Gruppen angezeigt:
+
+* * Alle Monitore* listet alle Monitore auf.
+* *Benutzerdefinierte Monitore* listet nur von Benutzern erstellte Monitore auf.
+
+
+
+
+== Systemdefinierte Monitore
+
+Sehen Sie sich die an link:task_system_monitors.html["Systemdefinierte Monitore"] Seite mit Beschreibungen der in Cloud Insights enthaltenen Monitore.
+
+
+
+=== Weitere Informationen
+
+* link:task_view_and_manage_alerts.html["Anzeigen und Fehlstellen von Warnungen"]
+

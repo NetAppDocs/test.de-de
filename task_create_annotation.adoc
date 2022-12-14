@@ -1,0 +1,117 @@
+---
+sidebar: sidebar 
+permalink: task_create_annotation.html 
+keywords: annotations, annotation rules, manual annotations, 
+summary: So erstellen Sie eine Anmerkung. 
+---
+= Mit Anmerkungen
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie erstellen Anmerkungen und weisen diese den zu überwachten Assets zu. Anmerkungen sind Notizen, die Informationen zu einer Ressource wie zum Beispiel physischen Standort, Ende der Nutzungsdauer, Storage-Tier oder Volume Service Level enthalten.
+
+
+
+== Anmerkungen definieren
+
+Mithilfe von Annotationen können Sie benutzerdefinierte geschäftsspezifische Daten hinzufügen, die auf die Anforderungen Ihres Unternehmens an Assets abgestimmt sind. Cloud Insights bietet zwar eine Reihe von Standardanmerkungen, z. B. den Lebenszyklus von Ressourcen (Geburtstag oder Ende der Nutzungsdauer), den Standort des Gebäudes oder Datacenters und das Tier, doch können Sie auch feststellen, dass Sie Daten auf andere Weise anzeigen möchten.
+
+Die Daten in benutzerdefinierten Annotationen ergänzen die bereits erfassten Gerätedaten wie Switch-Hersteller, Anzahl Ports und Leistungsstatistiken. Die Daten, die Sie mit Annotationen hinzufügen, werden von Cloud Insights nicht erkannt.
+
+.Bevor Sie beginnen
+* Geben Sie die Terminologie an, der die Umgebungsdaten zugeordnet werden müssen.
+* Geben Sie die Terminologie des Unternehmens an, der die Umgebungsdaten zugeordnet werden müssen.
+* Geben Sie alle standardmäßigen Anmerkungstypen an, die Sie verwenden können.
+* Ermitteln Sie, welche benutzerdefinierten Anmerkungen Sie erstellen müssen. Sie müssen die Anmerkung erstellen, bevor sie einem Asset zugewiesen werden kann.
+
+
+Führen Sie die folgenden Schritte aus, um eine Anmerkung zu erstellen.
+
+.Schritte
+. Klicken Sie im Menü Cloud Insights auf *Verwalten > Anmerkungen*
+. Klicken Sie auf *+ Anmerkung*, um eine neue Anmerkung zu erstellen.
+. Geben Sie einen Namen, eine Beschreibung und einen Typ für die neue Anmerkung ein.
++
+Geben Sie beispielsweise Folgendes ein, um eine Textbeschriftung zu erstellen, die den physischen Speicherort eines Assets in Data Center 4 definiert:
+
++
+** Geben Sie einen Namen für die Anmerkung ein, z. B. „Standort“.
+** Geben Sie eine Beschreibung der Beschreibung der Anmerkung ein, z. B. „physischer Standort ist Datacenter 4“.
+** Geben Sie den 'Typ' der Anmerkung ein, wie z. B. „Text“.
+
+
+
+
+
+
+== Manuelles Zuweisen von Anmerkungen zu Assets
+
+Durch das Zuweisen von Annotationen zu Assets können Sie Assets auf eine für Ihr Unternehmen relevante Weise sortieren, gruppieren und protokollieren. Sie können Assets eines bestimmten Typs automatisch mithilfe von Anmerkungsregeln Anmerkungen zuweisen. Sie können jedoch einem einzelnen Asset über die entsprechende Asset-Seite Anmerkungen zuweisen.
+
+.Bevor Sie beginnen
+* Sie müssen die Anmerkung erstellt haben, die Sie zuweisen möchten.
+
+
+.Schritte
+. Melden Sie sich in Ihrer Cloud Insights Umgebung an.
+. Suchen Sie das Element, auf das Sie die Anmerkung anwenden möchten.
++
+** Sie können Assets suchen, indem Sie eine Abfrage durchführen, aus einem Dassoard-Widget auswählen oder suchen. Wenn Sie die gewünschte Ressource gefunden haben, klicken Sie auf den Link, um die Landing Page der Ressource zu öffnen.
+
+
+. Klicken Sie auf der Seite Asset im Abschnitt Benutzerdaten auf *+ Anmerkung*.
+. Das Dialogfeld Anmerkung hinzufügen wird angezeigt.
+. Wählen Sie eine Anmerkung aus der Liste aus.
+. Klicken Sie auf „Wert“ und führen Sie eine der folgenden Aktionen aus, je nachdem, welche Anmerkungstypen Sie ausgewählt haben:
++
+** Wenn der Anmerkungstyp Liste, Datum oder Boolean ist, wählen Sie einen Wert aus der Liste aus.
+** Wenn es sich bei dem Anmerkungstyp um Text handelt, geben Sie einen Wert ein.
+
+
+. Klicken Sie Auf *Speichern*.
+
+
+Wenn Sie den Wert der Anmerkung nach der Zuweisung ändern möchten, klicken Sie auf das Anmerkungsfeld, und wählen Sie einen anderen Wert aus. Wenn die Anmerkung vom Listentyp ist, für den die Option _neue Werte hinzufügen auf der Fly_ ausgewählt ist, können Sie zusätzlich zur Auswahl eines vorhandenen Werts einen neuen Wert eingeben.
+
+
+
+== Anmerkungen mit Anmerkungsregeln zuweisen
+
+Um Assets anhand von Kriterien, die Sie definieren, automatisch Anmerkungen zuzuweisen, konfigurieren Sie Anmerkungsregeln. Cloud Insights weist anhand dieser Regeln Anmerkungen zu Assets zu. Cloud Insights bietet zudem zwei Standard-Anmerkungsregeln, die Sie je nach Bedarf ändern können oder entfernen können, wenn Sie sie nicht verwenden möchten.
+
+
+
+=== Anmerkungsregeln werden erstellt
+
+Alternativ zum manuellen Anwenden von Anmerkungen auf einzelne Assets können Sie mithilfe von Anmerkungsregeln automatisch Anmerkungen auf mehrere Assets anwenden. Wenn Insight die Anmerkungsregeln auswertet, haben Annotationen, die manuell auf den Seiten einzelner Assets festgelegt wurden, Vorrang vor regelbasierten Annotationen.
+
+.Bevor Sie beginnen
+Sie müssen eine Abfrage für die Anmerkungsregel erstellt haben.
+
+.Über diese Aufgabe
+Sie können zwar die Anmerkungstypen bearbeiten, während Sie die Regeln erstellen, aber Sie sollten die Typen bereits im Voraus definiert haben.
+
+.Schritte
+. Klicken Sie auf *Verwalten > Anmerkungsregeln*
++
+Auf der Seite Anmerkungsregeln wird die Liste der vorhandenen Anmerkungsregeln angezeigt.
+
+. Klicken Sie Auf *+ Hinzufügen*.
+. Gehen Sie wie folgt vor:
++
+.. Geben Sie im Feld *Name* einen eindeutigen Namen ein, der die Regel beschreibt.
++
+Dieser Name wird auf der Seite Anmerkungsregeln angezeigt.
+
+.. Klicken Sie auf *Query* und wählen Sie die Abfrage aus, mit der die Anmerkung auf Assets angewendet wird.
+.. Klicken Sie auf *Anmerkung* und wählen Sie die Beschriftung aus, die Sie anwenden möchten.
+.. Klicken Sie auf *Wert* und wählen Sie einen Wert für die Anmerkung aus.
++
+Wenn Sie beispielsweise als Anmerkung Geburtstag auswählen, geben Sie ein Datum für den Wert an.
+
+.. Klicken Sie Auf *Speichern*
+.. Klicken Sie auf *Alle Regeln*, wenn Sie alle Regeln sofort ausführen möchten; andernfalls werden die Regeln in einem regelmäßigen geplanten Intervall ausgeführt.
+
+
+

@@ -1,0 +1,46 @@
+---
+sidebar: sidebar 
+permalink: task_dc_na_cloud_agent.html 
+summary: Konfigurieren Sie NetApp Cloud Connection für ONTAP 9.9 oder höher Data Collector 
+keywords: data collector, NetApp, Cloud agent, ONTAP 
+---
+= NetApp Cloud Connection für ONTAP 9.9 oder höher
+:allow-uri-read: 
+
+
+[role="lead"]
+Diese Seite ist veraltet und wird nicht aktualisiert. Bitte gehen Sie zu link:https:task_dc_na_cloud_connection.html["Diese Seite stattdessen"].
+
+Dieser Datensammler erstellt eine Cloud-Verbindung, um Daten aus ONTAP 9.9+ CVO, AFF und FAS zu erfassen.
+
+
+
+== Konfiguration
+
+Cloud Insights sammelt Daten von ONTAP 9.9+ über eine *Cloud-Verbindung*, sodass keine externe Erfassungseinheit installiert werden muss. Dies vereinfacht die Fehlerbehebung, die Wartung und die Erstbereitstellung. Zur Konfiguration der Cloud-Verbindung für den ONTAP 9.9+-Datensammler müssen Sie einen *Pairing-Code* auf den ONTAP-System-Manager kopieren, der dann eine Verbindung zu Ihrer Cloud Insights-Umgebung herstellen wird. Nachdem die Verbindung hergestellt wurde, sind die erfassten Daten identisch mit denen, wenn sie über eine Akquisitionseinheit gesammelt wurden.
+
+Dieser Datensammler unterstützt ONTAP 9.9+ CVO, AFF und FAS.
+
+image:Cloud_Agent_DC.png["Konfiguration Von Cloud Agent Data Collector"]
+
+Führen Sie die folgenden Schritte aus, um die Verbindung zu konfigurieren:
+
+* Erstellen Sie ein eindeutiges Token, das zur Herstellung der Verbindung zum ONTAP-System verwendet wird.
+* Kopieren Sie den Pairing Code, der das Token enthält. Sie können den Kopplungscode anzeigen, indem Sie auf _[+] Code Snippet_ aufdecken.
++
+Sobald Sie den Kopplungscode kopiert haben, wird auf dem Konfigurationsbildschirm des Datensammlers ein Schritt 6 angezeigt, in dem Sie aufgefordert werden, auf den Verbindungsaufbau zu warten. Auf diesem Bildschirm muss erst die Verbindung hergestellt werden.
+
++
+image:Cloud_Agent_Step_Waiting.png["Warten auf Verbindung"]
+
+* Melden Sie sich auf der neuen Registerkarte „Browser“ beim ONTAP System Manager an, und navigieren Sie zu „_Cluster > Einstellungen > Cloud-Verbindungen_“.
+* Klicken Sie auf _Cloud-Verbindung hinzufügen_ und fügen Sie den Kopplungscode ein.
+* Kehren Sie zur Registerkarte Cloud Insights-Browser zurück, und warten Sie, bis die Verbindung hergestellt ist. Sobald er eingerichtet ist, wird eine Schaltfläche _complete_ angezeigt.
+* Klicken Sie Auf _Complete_.
+
+
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

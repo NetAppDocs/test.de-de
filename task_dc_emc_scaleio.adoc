@@ -1,0 +1,89 @@
+---
+sidebar: sidebar 
+permalink: task_dc_emc_scaleio.html 
+keywords: data collector, scaleIO, EMC, DELL 
+summary: KONFIGURIEREN DES DELL EMC ScaleIO-Datensammlers. 
+---
+= DELL EMC ScaleIO Datensammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Der ScaleIO Datensammler erfasst Inventarinformationen aus dem ScaleIO Storage. Für die Konfiguration benötigt dieser Datensammler die ScaleIO Gateway-Adresse und einen Admin-Benutzernamen und ein Passwort.
+
+
+
+== Terminologie
+
+Cloud Insights erhält die folgenden Bestandsinformationen vom ScaleIO Datensammler. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| MDM-Cluster (Meta Data Manager | Storage 
+
+
+| SDS (ScaleIO Data Server) | Storage-Node 
+
+
+| Storage-Pool | Storage-Pool 
+
+
+| Datenmenge | Datenmenge 
+
+
+| Gerät | Festplatte 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Anforderungen
+
+* Schreibgeschützter Zugriff auf das Admin-Benutzerkonto
+* Port-Anforderung: HTTPS-Port 443
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| ScaleIO Gateway(s) | IP-Adressen oder FQDNs von ScaleIO-Gateways, getrennt durch Komma (,) oder Semikolon (;) 
+
+
+| Benutzername | Administratorbenutzername zur Anmeldung beim ScaleIO-Gerät 
+
+
+| Passwort | Passwort zur Anmeldung beim ScaleIO-Gerät 
+|===
+
+
+== Erweiterte Konfiguration
+
+Klicken Sie auf das Kontrollkästchen Inventar, um die Bestandssammlung zu aktivieren.
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| HTTPS-Port | 443 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 60. 
+
+
+| Verbindungs-Timeout (s) | Der Standardwert ist 60. 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

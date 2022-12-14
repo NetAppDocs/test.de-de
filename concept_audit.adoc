@@ -1,0 +1,159 @@
+---
+sidebar: sidebar 
+permalink: concept_audit.html 
+keywords: audit, users, activities 
+summary: Audit bietet eine Übersicht über die System- und Benutzeraktivitäten im Cloud Insights System. 
+---
+= Prüfung
+:allow-uri-read: 
+
+
+[role="lead"]
+Zum Identifizieren von Änderungen, die sowohl erwartet (zur Nachverfolgung) als auch unerwartet (zur Fehlerbehebung), können Sie einen Audit-Trail der Cloud Insights-Systemereignisse und Benutzeraktivitäten anzeigen.
+
+
+
+== Anzeigen Von Geprüften Ereignissen
+
+Um die Seite „Audit“ anzuzeigen, klicken Sie im Menü auf *Admin > Audit*. Die Seite „Audit“ wird angezeigt und enthält die folgenden Details für jeden Audit-Eintrag:
+
+* *Zeit* - Datum und Uhrzeit der Veranstaltung oder Aktivität
+* *Benutzer* - der Benutzer, der die Aktivität initiiert hat
+* *Rolle* - die Rolle des Benutzers in Cloud Insights (Gast, Benutzer, Administrator)
+* *IP* - die IP-Adresse, die dem Ereignis zugeordnet ist
+* *Aktion* - Art der Aktivität, z. B. Login, Erstellen, Aktualisieren
+* *Kategorie* - die Kategorie der Aktivität
+* *Details* - Details zur Aktivität
+
+
+
+
+== Anzeigen von Audit-Einträgen
+
+Es gibt verschiedene Möglichkeiten, Audit-Einträge anzuzeigen:
+
+* Sie können Audit-Einträge anzeigen, indem Sie einen bestimmten Zeitraum (1 Stunde, 24 Stunden, 3 Tage usw.) auswählen.
+* Sie können die Sortierreihenfolge der Einträge entweder auf aufsteigend (nach-oben-Pfeil) oder absteigend (nach-unten-Pfeil) ändern, indem Sie auf den Pfeil in der Spaltenüberschrift klicken.
++
+Standardmäßig werden in der Tabelle die Einträge in absteigender Reihenfolge angezeigt.
+
+* Mit den Filterfeldern können Sie nur die Einträge anzeigen, die in der Tabelle angezeigt werden sollen. Klicken Sie auf die Schaltfläche [+], um weitere Filter hinzuzufügen.
++
+image:Audit_Filters.png["Audit-Filter"]
+
+
+
+
+
+=== Mehr zum Filtern
+
+Sie können einen der folgenden Optionen verwenden, um Ihren Filter zu verfeinern:
+
+|===
+
+
+| Filtern | Das macht es | Beispiel | Ergebnis 
+
+
+| * (Sternchen) | Ermöglicht Ihnen die Suche nach allem | vol. | Gibt alle Ressourcen zurück, die mit „vol“ beginnen und mit „RHEL“ enden 
+
+
+| ? (Fragezeichen) | Ermöglicht die Suche nach einer bestimmten Anzahl von Zeichen | BOS-PRD??-S12 | Gibt BOS-PRD zurück**__12_**-S12, BOS-PRD**__23_**-S12 und so weiter 
+
+
+| ODER | Ermöglicht Ihnen die Angabe mehrerer Elemente | FAS2240, CX600 ODER FAS3270 | Gibt eine beliebige von FAS2440, CX600 oder FAS3270 zurück 
+
+
+| NICHT | Ermöglicht das Ausschließen von Text aus den Suchergebnissen | NICHT EMC* | Liefert alles zurück, was nicht mit „EMC“ beginnt 
+
+
+| _Keine_ | Sucht in einem beliebigen Feld nach leer/Null/Keine | _Keine_ | Gibt Ergebnisse zurück, bei denen das Zielfeld nicht leer ist 
+
+
+| Nicht * | Wie bei _None_ oben, aber Sie können dieses Formular auch verwenden, um in _Text-only_-Feldern nach Null-Werten zu suchen | Nicht * | Gibt Ergebnisse zurück, bei denen das Zielfeld nicht leer ist. 
+
+
+| „“ | Sucht nach einer genauen Übereinstimmung | „NetApp*“ | Liefert Ergebnisse mit der exakten Zeichenfolge _NetApp*_ 
+|===
+Wenn Sie einen Filter in doppelte Anführungszeichen einschließen, behandelt Insight alles zwischen dem ersten und dem letzten Zitat als exakte Übereinstimmung. Alle Sonderzeichen oder Operatoren in den Angeboten werden als Literale behandelt. Wenn Sie beispielsweise nach „*“ filtern, erhalten Sie Ergebnisse, die ein wortwörtlicher Stern sind; das Sternchen wird in diesem Fall nicht als Platzhalter behandelt. Die Operatoren OR und NOT werden auch als Literalzeichenfolgen behandelt, wenn sie in doppelten Anführungszeichen eingeschlossen sind.
+
+
+
+== Geprüfte Ereignisse und Maßnahmen
+
+Die von Cloud Insights auditierten Ereignisse und Maßnahmen können in die folgenden allgemeinen Bereiche unterteilt werden:
+
+* *Benutzerkonto*: Anmelden, Abmelden, Rollenänderung, etc
++
+Beispiel: _User *Tony Lavoie* angemeldet von *10.1.120.15*, User Agent *Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Like Gecko) Chrome/85.0.4183.121 Safari/537.36*, Anmeldemethode(en) *Cloud Central Portal Login_*
+
+* *Erfassungseinheit*: Erstellen, löschen usw.
++
+Beispiel: _Acquisition Unit *AU-Boston-1* entfernt_.
+
+* *Data Collector*: Hinzufügen, entfernen, ändern, verschieben/fortsetzen, Erfassungseinheit ändern, Start/Stopp usw.
++
+Beispiel: _Datasource *FlexPod Lab* entfernt, Anbieter *NetApp*, Modell *ONTAP Datenmanagement-Software*, ip *192.168.106.5_*.
+
+* *Anwendung*: Hinzufügen, Objekt zuweisen, entfernen, etc
++
+Beispiel: _Internes Volumen *ocisedev:t1appSVM01:t1appFlexVol01* zur Anwendung hinzugefügt *Test App_*.
+
+* *Anmerkung*: Hinzufügen, zuweisen, entfernen, Anmerkungsregeln Aktionen, Anmerkungswert ändert sich, Usw.
++
+Beispiel: _Anmerkungswert *Boston* wurde dem Anmerkungstyp *SalesOffice_* hinzugefügt.
+
+* *Abfrage*: Hinzufügen, entfernen, etc
++
+Beispiel: _Query *TL Sales Query* wird hinzugefügt_.
+
+* *Monitor*: Hinzufügen, entfernen, etc
++
+Beispiel: Monitor _Aggr Size - CI Alerts Notifications Dev_ aktualisiert
+
+* *Benachrichtigung*: E-Mail ändern, etc
++
+Beispiel: Empfänger _ci-Alerts-notifications-dl_ erstellt
+
+
+
+
+
+== Audit-Ereignisse Werden Exportiert
+
+Sie können die Ergebnisse Ihrer Audit-Anzeige in eine .CSV-Datei exportieren, mit der Sie die Daten analysieren oder in eine andere Anwendung importieren können.
+
+.Schritte
+. Legen Sie auf der Seite „Audit“ den gewünschten Zeitbereich und alle gewünschten Filter fest. Cloud Insights exportiert nur die Audit-Einträge, die dem eingestellten Filter- und Zeitbereich entsprechen.
+. Klicken Sie auf die Schaltfläche _Export_ image:ExportButton.png["Schaltfläche Exportieren"] Rechts oben am Tisch.
+
+
+Die angezeigten Audit-Ereignisse werden in eine .CSV-Datei mit maximal 10,000 Zeilen exportiert.
+
+
+
+== Aufbewahrung von Audit-Daten
+
+Wie lange Cloud Insights Audit-Daten aufbewahrt, hängt von Ihrer Edition ab:
+
+* Basic Edition: Audit-Daten werden 30 Tage lang aufbewahrt
+* Standard- und Premium-Editionen: Audit-Daten werden für 1 Jahr plus 1 Tag aufbewahrt
+
+
+Überwachungseinträge, die älter als die Aufbewahrungszeit sind, werden automatisch gelöscht. Es ist keine Benutzerinteraktion erforderlich.
+
+
+
+== Fehlerbehebung
+
+[role="lead"]
+Hier finden Sie Vorschläge zur Fehlerbehebung bei Audit-Problemen.
+
+|===
+
+
+| *Problem:* | *Teste das:* 
+
+
+| Ich sehe die Meldungen von Audit, die mir sagen, dass ein Monitor exportiert wurde. | Der Export einer benutzerdefinierten Monitorkonfiguration wird von NetApp Technikern üblicherweise bei der Entwicklung und dem Testen neuer Funktionen verwendet. Wenn Sie diese Meldung nicht erwarten, sollten Sie die in der geprüften Aktion genannten Maßnahmen des Benutzers oder den Support des Kontakts untersuchen. 
+|===

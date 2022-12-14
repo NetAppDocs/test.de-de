@@ -1,0 +1,14 @@
+---
+sidebar: sidebar 
+permalink: TBD.html 
+summary: Dieses Thema ist noch nicht bereit. 
+keywords: coming soon 
+---
+= Dieses Thema wird derzeit in Bau sein
+:allow-uri-read: 
+
+
+[role="lead"]
+Verzeihen Sie unseren Auftritt während des Cloud Insights Vorschaufens. Viele Themen sind noch im Bau, und das scheint einer von ihnen zu sein. Bitte tragen Sie bei uns und schauen Sie regelmäßig nach Aktualisierungen der Dokumentation.
+
+image::new-home-construction-1500990976ZLv.jpg[Im Bau]

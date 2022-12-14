@@ -1,0 +1,92 @@
+---
+sidebar: sidebar 
+permalink: task_device_resolution_ip.html 
+keywords: Automatic, AR, AHR, Host, automatic device resolution, FC, Identify 
+summary:  
+---
+= IP-Geräteauflösung
+:allow-uri-read: 
+
+
+[role="lead"]
+Auf dem Bildschirm IP-Identifizierung werden alle iSCSI- und CIFS- oder NFS-Freigaben angezeigt, die durch die automatische Geräteauflösung oder durch manuelle Geräteauflösung identifiziert wurden. Auch nicht identifizierte Geräte werden angezeigt. Der Bildschirm enthält die IP-Adresse, den Namen, den Status, den iSCSI-Knoten und den Freigabenamen für Geräte. Der Prozentsatz der erfolgreich identifizierten Geräte wird ebenfalls angezeigt.
+
+image:Device_Resolution_IP.png["IP-Geräteauflösung"]
+
+
+
+==== Manuelles Hinzufügen von IP-Geräten
+
+Sie können Cloud Insights manuell ein IP-Gerät hinzufügen, indem Sie die im Bildschirm IP-Identifizierung verfügbare Funktion zum manuellen Hinzufügen verwenden.
+
+.Verfahren
+. Melden Sie sich in der Weboberfläche von Cloud Insights an.
+. Klicken Sie auf *Verwalten > Geräteauflösung*
+. Klicken Sie auf die Registerkarte * IP-Adresse identifizieren*.
+. Klicken Sie auf die Schaltfläche *Hinzufügen*.
++
+Das Dialogfeld Gerät hinzufügen wird angezeigt
+
+. Geben Sie die Adresse, die IP-Adresse und einen eindeutigen Gerätenamen ein.
+
+
+.Ergebnis
+Das von Ihnen verwendete Gerät wird der Geräteliste auf der Registerkarte IP Address Identify hinzugefügt.
+
+
+
+==== Importieren der IP-Geräteidentifizierung aus einer .CSV-Datei
+
+Sie können die Identifikationen für IP-Geräte manuell über eine Liste der Geräteerkennungen in einer CSV-Datei in die Funktion „Geräteauflösung“ importieren.
+
+. Bevor Sie beginnen
+
+
+Sie benötigen eine korrekt formatierte CSV-Datei, um die Geräteidentifizierungen direkt in die Funktion „Geräteauflösung“ importieren zu können. Die .CSV-Datei für IP-Geräte erfordert folgende Informationen:
+
+|===
+
+
+| Adresse | IP | Name 
+|===
+Die Datenfelder müssen in Anführungszeichen eingeschlossen werden, wie im folgenden Beispiel gezeigt.
+
+....
+"Address","IP","Name"
+"ADDRESS6447","IP6447","NAME-6447"
+"ADDRESS3211","IP3211","NAME-3211"
+"ADDRESS593","IP593","NAME-593"
+....
+
+NOTE: Als Best Practice wird empfohlen, zunächst die IP-Adresse Identify-Informationen in eine .CSV-Datei zu exportieren, die gewünschten Änderungen in dieser Datei vorzunehmen und die Datei dann wieder in die IP-Adresse Identify zu importieren. Dadurch wird sichergestellt, dass die erwarteten Spalten in der richtigen Reihenfolge vorhanden sind.
+
+
+
+==== Exportieren der IP-Gerätekennung in eine CSV-Datei
+
+Sie können vorhandene Identifizierungen für IP-Geräte von der Cloud Insights-Geräteauflösung in eine CSV-Datei exportieren. Sie können eine Geräteidentifikation exportieren, damit Sie sie ändern und dann wieder in Cloud Insights importieren können, wo sie dann verwendet wird, um Geräte zu identifizieren, die denen ähneln, die ursprünglich mit der exportierten Identifizierung übereinstimmen.
+
+.Über diese Aufgabe
+. Dieses Szenario kann verwendet werden, wenn Geräte ähnliche Attribute haben, die einfach in der .CSV-Datei bearbeitet und dann wieder in das System importiert werden können.
+
+Wenn Sie eine IP-Geräte-ID in eine CSV-Datei exportieren, enthält die Datei die folgenden Informationen in der angezeigten Reihenfolge:
+
+|===
+
+
+| Adresse | IP | Name 
+|===
+.Verfahren
+. Melden Sie sich in der Cloud Insights Web-UI an.
+. Klicken Sie Auf *Verwalten > Geräteauflösung*
+. Wählen Sie die Registerkarte * IP Address Identify* aus.
+. Wählen Sie das IP-Gerät oder die Geräte aus, deren Kennung Sie exportieren möchten.
+. Klicken Sie auf die Option *Export* image:ExportButton.png[""] Schaltfläche.
++
+Wählen Sie aus, ob die .CSV-Datei geöffnet oder die Datei gespeichert werden soll.
+
+
+
+Verwandte Themen:link:task_device_resolution_fibre_channel.html["Fibre Channel-Geräteauflösung"]
+link:task_device_resolution_rules.html["Geräterauflösungsregeln Werden Erstellt"]
+link:task_device_resolution_preferences.html["Einstellen Der Einstellungen Für Die Geräteauflösung"]

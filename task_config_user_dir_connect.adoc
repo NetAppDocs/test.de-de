@@ -1,0 +1,182 @@
+---
+sidebar: sidebar 
+permalink: task_config_user_dir_connect.html 
+keywords: collector, configure, LDAP, Active Directory 
+summary: Cloud Secure Active Directory-Benutzerverzeichnissammler Wird Konfiguriert 
+---
+= Konfigurieren eines Active Directory (AD)-Benutzerverzeichnissammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Secure kann so konfiguriert werden, dass Benutzerattribute von Active Directory Servern erfasst werden.
+
+.Bevor Sie beginnen
+* Sie müssen ein Cloud Insights-Administrator oder -Kontoinhaber sein, um diese Aufgabe auszuführen.
+* Sie müssen über die IP-Adresse des Servers verfügen, der den Active Directory-Server hostet.
+* Ein Agent muss konfiguriert werden, bevor Sie einen Benutzerverzeichnisanschluss konfigurieren.
+
+
+.Schritte zum Konfigurieren eines Benutzerverzeichnissammler
+. Klicken Sie im Menü Cloud Secure auf: *Admin > Datensammler > Nutzerverzeichnissammler > + Benutzerverzeichnissammler*, und wählen Sie *Active Directory* aus
++
+Das System zeigt den Bildschirm Benutzerverzeichnis hinzufügen an.
+
+
+
+Konfigurieren Sie den User Directory Collector, indem Sie die erforderlichen Daten in die folgenden Tabellen eingeben:
+
+[cols="2*"]
+|===
+
+
+| Name | Beschreibung 
+
+
+| Name | Eindeutiger Name für das Benutzerverzeichnis. Beispiel: _GlobalADCollector_ 
+
+
+| Agent | Wählen Sie einen konfigurierten Agenten aus der Liste aus 
+
+
+| Server-IP/Domain-Name | IP-Adresse oder Fully-Qualified Domain Name (FQDN) des Servers, der das Active Directory hostet 
+
+
+| Waldname | Gesamtebene der Verzeichnisstruktur. Forest Name ermöglicht beide Formate: _X. y.y.z_ => direkter Domainname, wie Sie ihn auf Ihrer SVM haben. [Beispiel: hq.companyname.com] _DC=x,DC=y,DC=z_ => relative Distinguished Names [Beispiel: DC=hq,DC= commeryname,DC=com] oder Sie können wie folgt angeben: _OU=Engineering,DC=hq,DC= commeryname,DC=com_ [nach spezifischer OU-Technik filtern] _CN=username,OU=Engineering,DC=comcompyname, DC=netapp, DC=com_ [um nur bestimmte Benutzer mit <username> von OU <Engineering> zu erhalten] _CN=Acrobat Nutzer,CN=Benutzer,DC=hq,DC=commeryname,DC=alle Benutzer innerhalb von Boston, die innerhalb der Organisation unterstützt werden. 
+
+
+| DN binden | Benutzer erlaubt, das Verzeichnis zu durchsuchen. Beispiel: _username@companyname.com_ oder _username@domainname.com_ 
+
+
+| Kennwort BINDEN | Kennwort des Verzeichnisservers (d. h. Kennwort für in Bind DN verwendeten Benutzernamen) 
+
+
+| Protokoll | ldap, ldaps, ldap-Start-tls 
+
+
+| Ports | Wählen Sie Port 
+|===
+Geben Sie die folgenden Directory Server-erforderlichen Attribute ein, wenn die Standardattributnamen in Active Directory geändert wurden. Meistens werden diese Attributnamen in Active Directory geändert, in diesem Fall können Sie einfach mit dem Standardattributnamen fortfahren.
+
+[cols="2*"]
+|===
+
+
+| Merkmale | Attributname im Verzeichnisserver 
+
+
+| Anzeigename | Name 
+
+
+| SID | Objektsid 
+
+
+| Benutzername | SAMAccountName 
+|===
+Klicken Sie auf Optionale Attribute einschließen, um eines der folgenden Attribute hinzuzufügen:
+
+[cols="2*"]
+|===
+
+
+| Merkmale | Attributname im Verzeichnisserver 
+
+
+| E-Mail-Adresse | E-Mail 
+
+
+| Telefonnummer | Telefonnummerierung 
+
+
+| Rolle | Titel 
+
+
+| Land | Co 
+
+
+| Bundesland | Bundesland 
+
+
+| Abteilung | Abteilung 
+
+
+| Foto | Daumennagelfoto 
+
+
+| ManagerDN | manager an 
+
+
+| Gruppen | Mitgliedschafts 
+|===
+
+
+== Die Konfiguration Des Benutzerverzeichnissammler Wird Getestet
+
+Sie können LDAP-Benutzerberechtigungen und Attributdefinitionen mithilfe der folgenden Verfahren validieren:
+
+* Verwenden Sie den folgenden Befehl, um die Cloud Secure LDAP-Benutzerrechte zu validieren:
++
+`ldapsearch -o ldif-wrap=no -LLL -x -b "dc=netapp,dc=com" -h 10.235.40.29 -p 389 -D \Administrator@netapp.com -W`
+
+* Verwenden Sie AD Explorer, um in einer AD-Datenbank zu navigieren, Objekteigenschaften und -Attribute anzuzeigen, Berechtigungen anzuzeigen, das Schema eines Objekts anzuzeigen, ausgefeilte Suchen auszuführen, die Sie speichern und erneut ausführen können.
++
+** Installieren link:https://docs.microsoft.com/en-us/sysinternals/downloads/adexplorer["AD-Explorer"] Auf jedem Windows-Rechner, der eine Verbindung zum AD-Server herstellen kann.
+** Stellen Sie eine Verbindung zum AD-Server mit dem Benutzernamen/Passwort des AD-Verzeichnisservers her.
+
+
+
+
+image:cs_ADExample.png["AD-Verbindung"]
+
+
+
+== Fehlerbehebung Bei Konfigurationsfehlern Des Benutzerverzeichnisses
+
+In der folgenden Tabelle werden bekannte Probleme und Auflösungen beschrieben, die während der Kollektor-Konfiguration auftreten können:
+
+[cols="2*"]
+|===
+| Problem: | Auflösung: 
+
+
+| Das Hinzufügen eines Benutzerverzeichnissteckers führt zum Status ‘Fehler’. Fehler sagt, „ungültige Anmeldeinformationen für LDAP-Server bereitgestellt“. | Benutzername oder Passwort falsch angegeben. Bearbeiten und geben Sie den korrekten Benutzernamen und das richtige Passwort an. 
+
+
+| Das Hinzufügen eines Benutzerverzeichnissteckers führt zum Status ‘Fehler’. Fehler sagt: „Das Objekt, das DN=DC=hq,DC=Domainname,DC=com als Waldname angegeben hat, konnte nicht abgerufen werden.“ | Falscher Waldname angegeben. Bearbeiten und geben Sie den richtigen Namen für die Gesamtstruktur an. 
+
+
+| Die optionalen Attribute des Domain-Benutzers werden auf der Seite Cloud Secure-Benutzerprofil nicht angezeigt. | Dies ist wahrscheinlich auf eine Diskrepanz zwischen den Namen der in CloudSecure hinzugefügten optionalen Attribute und den tatsächlichen Attributnamen in Active Directory zurückzuführen. Bearbeiten und geben Sie die korrekten optionalen Attributnamen an. 
+
+
+| Datensammler im Fehlerzustand mit „LDAP-Benutzer konnten nicht abgerufen werden. Grund für Fehler: Verbindung auf dem Server nicht möglich, Verbindung ist Null“ | Starten Sie den Kollektor neu, indem Sie auf die Schaltfläche _Neustart_ klicken. 
+
+
+| Das Hinzufügen eines Benutzerverzeichnissteckers führt zum Status ‘Fehler’. | Stellen Sie sicher, dass Sie für die erforderlichen Felder gültige Werte angegeben haben (Server, Forest-Name, BIND-DN, BIND-Password). Vergewissern Sie sich, dass die Eingabe von BIND-DN immer als ‘Administrator@<Domain_Forest_Name>’ oder als Benutzerkonto mit Administratorrechten für die Domäne angegeben wird. 
+
+
+| Das Hinzufügen eines Benutzerverzeichnissteckers führt zum ‘reVERSUCH’ Status. Zeigt den Fehler „kann den Status des Collectors nicht definieren,Grund TCP Befehl [Connect(localhost:35012,None,List(),some(,seconds),true)] fehlgeschlagen, weil java.net.ConnectionException:Connection abgelehnt wurde.“ | Für den AD-Server wurde eine falsche IP- oder FQDN bereitgestellt. Bearbeiten Sie die korrekte IP-Adresse oder den korrekten FQDN. 
+
+
+| Das Hinzufügen eines Benutzerverzeichnissteckers führt zum Status ‘Fehler’. Fehler sagt: „LDAP-Verbindung konnte nicht hergestellt werden“. | Für den AD-Server wurde eine falsche IP- oder FQDN bereitgestellt. Bearbeiten Sie die korrekte IP-Adresse oder den korrekten FQDN. 
+
+
+| Das Hinzufügen eines Benutzerverzeichnissteckers führt zum Status ‘Fehler’. Fehler sagt, “die Einstellungen konnten nicht geladen werden. Grund: Datasource Configuration hat einen Fehler. Spezifischer Grund: /Connector/conf/Application.conf: 70: ldap.ldap-Port hat type STRING statt NUMBER“ | Falscher Wert für Port angegeben. Versuchen Sie, die Standardanschlusswerte oder die korrekte Portnummer für den AD-Server zu verwenden. 
+
+
+| Ich begann mit den obligatorischen Attributen, und es funktionierte. Nach dem Hinzufügen der optionalen Attribute werden die Daten der optionalen Attribute nicht aus AD abgerufen. | Dies ist wahrscheinlich auf eine Diskrepanz zwischen den in CloudSecure hinzugefügten optionalen Attributen und den tatsächlichen Attributnamen in Active Directory zurückzuführen. Bearbeiten und geben Sie den korrekten obligatorischen oder optionalen Attributnamen an. 
+
+
+| Wann erfolgt nach dem Neustart des Collectors die AD-Synchronisierung? | DIE ANZEIGENSYNCHRONISATION erfolgt sofort nach dem Neustart des Collectors. Es dauert etwa 15 Minuten, bis Benutzerdaten von etwa 300.000 Benutzern abgerufen wurden. Und wird automatisch alle 12 Stunden aktualisiert. 
+
+
+| Benutzerdaten werden von AD zu CloudSecure synchronisiert. Wann werden die Daten gelöscht? | Benutzerdaten werden 13 Monate lang aufbewahrt, wenn keine Aktualisierung erfolgt. Wenn der Mandant gelöscht wird, werden die Daten gelöscht. 
+
+
+| Der Benutzerverzeichnisanschluss hat den Status ‘Fehler’. „Der Stecker befindet sich im Fehlerzustand. Dienstname: UsersLdap. Grund für Fehler: Abrufen von LDAP-Benutzern fehlgeschlagen. Grund für Fehlschlag: 80090308: LdapErr: DSID-0C090453, Kommentar: ACkeptSecurityContext error, Data 52e, v3839“ | Falscher Waldname angegeben. Siehe oben, wie Sie den richtigen Namen für die Gesamtstruktur angeben. 
+
+
+| Die Telefonnummer wird nicht auf der Benutzerprofilseite ausgefüllt. | Dies ist wahrscheinlich auf ein Problem bei der Attributzuordnung mit dem Active Directory zurückzuführen. 1. Bearbeiten Sie den jeweiligen Active Directory-Collector, der die Informationen des Benutzers aus Active Directory abrufen wird. 2. Hinweis unter optionalen Attributen gibt es einen Feldnamen „Telefonnummer“, der dem Active Directory-Attribut ‘Telefonnummernnummer’ zugeordnet ist. 4. Verwenden Sie jetzt das Active Directory Explorer-Tool wie oben beschrieben, um das Active Directory zu durchsuchen und den korrekten Attributnamen anzuzeigen. 3. Stellen Sie sicher, dass in Active Directory ein Attribut namens ‘Telefonnummernnummer’, das in der Tat die Telefonnummer des Benutzers hat, vorhanden ist. 5. Sagen wir ‘Active Directory, dass es in „Phonenumber“ geändert wurde. 6. Dann bearbeiten Sie den CloudSecure User Directory Collector. Ersetzen Sie im optionalen Attributbereich ‘Telefonnummerierung’ durch ‘Phonenumber’. 7. Speichern Sie den Active Directory-Collector, wird der Sammler neu starten und erhalten die Telefonnummer des Benutzers und die gleiche in der Benutzerprofil Seite. 
+
+
+| Wenn das Verschlüsselungszertifikat (SSL) auf dem Active Directory-Server (AD) aktiviert ist, kann der Cloud Secure-Benutzerverzeichnissammler keine Verbindung zum AD-Server herstellen. | Deaktivieren Sie die AD-Serververschlüsselung, bevor Sie einen User Directory Collector konfigurieren. Sobald die Benutzerdetails abgerufen wurde, wird es dort für 13 Monate sein. Wenn der AD-Server nach dem Abrufen der Benutzerdetails getrennt wird, werden die neu hinzugefügten Benutzer in AD nicht abgerufen. Um wieder abrufen zu können, muss der Benutzer-Verzeichnis-Collector mit AD verbunden sein. 
+|===

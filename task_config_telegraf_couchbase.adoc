@@ -1,0 +1,55 @@
+---
+sidebar: sidebar 
+permalink: task_config_telegraf_couchbase.html 
+keywords: telegraf, installation, install, couchbase 
+summary: Konfiguration des Couchbase Datensammlers 
+---
+= Couchbase Data Collector
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights verwendet diese Datensammlung, um die Kennzahlen von Couchbase zu erfassen.
+
+
+
+== Installation
+
+. Klicken Sie in *Admin > Data Collectors* auf *+Data Collector*. Wählen Sie unter *Services* die Option Couchbase.
++
+Wählen Sie das Betriebssystem oder die Plattform aus, auf dem der Telegraf-Agent installiert ist.
+
+. Wenn Sie noch keinen Agent für die Sammlung installiert haben oder einen Agent für ein anderes Betriebssystem oder eine andere Plattform installieren möchten, klicken Sie auf _Anweisungen anzeigen_, um das zu erweitern link:task_config_telegraf_agent.html["Agenten-Installation"] Anweisungen.
+. Wählen Sie den Agent-Zugriffsschlüssel für diesen Datensammler aus. Sie können einen neuen Agent-Zugriffsschlüssel hinzufügen, indem Sie auf die Schaltfläche *+ Agent Access Key* klicken. Best Practice: Verwenden Sie einen anderen Agent-Zugriffsschlüssel nur, wenn Sie Datensammler gruppieren möchten, zum Beispiel nach Betriebssystem/Plattform.
+. Befolgen Sie die Konfigurationsschritte, um den Datensammler zu konfigurieren. Die Anweisungen hängen vom Betriebssystem oder der Plattform ab, die Sie zur Datenerfassung verwenden.
+
+
+image:CouchbaseDCConfigWindows.png["Konfiguration von Couchbase"]
+
+
+
+== Einrichtung
+
+Informationen finden Sie unter link:https://docs.couchbase.com/home/index.html["Couchbase Dokumentation"].
+
+
+
+== Objekte und Zähler
+
+Folgende Objekte und ihre Zähler werden gesammelt:
+
+[cols="<.<,<.<,<.<,<.<"]
+|===
+| Objekt: | Kennungen: | Attribute: | Datenpunkte: 
+
+
+| Couchbase Node | Namespace Cluster Couchbase Node-Hostname | Node Name Node-IP | Speicher Insgesamt 
+
+
+| Couchbase Bucket | Namespace-Bucket-Cluster | Node Name Node-IP | Daten Verwendete Daten Abrufen Verwendete Elemente Anzahl Verwendete Elemente Speicher Verwendete Operationen Pro Sekunde Kontingent Verwendet 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Seite.

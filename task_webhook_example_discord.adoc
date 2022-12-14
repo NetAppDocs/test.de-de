@@ -1,0 +1,53 @@
+---
+sidebar: sidebar 
+permalink: task_webhook_example_discord.html 
+keywords: webhook, notification, Discord, integration 
+summary: Erstellen Sie einen Webhook, um über die Grenzwerte für Leistung oder Bestand für die Ableitung zu informieren 
+---
+= Beispiel für den Webhook für die Kabeltrennleitung
+:allow-uri-read: 
+
+
+[role="lead"]
+Mit Webhooks können Benutzer über einen benutzerdefinierten Webhook-Kanal Benachrichtigungen an verschiedene Anwendungen senden. Diese Seite enthält ein Beispiel zum Einrichten von Webhooks für Discord.
+
+
+NOTE: Diese Seite bezieht sich auf Anweisungen von Dritten, die möglicherweise geändert werden können. Siehe link:https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks["Dokumentation zum Auflösen von Kabel"] Finden Sie die aktuellsten Informationen.
+
+
+
+=== Kabelabschalt Einrichten:
+
+* Wählen Sie in Discord den Server unter Textkanäle die Option Kanal bearbeiten (Zahnradsymbol) aus.
+* Wählen Sie *Integrationen > Webhooks anzeigen* und klicken Sie auf *Neuer Webhook*
+* Kopieren Sie die Webhook-URL. Sie müssen diese in die Cloud Insights Webhook-Konfiguration einfügen.
+
+
+
+
+=== Cloud Insights-Webhook Erstellen:
+
+. Navigieren Sie in Cloud Insights zu *Admin > Benachrichtigungen* und wählen Sie die Registerkarte *Webhooks* aus. Klicken Sie auf *+Webhook*, um einen neuen Webhook zu erstellen.
+. Geben Sie dem Webhook einen aussagekräftigen Namen, z. B. „Discord“.
+. Wählen Sie in der Dropdown-Liste _Template Type_ die Option *Discord* aus.
+. Fügen Sie die URL von oben in das Feld _URL_ ein.
+
+
+image:Webhooks-Discord_example.png["Webhook-Vorlage lösen"]
+
+
+NOTE: Um den Webhook zu testen, ersetzen Sie vorübergehend den url-Wert im Nachrichtentext durch eine gültige URL (z. B. _https://netapp.com_) und klicken dann auf die Schaltfläche _Webhook testen_. Stellen Sie den Nachrichtentext nach Abschluss des Tests wieder ein.
+
+
+
+=== Benachrichtigungen über Webhook
+
+Um über Webhook Ereignisse zu benachrichtigen, navigieren Sie in Cloud Insights zu *Alarme > Monitore* und klicken Sie auf *+Monitor*, um eine neue zu erstellen link:task_create_monitor.html["Überwachen"].
+
+* Wählen Sie eine Metrik aus, und definieren Sie die Bedingungen des Monitors.
+* Wählen Sie unter „ Team-Benachrichtigung(en) einrichten“ die Option „ *Webhook* Liefermethode“.
+* Wählen Sie den Webhook „Discord“ für die gewünschten Ereignisse (kritisch, Warnung, gelöst).
++
+image:Webhooks_Discord_Notifications.png["Webhook-Benachrichtigungen"]
+
+

@@ -1,0 +1,87 @@
+---
+sidebar: sidebar 
+permalink: concept_ttl_and_downsampling.html 
+summary: 'Time-to-Live (TTL) und Downsampling erklärt' 
+keywords: time-to-live, TTL, downsampling, downsample, 
+---
+= Time-to-Live (TTL)- und Downsampling-Daten
+:allow-uri-read: 
+
+
+[role="lead"]
+Da Cloud Insights Daten für einen festgelegten Zeitraum (pro Edition) speichert, können Tausende von Datenpunkten verarbeitet werden. Daten können daher vor der Anzeige in Diagrammen und Tabellen in einem Downsampling erfasst werden.
+
+
+
+== Datenaufbewahrung (Live-Zeiten)
+
+Cloud Insights speichert die Daten für einen Zeitraum, der von der aktiven abonnierten Edition festgelegt wurde. Die Datenaufbewahrung wird auch als Time-to-Live oder TTL bezeichnet.
+
+|===
+| Ausgabe | TTL 
+
+
+| Basic | 7 Tage 
+
+
+| Standard | 90 Tage 
+
+
+| Premium | 13 Monaten 
+|===
+Bei Premium Edition-Abonnements mit mindestens 500 verwalteten Einheiten (MUs) werden auch Business Intelligence- und Reporting-Daten für den Zeitraum von 13 Monaten gespeichert.
+
+
+
+== Downsampling von Daten
+
+*Downsampling* bietet eine statistische Angleichung Ihrer Daten in Diagrammen, so dass Sie einen effizienten Überblick über die Daten erhalten, ohne jeden Datenpunkt anzeigen zu müssen, und gleichzeitig eine genaue Ansicht Ihrer gesammelten Daten erhalten.
+
+
+
+=== Warum ist ein Downsampling erforderlich?
+
+Da eine große Menge an Verarbeitung erforderlich ist, um Daten für die Anzeige in Diagrammen und Diagrammen vorzubereiten, damit Diagramme schnell und effizient angezeigt werden können, Daten können so heruntergetastet werden, dass die Gesamtform eines Diagramms erhalten bleibt, ohne dass für dieses Diagramm jeder einzelne Datenpunkt verarbeitet werden muss.
+
+Hinweis: Bei Downsampling gehen keine tatsächlichen Daten verloren. Sie können die tatsächlichen Daten für Ihr Diagramm anstelle von abtasteten Daten anzeigen, indem Sie die unten dargestellten Schritte befolgen.
+
+
+
+=== Funktionsweise von Downsampling
+
+Die Daten werden unter den folgenden Bedingungen heruntererfasst:
+
+* Wenn Ihr ausgewählter Zeitraum Daten von maximal 7 Tagen enthält, erfolgt keine Downsampling-Messung. Diagramme zeigen tatsächliche Daten an.
+* Wenn Ihr ausgewählter Zeitraum mehr als 7 Tage Daten enthält, jedoch weniger als 1,000 Datenpunkte, erfolgt keine Downsampling-Messung. Diagramme zeigen tatsächliche Daten an.
+* Wenn Ihr ausgewählter Zeitbereich mehr als 7 Tage Daten und mehr als 1,000 Datenpunkte umfasst, werden die Daten nach unten abgetastet. Diagramme zeigen angenähte Daten an.
+
+
+Die folgenden Beispiele zeigen ein Downsampling in Aktion. Die erste Abbildung zeigt Latenz- und IOPS-Diagramme auf der Seite „Datastore Assets“ für einen Zeitraum von 24 Stunden, wie durch Auswahl der Zeitauswahl für die Asset-Seite 24h gezeigt. Sie können auch dieselben Daten anzeigen, indem Sie Benutzerdefiniert auswählen und den Zeitbereich auf denselben Zeitraum von 24 Stunden festlegen.
+
+Da wir einen Zeitbereich von weniger als 7 Tagen wählen und wir weniger als 1,000 Datenpunkte haben, sind die angezeigten Daten tatsächliche Daten. Es erfolgt keine Downsampling-Messung.
+
+image:Charts_NoDownsample.png["Keine Downsampling"]
+
+Wenn Sie sich jedoch Daten anzeigen lassen, indem Sie entweder 30d auf der Zeitauswahl der Asset-Seite auswählen, Oder indem Sie einen benutzerdefinierten Zeitbereich von mehr als 7 Tagen festlegen (oder wenn Cloud Insights mehr als 1,000 Datenproben für den ausgewählten Zeitraum erfasst hat), werden die Daten vor der Anzeige in einem Downsampling angezeigt. Wenn Sie ein abtasteter Diagramm vergrößern, werden im Display weiterhin die approximierten Daten angezeigt.
+
+
+NOTE: Wenn Sie ein Diagramm mit Downsampling vergrößern, handelt es sich bei dem Zoom um einen digitalen Zoom. Die Anzeige zeigt weiterhin die approximierten Daten an.
+
+Sie sehen dies in der folgenden Abbildung, in der der Zeitbereich zuerst auf 30d gesetzt wird, und das Diagramm wird dann vergrößert, um den gleichen 24-Stunden-Zeitraum wie oben anzuzeigen.
+
+image:Charts_Downsampled.png["Downsampling"]
+
+Die abtasteten Diagramme zeigen den gleichen 24-Stunden-Zeitraum wie die oben genannten "tatsächlichen" Diagramme, sodass die Linien die gleiche allgemeine Form folgen, so dass Sie schnell interessante Gipfel oder Täler in Ihren Leistungsdaten zu erkennen.
+
+
+NOTE: Aufgrund der Angleichung der Daten an die Abtastrate können die Diagrammlinien beim Vergleich von Downsampling vs. Leicht ausgeschaltet werden Aktuelle Daten, um eine bessere Ausrichtung in den Diagrammen zu ermöglichen. Die Differenz ist jedoch minimal und wirkt sich nicht auf die Gesamtgenauigkeit der angezeigten Daten aus.
+
+
+
+=== Verstöße gegen herunterbeprobierte Diagramme
+
+Beachten Sie beim Anzeigen von Downsampling-Diagrammen, dass Verstöße nicht angezeigt werden. Um Verstöße zu sehen, können Sie eine von zwei Dingen tun:
+
+* Zeigen Sie die aktuellen Daten für diesen Zeitbereich an, indem Sie in der Zeitauswahl der Anlagenseite „Benutzerdefiniert“ auswählen und einen Zeitbereich von weniger als 7 Tagen eingeben. Bewegen Sie den Mauszeiger über jeden roten Punkt. In der QuickInfo wird der aufgetretene Verstoß angezeigt.
+* Notieren Sie den Zeitbereich, und suchen Sie die Verstöße im Dashboard für Verstöße.
+

@@ -1,0 +1,77 @@
+---
+sidebar: sidebar 
+permalink: kubernetes_landing_page.html 
+keywords: telegraf, installation, install, kubernetes, pods, clusters, filters, filtering, k8s 
+summary: Auf der Kubernetes-Landing Page wird erläutert 
+---
+= Kubernetes-Cluster – Übersicht
+:allow-uri-read: 
+
+
+[role="lead"]
+Der Cloud Insights Kubernetes Explorer ist ein leistungsstarkes Tool zur Anzeige des Gesamtzustands und der Verwendung der Kubernetes Cluster und ermöglicht es Ihnen, mühelos detaillierte Informationen zu den Bereichen der Untersuchung anzuzeigen.
+
+Durch Klicken auf *Dashboards > Kubernetes Explorer* wird die Übersichtsseite Kubernetes Cluster geöffnet. Diese Übersichtsseite enthält eine Vielzahl an Informationen auf einen Blick.
+
+
+NOTE: Zahlen, die in den verschiedenen Abschnitten dieser und nachfolgenden Kubernetes Explorer-Seiten blau angezeigt werden (z. B. Node-/Pod-Status, Namespace-Anzahl usw.), sind Links zu verwandten Abfrageseiten, die die Details hinter diesen Zahlen anzeigen.
+
+image:Kubernetes_Cluster_Overview_Page.png["Kubernetes Übersicht"]
+
+
+
+=== Cluster-Nutzung – Übersicht
+
+image:Kubernetes_Cluster_List.png["Cluster-Liste – Übersicht"]
+
+In der Cluster-Liste werden für jedes Cluster in Ihrer Umgebung die folgenden Nutzungsinformationen angezeigt:
+
+* CPU: Prozentsatz der genutzten CPU-Gesamtkapazität
+* Speicher: Prozentsatz des insgesamt verwendeten Speichers
+* Storage: Prozentsatz des insgesamt verwendeten Storage
+
+
+Sie können die Cluster-Liste nach folgenden Faktoren sortieren:
+
+* Node- und Pod-Alarmstufe (Standard)
+* Cluster-Name
+* Anzahl der Nodes
+* Am meisten durch Computing genutzt
+* Am wenigsten durch Computing genutzt
+* Am meisten durch Storage genutzt
+* Am wenigsten durch Storage genutzt
+
+
+Wenn Sie auf einen Cluster-Namen klicken, wird das geöffnet link:kubernetes_cluster_detail.html["*Detailseite*"] Für diesen Cluster zu erstellen
+
+
+
+=== Node- und Pod-Status
+
+image:Kubernetes_Node_Pod_Status.png["Node- und Pod-Status"]
+
+
+
+=== Namespaces
+
+Rechts auf dem Bildschirm ist eine Liste der drei wichtigsten Namespaces, die in jedem Cluster verwendet werden. Klicken Sie auf den Link *Alle*, um alle Namespaces für das Cluster anzuzeigen.
+
+Wenn Sie auf einen Namespace klicken, wird die Namespace-Detailseite geöffnet.
+
+image:Kubernetes_Namespaces.png["Namespaces"]
+
+
+
+=== Verfeinern des Filters
+
+Wenn Sie filtern, werden Sie beim Eingeben mit der Option angezeigt, basierend auf dem aktuellen Text einen *Platzhalterfilter* zu erstellen. Wenn Sie diese Option auswählen, werden alle Ergebnisse angezeigt, die dem Platzhalterausdruck entsprechen. Sie können auch *Expressions* mit NOT oder UND erstellen, oder Sie können die Option "Keine" auswählen, um nach Null-Werten im Feld zu filtern.
+
+image:Filter_Kubernetes_Explorer.png["Filtern mit Platzhalter im K8S Explorer"]
+
+Filter basierend auf Platzhalter oder Ausdrücken (z. B. NOT, AND, „None“ etc.) wird im Filterfeld dunkelblau angezeigt. Elemente, die Sie direkt aus der Liste auswählen, werden hellblau angezeigt.
+
+image:Filter_Kubernetes_Explorer_2.png["Filter zeigt Platzhalter und ausgewählte Elemente an"]
+
+Kubernetes-Filter sind kontextbezogen, d. h., wenn Sie sich beispielsweise auf einer bestimmten Knotenseite befinden, listet der Pod_Name-Filter nur die Pods auf, die mit diesem Node zusammenhängen. Wenn Sie darüber hinaus einen Filter für einen bestimmten Namespace anwenden, werden im Pod_Name-Filter nur Pods auf diesem Node _und_ in diesem Namespace aufgelistet.
+
+Beachten Sie, dass die Platzhalter- und Ausdrucksfilterung mit Text oder Listen funktioniert, jedoch nicht mit numerischen Werten, Daten oder Booleanen.

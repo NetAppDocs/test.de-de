@@ -1,0 +1,41 @@
+---
+sidebar: sidebar 
+permalink: index.html 
+summary: Willkommen beim Dokumentationsportal für Cloud Insights. 
+---
+= Cloud Insights-Dokumentation
+:allow-uri-read: 
+
+
+[role="lead"]
+NetApp Cloud Insights ist ein Tool für das Monitoring der Cloud-Infrastruktur, mit dem Sie Ihre gesamte Infrastruktur im Blick haben. Es überwacht nicht nur alle Ressourcen, die in Public Clouds und privaten Datacentern liegen, sondern hilft auch dabei, Fehler aufzuspüren und den Ressourceneinsatz zu optimieren. Cloud Insights
+
+Cloud Insights bietet Ihnen folgende Vorteile:
+
+* *Verkürzung der durchschnittlichen Zeit bis zur Auflösung um bis zu 90%*
++
+Mit unserer dynamischen Analyse von Topologie und Korrelation lassen sich Problembereiche sofort ermitteln. Das tagelange Durchsuchen von Protokollen und das manuelle Herstellen von Beziehungen in der Infrastruktur werden hinfällig.
+
+* *Die Kosten für die Cloud-Infrastruktur sinken um durchschnittlich 33 %*
++
+Verwaiste und nicht genutzte Ressourcen werden ermittelt und Workloads können auf optimierte Performance- und Kostenebenen optimiert werden.
+
+* *Bebeugen Sie bis zu 80 % der Cloud-Probleme vor, die sich auf Endbenutzer auswirken*
++
+Das Durchsuchen von Unmengen an Daten zur Suche nach der entsprechenden Komponente wird durch erweiterte Analysen und maschinelles Lernen beendet, um Probleme zu identifizieren, bevor sie zu kritischen Ausfällen führen.
+
+
+
+
+
+== Erste Schritte
+
+* Ich bin ein neuer Kunde: link:task_cloud_insights_onboarding_1.html["Onboarding"]
+* Ich bin angemeldet: Was mache ich jetzt?link:task_getting_started_with_cloud_insights.html["Erfassen Von Daten"]
+link:concept_user_roles.html["Benutzer einrichten"]
+* Wie nutze ich Cloud Insights optimal?link:task_defining_annotations.html["Vorbereiten Von Ressourcen: Anmerkungen"]
+link:concept_querying_assets.html["Suchen der gewünschten Assets: Abfragen"]
+link:concept_dashboards_overview.html["Anzeigen der gewünschten Daten: Dashboards"]
+link:https:task_create_monitor.html["Monitoring und Alarme"]
+* Ich habe Cloud Insights versucht und jetzt bin ich bereit zu link:concept_subscribing_to_cloud_insights.html["*Anmeldung*"].
+

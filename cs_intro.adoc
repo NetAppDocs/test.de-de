@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: cs_intro.html 
+keywords: CloudSecure 
+summary: Überblick 
+---
+= Informationen zu Cloud Secure
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Secure schützt Ihre Daten durch nützliche Informationen zu Bedrohungen von innen. Es ermöglicht eine zentrale Übersicht und Kontrolle über den Zugriff auf alle Unternehmensdaten in Hybrid-Cloud-Umgebungen, damit Sicherheits- und Compliance-Ziele erfüllt werden.
+
+
+
+== Übersicht
+
+Verschaffen Sie sich einen zentralen Überblick und kontrollieren Sie den Benutzerzugriff auf wichtige Unternehmensdaten, die lokal oder in der Cloud gespeichert sind.
+
+Ersetzen Sie Tools und manuelle Prozesse, die nicht zeitgerecht und präzise Einblicke in Datenzugriff und -Kontrolle bieten. Cloud Secure wird sowohl in der Cloud als auch in lokalen Storage-Systemen ausgeführt und bietet Warnmeldungen zu schädlichem Benutzerverhalten in Echtzeit.
+
+
+
+== Darstellt
+
+Dank erweitertem Machine Learning und Anomalieerkennung werden Unternehmensdaten vor Missbrauch durch böswillige oder kompromittierte Benutzer geschützt.
+
+Benachrichtigt Sie über erweitertes Machine Learning und Anomalieerkennung des Benutzerverhaltens bei ungewöhnlichen Datenzugriff.
+
+
+
+== Compliance
+
+Durch Auditing von Benutzerzugriffen auf lokal oder in der Cloud gespeicherte wichtige Unternehmensdaten wird die unternehmensinterne Compliance gewahrt.

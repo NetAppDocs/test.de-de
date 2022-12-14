@@ -1,0 +1,56 @@
+---
+sidebar: sidebar 
+permalink: task_configure_data_collectors.html 
+keywords: acquisition, AU, data collector, collector, notification, notify, 
+summary: Allgemeine Anweisungen zur Datenerfassung 
+---
+= Konfigurieren Von Datensammlern
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie konfigurieren Datensammler in Ihrer Cloud Insights-Umgebung, um Daten von Geräten im Datacenter zu erfassen.
+
+.Bevor Sie beginnen
+* Sie müssen eine Erfassungseinheit konfiguriert haben, bevor Sie mit dem Erfassen von Daten beginnen können.
+* Sie benötigen Anmeldedaten für die Geräte, von denen Sie Daten erfassen.
+* Für alle Geräte, von denen Sie Daten erfassen, sind Netzwerkadressen, Kontoinformationen und Passwörter erforderlich.
+
+
+.Schritte
+. Klicken Sie im Menü Cloud Insights auf *Admin > Datensammler*
++
+Das System zeigt die verfügbaren Datensammler an, die nach Hersteller geordnet sind.
+
+. Klicken Sie auf *+ Collector* auf dem gewünschten Anbieter und wählen Sie den zu konfigurierenden Datensammler aus.
++
+Im Dialogfeld können Sie den Datensammler konfigurieren und eine Erfassungseinheit hinzufügen.
+
+. Geben Sie einen Namen für den Datensammler ein.
++
+Namen können Buchstaben (a-z), Zahlen (0-9), Bindestriche (-), Unterstriche (_), Apostrophe ('), Und Perioden (.).
+
+. Geben Sie die Erfassungseinheit ein, die diesem Datensammler zugeordnet werden soll.
+. Geben Sie die erforderlichen Felder im Konfigurationsbildschirm ein.
+. Wenn Sie aufgefordert werden, Benachrichtigungen zu konfigurieren, wählen Sie E-Mail, Webhook oder beides und wählen Sie die Alarmtypen aus, die Sie benachrichtigen möchten (kritisch, Warnung, Information und/oder gelöst). Sie können die Liste der Empfänger für den globalen Monitor (konfiguriert in *Admin > Benachrichtigungen*) angeben oder weitere Empfänger angeben. Wenn Sie bereit sind, fortzufahren, klicken Sie auf *Setup abschließen*.
+
+
+image:CollectorNotifications.jpg["Sammlerbenachrichtigungen"]
+
+Wenn Sie sich eine Landing Page für die Datenerfassung ansehen, können Sie die Benachrichtigungen ändern, indem Sie auf das Bleistiftsymbol im Feld „Benachrichtigungen“ des Zusammenfassungsbereichs für die Datenerfassung klicken.
+
+image:CollectorNotifications_Edit.jpg["Bearbeiten Von Collector-Benachrichtigungen"]
+
+. Klicken Sie auf *Erweiterte Konfiguration*, um weitere Konfigurationsfelder hinzuzufügen. (Nicht alle Datensammler benötigen erweiterte Konfiguration.)
+. Klicken Sie auf *Testkonfiguration*, um zu überprüfen, ob der Datensammler ordnungsgemäß konfiguriert ist.
+. Klicken Sie auf *Collector hinzufügen*, um die Konfiguration zu speichern und den Datensammler zu Ihrem Cloud Insights-Mandanten hinzuzufügen.
+
+
+Nach dem Hinzufügen eines neuen Datensammlers leitet Cloud Insights drei Abstimmungen ein:
+
+* 1. Bestandsabfrage: Sofort
+* Erste Leistungsdatenabfrage, um eine Basislinie zu erstellen: Unmittelbar nach Bestandsabfrage
+* 2. Leistungsumfrage: Innerhalb von 15 Sekunden nach Abschluss der 1. Leistungsumfrage
+
+
+Die Abfrage erfolgt dann nach den konfigurierten Abfrageintervallen für Bestand und Leistung.

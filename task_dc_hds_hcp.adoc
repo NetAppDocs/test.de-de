@@ -1,0 +1,86 @@
+---
+sidebar: sidebar 
+permalink: task_dc_hds_hcp.html 
+keywords: data collector, Hitachi HDS, HCP 
+summary: Konfiguration des HDS Datensammlers 
+---
+= Datensammler Hitachi HCP
+:allow-uri-read: 
+
+
+[role="lead"]
+Dieser Datensammler unterstützt die Hitachi Content Platform (HCP) mithilfe der HCP Management API.
+
+
+
+== Terminologie
+
+Cloud Insights erfasst die folgenden Bestandsinformationen vom Datensammler Hitachi HCP. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| HCP-Cluster | Storage 
+
+
+| Mandant | Storage-Pool 
+
+
+|  | Namespace 
+
+
+| Internes Volumen | Knoten 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Inventaranforderungen
+
+Zur Erfassung von Bestandsdaten müssen Sie Folgendes haben:
+
+* IP-Adresse des HCP-Servers
+* Schreibgeschützter Benutzername und Kennwort für die HCP-Software und die Peer-Rechte
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| HCP-Host | IP-Adresse oder vollqualifizierter Domänenname des HCP-Hosts 
+
+
+| HCP-Anschluss | Der Standardwert ist 9090 
+
+
+| HCP-Benutzer-ID | Benutzername für den HCP-Host. 
+
+
+| HCP-Kennwort | Passwort, das für den HCP-Host verwendet wird. 
+
+
+| HCP-Authentifizierungstyp | Wählen Sie HCP_LOCAL oder ACTIVE_DIRECTORY 
+|===
+
+
+== Erweiterte Konfiguration
+
+|===
+
+
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 60. 
+
+
+| Leistungsintervall (Sek.) | Intervall zwischen Performance-Abstimmungen Der Standardwert ist 900. 
+|===
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

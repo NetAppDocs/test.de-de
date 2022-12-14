@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: task_view_and_manage_alerts.html 
+summary: Anzeigen von Warnungen, die von Monitoren ausgelöst wurden 
+keywords: monitor, alert, viewing 
+---
+= Anzeigen und Verwalten von Warnmeldungen von Monitoren
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights zeigt bei jedem dieser Meldungen an link:task_create_monitor.html["Überwachte Schwellenwerte"] Werden überschritten.
+
+
+TIP: Monitore und Alarmfunktionen sind in der Cloud Insights Standard Edition und höher erhältlich.
+
+
+
+=== Anzeigen und Verwalten von Warnungen
+
+Gehen Sie wie folgt vor, um Meldungen anzuzeigen und zu verwalten.
+
+. Navigieren Sie zur Seite *Alerts > All Alerts*.
+. Eine Liste der letzten 1,000 Meldungen wird angezeigt. Sie können diese Liste in einem beliebigen Feld sortieren, indem Sie auf die Spaltenüberschrift für das Feld klicken. In der Liste werden die folgenden Informationen angezeigt. Beachten Sie, dass standardmäßig nicht alle dieser Spalten angezeigt werden. Sie können die anzuzeigenden Spalten auswählen, indem Sie auf das Zahnrad-Symbol klicken image:gear.png["Zahnrad-Symbol"]:
++
+** *Alarm-ID*: Vom System generierte eindeutige Alarm-ID
+** *Auslösezeit*: Der Zeitpunkt, zu dem der betreffende Monitor den Alarm ausgelöst hat
+** *Aktueller Schweregrad* (Registerkarte Aktive Warnmeldungen): Der aktuelle Schweregrad der aktiven Warnmeldung
+** *Oberer Schweregrad* (Registerkarte „Erledigte Warnmeldungen“); der maximale Schweregrad der Warnmeldung, bevor sie behoben wurde
+** *Monitor*: Der Monitor ist so konfiguriert, dass der Alarm ausgelöst wird
+** *Ausgelöst an*: Das Objekt, auf dem die überwachte Schwelle überschritten wurde
+** *Status*: Aktueller Alarmstatus, _Neu_ oder _in Prozess_
+** *Aktiver Status*: _Aktiv_ oder _aufgelöst_
+** *Bedingung*: Die Schwellwertbedingung, die die Warnung ausgelöst hat
+** *Metrisch*: Die Objektmetrik, auf der der überwachte Schwellenwert überschritten wurde
+** *Überwachungsstatus*: Aktueller Status des Monitors, der die Warnung ausgelöst hat
+** *Hat Korrekturmaßnahmen*: Der Alarm hat Korrekturmaßnahmen vorgeschlagen. Öffnen Sie die Alarmseite, um diese anzuzeigen.
+
+
+
+
+Sie können eine Warnmeldung verwalten, indem Sie auf das Menü rechts neben der Warnmeldung klicken und eine der folgenden Optionen auswählen:
+
+* *In Bearbeitung* um anzuzeigen, dass der Alarm untersucht wird oder anderweitig offen gehalten werden muss
+* *Abweisen*, um die Warnung aus der Liste der aktiven Warnungen zu entfernen.
+
+
+Sie können mehrere Warnungen verwalten, indem Sie das Kontrollkästchen links neben jeder Warnung aktivieren und auf „_Ausgewählte Warnungen ändern Status_“ klicken.
+
+Wenn Sie auf eine Alarm-ID klicken, wird die Seite mit den Alarmdetails geöffnet.
+
+
+
+=== Seite Mit Den Alarmdetails
+
+Die Seite mit den Details für Warnmeldungen enthält weitere Details zu der Warnmeldung, darunter eine _Zusammenfassung_, eine _Expert View_ mit Diagrammen zu den Objektdaten, beliebige _zugehörige Assets_ und _Kommentare_, die von den Alarmforschern eingegeben wurden.
+
+image:alert_detail_page.png["Seite Mit Den Alarmdetails"]
+
+
+
+=== „Dauerhaft Aktiv“-Warnungen
+
+Es ist möglich, einen Monitor so zu konfigurieren, dass die Bedingung *immer* auf dem überwachten Objekt vorhanden ist, z. B. IOPS > 1 oder Latenz > 0. Diese werden oft als „Test“-Monitore erzeugt und dann vergessen. Solche Monitore erzeugen Warnmeldungen, die dauerhaft an den einzelnen Objekten offen bleiben. Dies kann zu Problemen mit der Systemspannung und Stabilität im Laufe der Zeit führen.
+
+Um dies zu verhindern, schließt Cloud Insights automatisch alle „dauerhaft aktiven“ Warnungen nach 7 Tagen. Beachten Sie, dass die zugrunde liegenden Monitorbedingungen (wahrscheinlich) weiterhin existieren, wodurch fast sofort eine neue Warnung ausgegeben wird, aber durch das Schließen von „immer aktiven“ Warnungen werden einige der sonst auftretenden Systembelastungen verringert.

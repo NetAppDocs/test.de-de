@@ -1,0 +1,113 @@
+---
+sidebar: sidebar 
+permalink: task_dc_brocade_bna.html 
+keywords: data collector, Brocade, BNA 
+summary: Konfigurieren von Brocade BNA Collector 
+---
+= Datensammler Brocade Network Advisor
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights erfasst mithilfe des Brocade Network Advisor Datensammlers Inventar- und Performance-Daten von Brocade Switches.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen vom Datensammler Brocade Network Advisor. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Switch | Switch 
+
+
+| Port | Port 
+
+
+| Virtual Fabric, Physische Fabric | Fabric 
+
+
+| Logischer Switch | Logischer Switch 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Anforderungen
+
+Zur Konfiguration dieses Datensammlers sind folgende Voraussetzungen erforderlich:
+
+* Die Cloud Insights-Erfassungseinheit führt Verbindungen zum TCP-Port 443 auf dem BNA-Server ein. BNA-Server muss Version 14.2.1 oder höher ausführen.
+* IP-Adresse des Brocade Network Advisor Servers
+* Benutzername und Kennwort für ein Administratorkonto
+* Port-Anforderung: HTTP/HTTPS 443
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Brocade Network Advisor Server IP | IP-Adresse des Network Advisor-Servers 
+
+
+| Benutzername | Benutzername für den Switch 
+
+
+| Benutzername | Administrator-Benutzername 
+
+
+| Passwort | Administratorpasswort 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Verbindungstyp | HTTPS (Standardport 443) oder HTTP (Standardport 80) 
+
+
+| Verbindungs-Port Überschreiben | Wenn Sie leer sind, verwenden Sie den Standardport im Feld Verbindungstyp. Andernfalls geben Sie den zu verwendenden Anschluss ein 
+
+
+| Passwort | Passwort für den Switch 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 40 
+
+
+| Access Gateway Melden | Aktivieren Sie diese Option, um Geräte im Access Gateway-Modus einzubeziehen 
+
+
+| Leistungsintervall (Sek.) | Der Standardwert ist 1800 
+|===
+
+
+== Fehlerbehebung
+
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+
+
+==== Inventar
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Sie erhalten eine Meldung, dass mehr als 1 Knoten am Access Gateway-Port angemeldet ist, oder Datensammler kann das Access Gateway-Gerät nicht erkennen. | Überprüfen Sie, ob das NPV-Gerät ordnungsgemäß funktioniert und dass alle verbundenen WWNs erwartet werden. Erwerben Sie das NPV-Gerät nicht direkt. Stattdessen erfasst die Akquisition des Core Fabric Switch die NPV Geräte-Daten. 
+|===
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

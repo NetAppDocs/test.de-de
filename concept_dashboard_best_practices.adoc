@@ -1,0 +1,129 @@
+---
+sidebar: sidebar 
+permalink: concept_dashboard_best_practices.html 
+summary: Best Practices zur optimalen Nutzung Ihrer Dashboards 
+keywords: dashboard, hints, tips, best practice, widgets, metrics, 
+---
+= Best Practices für Dashboards und Widgets
+:allow-uri-read: 
+
+
+[role="lead"]
+Tipps und Tricks, damit Sie die leistungsstarken Funktionen von Dashboards und Widgets optimal nutzen können.
+
+
+
+== Suchen der richtigen Metrik
+
+Cloud Insights erfasst Zähler und Kennzahlen unter Verwendung von Namen, die sich manchmal von der Datenerfassung zu Datensammler unterscheiden.
+
+Bei der Suche nach der richtigen Metrik oder dem Zähler für Ihr Dashboard-Widget sollten Sie bedenken, dass die Metrik, die Sie benötigen, unter einem anderen Namen als der Metrik stehen kann, an die Sie denken. Während die Dropdown-Listen in Cloud Insights in der Regel alphabetisch sind, wird manchmal ein Begriff nicht in der Liste angezeigt, in der er Ihrer Meinung nach sein sollte. Beispielsweise werden Begriffe wie „Rohkapazität“ und „genutzte Kapazität“ in den meisten Listen nicht zusammen angezeigt.
+
+*Best Practice*: Verwenden Sie die Suchfunktion in Feldern wie Filtern nach oder Orten wie der Spaltenauswahl, um das zu finden, was Sie suchen. Beispielsweise zeigt die Suche nach „Cap“ alle Metriken mit „Capacity“ in ihren Namen an, unabhängig davon, wo sie in der Liste auftreten. Sie können dann ganz einfach die gewünschten Metriken aus dieser kürzeren Liste auswählen.
+
+Hier sind ein paar alternative Formulierungen, die Sie bei der Suche nach Metriken versuchen können:
+
+|===
+
+
+| Wann Sie suchen möchten: | Versuchen Sie auch die Suche nach: 
+
+
+| CPU | Prozessor 
+
+
+| Kapazität | Genutzte Kapazität Rohkapazität bereitgestellte Kapazität Storage Pools Kapazität <anderer Asset-Typ> geschriebene Kapazität 
+
+
+| Festplattengeschwindigkeit | Niedrigste Festplattengeschwindigkeit, die am wenigsten geeignete Festplattenart ausführt 
+
+
+| Host | Hypervisor-Hosts 
+
+
+| Hypervisor | Host ist Hypervisor 
+
+
+| Mikrocode | Firmware 
+
+
+| Name | Alias Hypervisor Name Storage Name <other Asset type> Name Simple Name Resource Name Fabric Alias 
+
+
+| Lesen/Schreiben | Teilweise Lese-/Lese-Schreib-IOPS – Schreiblatenz – Lese-Cache-Auslastung – Lesen 
+
+
+| Virtual Machine | Die VM ist virtuell 
+|===
+Dies ist keine umfassende Liste. Dies sind nur Beispiele für mögliche Suchbegriffe.
+
+
+
+== Ermitteln der richtigen Ressourcen
+
+Die Ressourcen, auf die Sie in Widget-Filtern und -Suchen verweisen können, variieren von Asset-Typ zu Asset-Typ.
+
+In Dashboards und Asset-Seiten bestimmt der Asset-Typ, um den Sie Ihr Widget erstellen, die anderen Asset-Typen-Zähler, für die Sie eine Spalte filtern oder hinzufügen können. Beachten Sie beim Erstellen Ihres Widgets Folgendes:
+
+|===
+
+
+| Dieser Asset-Typ / Zähler: | Kann unter diesen Assets gefiltert werden: 
+
+
+| Virtual Machine | VMDK 
+
+
+| Datenspeicher(e) | Internes Volume VMDK Virtual Machine Volume 
+
+
+| Hypervisor | Virtual Machine ist Hypervisor-Host 
+
+
+| Host(s) | Host Virtual Machine Des Internen Volume Cluster 
+
+
+| Fabric | Port 
+|===
+Dies ist keine umfassende Liste.
+
+*Best Practice*: Wenn Sie nach einem bestimmten Asset-Typ filtern, der nicht in der Liste angezeigt wird, versuchen Sie, Ihre Anfrage um einen alternativen Asset-Typ zu erstellen.
+
+
+
+== Scatter-Plot Beispiel: Ihre Achse kennen
+
+Durch Ändern der Zählerreihenfolge in einem Widget mit Streudiagramm werden die Achsen geändert, auf denen die Daten angezeigt werden.
+
+.Über diese Aufgabe
+Dieses Beispiel erstellt ein Scatter-Diagramm, mit dem Sie leistungsschwache VMs sehen können, die eine hohe Latenz im Vergleich zu niedrigen IOPS haben.
+
+.Schritte
+. Erstellen oder öffnen Sie ein Dashboard im Bearbeitungsmodus und fügen Sie ein Widget *Streudiagramm* hinzu.
+. Wählen Sie einen Asset-Typ aus, z. B. _Virtual Machine_.
+. Wählen Sie den ersten Zähler aus, den Sie zeichnen möchten. Wählen Sie in diesem Beispiel „_Latenz - Total_“ aus.
++
+_Latenz - Total_ wird entlang der X-Achse des Diagramms kartiert.
+
+. Wählen Sie den zweiten Zähler aus, den Sie zeichnen möchten. Wählen Sie in diesem Beispiel „_IOPS – Total_“ aus.
++
+_IOPS - Total_ wird entlang der Y-Achse im Diagramm dargestellt. VMs mit höherer Latenz werden rechts im Diagramm angezeigt. Es werden nur die 100 VMs mit der höchsten Latenz angezeigt, da die Einstellung *Top by X-Axis* aktuell ist.
+
++
+image:ScatterplotExample1.png["Streudiagramm Beispiel 1"]
+
+. Nun die Reihenfolge der Zähler umkehren, indem der erste Zähler auf _IOPS - Total_ und der zweite auf _Latenz - Total_ eingestellt wird.
++
+_Latenz- Total_ wird jetzt entlang der Y-Achse im Diagramm und _IOPS - Total_ entlang der X-Achse kartiert. VMs mit höheren IOPS werden jetzt rechts im Diagramm angezeigt.
+
++
+Da wir die *Top by X-Axis*-Einstellung nicht geändert haben, zeigt das Widget jetzt die Top 100 VMs mit den höchsten IOPS an, da dies das ist, was derzeit entlang der X-Achse dargestellt wird.
+
++
+image:ScatterplotExample2.png["Streudiagramm Beispiel 2"]
+
+
+
+Sie können wählen, dass das Diagramm die obere N nach X-Achse, die obere N nach Y-Achse, die untere N nach X-Achse oder die untere N nach Y-Achse anzeigt. In unserem letzten Beispiel werden die 100 wichtigsten VMs mit den höchsten IOPS insgesamt angezeigt. Wenn wir es in *Top by Y-Achse* ändern, zeigt das Diagramm wieder die Top 100 VMs mit der höchsten Gesamt-Latenz an.
+
+Beachten Sie, dass Sie in einem Scatter-Diagramm auf einen Punkt klicken können, um die Asset-Seite für diese Ressource aufzurufen.

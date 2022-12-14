@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: reporting_create_example.html 
+summary: Verwenden Sie diese Vorgehensweise, um einen Bericht mithilfe der vordefinierten Cloud Insights-Berichte zu erstellen. 
+keywords: reporting, cognos, data warehouse, dwh, create, report 
+---
+= Erstellen eines Berichts (Beispiel)
+:allow-uri-read: 
+
+
+[role="lead"]
+Erstellen Sie anhand der Schritte in diesem Beispiel einen einfachen Bericht zur physischen Kapazität von Storage- und Speicherpools in verschiedenen Datacentern.
+
+.Schritte
+. Klicken Sie in der Symbolleiste auf *[+]*
+. Klicken Sie Auf *Bericht*
+. Klicken Sie Auf *Vorlagen > Leer*
+. Klicken Sie auf *Themen > Cool Blue > OK*
++
+Die Registerkarte „Quelle und Daten“ wird angezeigt
+
+. Klicken Sie Auf *Quelle > [+]*
+. Klicken Sie im Dialogfeld *Datei öffnen* auf *Teaminhalt > Pakete*
++
+Eine Liste der verfügbaren Pakete wird angezeigt.
+
+. Klicken Sie auf *Speicher- und Speicherpool-Kapazität > Öffnen*
+. Klicken Sie Auf *[+]*
++
+Die verfügbaren Stile für Ihren Bericht werden angezeigt.
+
+. Klicken Sie Auf *Liste*
++
+Fügen Sie entsprechende Namen für Liste und Abfrage hinzu
+
+. Klicken Sie auf *OK*
+. Erweiterung_Physische Kapazität_
+. Erweitern Sie das System auf die unterste Ebene _Data Center_
+. Ziehen Sie _Data Center_ zum Reporting-Gaumen.
+. Erweitern Sie _Capacity (MB)_
+. Ziehen Sie _Kapazität (MB)_ zum Berichtspaue.
+. Ziehen Sie _genutzte Kapazität (MB)_ zum Berichtsausgang.
+. Führen Sie den Bericht durch, indem Sie auf klicken image:Reporting-RunButton.png["Laufen"] Und Auswahl eines Ausgabetyps.
+
+
+.Ergebnis
+Ein Bericht wie der folgende wird erstellt:
+
+image:Reporting-Example1.png["Berichtsbeispiel"]

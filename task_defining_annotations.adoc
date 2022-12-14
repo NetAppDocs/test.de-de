@@ -1,0 +1,143 @@
+---
+sidebar: sidebar 
+permalink: task_defining_annotations.html 
+keywords: annotations, monitor, notes, tags 
+summary: Verfolgen von Daten mithilfe von Anmerkungen 
+---
+= Anmerkungen definieren
+:allow-uri-read: 
+
+
+[role="lead"]
+Wenn Sie Cloud Insights anpassen, um die Daten zur Nachverfolgung Ihrer Unternehmensanforderungen zu verfolgen, können Sie spezielle Notizen, die so genannten Anmerkungen, definieren und diese Ihrer Assets zuweisen.
+
+Sie können Assets mit Informationen zum Ende des Lebenszyklus der Ressource, zum Datacenter, zum Standort, zum Storage-Tier oder zu einem Volume Service-Level Anmerkungen zuweisen.
+
+Durch die Verwendung von Annotationen zum Monitoring Ihrer Umgebung werden die folgenden grundlegenden Aufgaben aufgeführt:
+
+* Erstellen oder Bearbeiten von Definitionen für alle Anmerkungstypen.
+* Anzeigen von Asset-Seiten und Verknüpfen jeder Anlage mit einer oder mehreren Anmerkungen.
++
+Wenn z. B. ein Asset geleast wird und der Mietvertrag innerhalb von zwei Monaten abläuft, können Sie eine End-of-Life-Anmerkung auf das Asset anwenden. Dadurch wird verhindert, dass andere diese Ressource über einen längeren Zeitraum nutzen können.
+
+* Erstellen von Regeln, um Anmerkungen automatisch auf mehrere Assets desselben Typs anzuwenden.
+* Filtern Sie Assets nach ihren Anmerkungen.
+
+
+
+
+== Standard-Anmerkungstypen
+
+Cloud Insights bietet einige Standard-Anmerkungstypen. Mit diesen Annotationen lassen sich Daten filtern oder gruppieren.
+
+Sie können Assets mit Standardanmerkungstypen verknüpfen, z. B.:
+
+* Lebenszyklus von Anlagen, z. B. Geburtstag, Sonnenuntergang oder Ende des Lebenszyklus
+* Positionsinformationen zu einem Gerät wie z. B. Rechenzentren, Gebäude oder Etage
+* Klassifizierung von Assets, z. B. nach Qualität (Tiers), nach angeschlossenen Geräten (Switch-Ebene) oder nach Service-Level
+* Status, z. B. „heiß“ (hohe Auslastung)
+
+
+In der folgenden Tabelle sind die von Cloud Insights bereitgestellten Anmerkungstypen aufgeführt.
+
+[cols="30,53, 16"]
+|===
+
+
+| Anmerkungstypen | Beschreibung | Typ 
+
+
+| Alias | Benutzerfreundlicher Name für eine Ressource | Text 
+
+
+| Rechnerressourcengruppe | Gruppenzuordnung, die vom Datensammler der Host- und VM-Dateisysteme verwendet wird | Liste 
+
+
+| Rechenzentrum | Physischer Standort | Liste 
+
+
+| Heiß | Geräte, die regelmäßig oder an der Kapazitätsgrenze unter hohem Verbrauch stehen | Boolesch 
+
+
+| Hinweis | Kommentare, die einer Ressource zugeordnet sind | Test 
+
+
+| Service-Level | Eine Reihe unterstützter Service-Level, die Sie Ressourcen zuweisen können. Zeigt eine Liste mit bestellten Optionen für interne Volumes, qtree und Volumes an. Bearbeiten Sie Service Levels, um Performance-Richtlinien für unterschiedliche Level festzulegen. | Liste 
+
+
+| Sonnenuntergang | Schwellenwert, nach dem keine neuen Zuordnungen an das Gerät vorgenommen werden können. Nützlich für geplante Migrationen und andere ausstehende Netzwerkänderungen. | Datum 
+
+
+| Switch-Ebene | Vordefinierte Optionen zum Einrichten von Kategorien für Schalter. In der Regel bleiben diese Bezeichnungen für die Lebensdauer des Geräts, Sie können sie jedoch bearbeiten. Nur für Switches verfügbar. | Liste 
+
+
+| Ebene | Sie können darüber hinaus verwendet werden, um in Ihrer Umgebung verschiedene Service Levels zu definieren. Tiers können den Typ des Levels definieren, z. B. die erforderliche Geschwindigkeit (z. B. Gold oder Silber). Diese Funktion ist nur für interne Volumes, qtrees, Storage Arrays, Storage-Pools und Volumes verfügbar. | Liste 
+
+
+| Schweregrad Der Verletzung | Rangfolge (z. B. Major) eines Verstoßes (z. B. fehlende Host-Ports oder fehlende Redundanz) in einer Hierarchie von höchster bis niedrigster Bedeutung. | Liste 
+|===
+
+NOTE: Alias, Datacenter, Heiß, Service-Level, Sonnenuntergang, Switch-Ebene, Stufe und Verstoß Schweregrad sind Anmerkungen auf Systemebene, die Sie nicht löschen oder umbenennen können. Sie können nur deren zugewiesenen Werte ändern.
+
+
+
+== Erstellen benutzerdefinierter Anmerkungen
+
+Mithilfe von Annotationen können Sie benutzerdefinierte geschäftsspezifische Daten hinzufügen, die auf die Anforderungen Ihres Unternehmens an Assets abgestimmt sind. Cloud Insights bietet eine Reihe von Standardanmerkungen, doch können Sie herausfinden, dass Sie Daten auf andere Weise anzeigen möchten. Die Daten in benutzerdefinierten Annotationen ergänzen bereits erfassten Gerätedaten, wie z. B. Speicherhersteller, Anzahl Volumen und Leistungsstatistiken. Die Daten, die Sie mit Annotationen hinzufügen, werden von Cloud Insights nicht erkannt.
+
+.Schritte
+. Klicken Sie im Menü Cloud Insights auf *Verwalten > Anmerkungen*.
++
+Auf der Seite Anmerkungen wird die Liste der Anmerkungen angezeigt.
+
+. Klicken Sie Auf *+Hinzufügen*
+. Geben Sie einen *Name* und eine *Beschreibung* der Anmerkung ein.
++
+Sie können in diese Felder bis zu 255 Zeichen eingeben.
+
+. Klicken Sie auf *Typ* und wählen Sie dann eine der folgenden Optionen aus, die den in dieser Anmerkung zulässigen Datentyp darstellt:
+
+
+.Anmerkungstypen
+Boolesch:: Erstellt eine Dropdown-Liste mit den Optionen „Ja“ und „Nein“ Beispielsweise ist die Beschriftung „Direct Attached“ Boolesch.
+Datum:: Dadurch wird ein Feld erstellt, das ein Datum enthält. Wenn es sich bei der Anmerkung um ein Datum handelt, wählen Sie diese Option aus.
+Liste:: Erstellt eine der folgenden Optionen:
++
+--
+* Eine feste Dropdown-Liste
++
+Wenn andere diesem Anmerkungstyp auf einem Gerät zuweisen, können sie der Liste keine weiteren Werte hinzufügen.
+
+* Eine Liste mit flexiblen Dropdown-Menüs
++
+Wenn Sie beim Erstellen dieser Liste die Option Neue Werte hinzufügen auswählen, wenn andere diesen Anmerkungstyp auf einem Gerät zuweisen, können sie der Liste weitere Werte hinzufügen.
+
+
+
+--
+Nummer:: Erstellt ein Feld, in dem der Benutzer, der die Anmerkung zuweist, eine Zahl eingeben kann. Wenn der Anmerkungstyp beispielsweise „Stockwerk“ lautet, kann der Benutzer den Wert „number“ auswählen und die Bodennummer eingeben.
+Text:: Erstellt ein Feld, das Freiformtext zulässt. Sie können z. B. „Sprache“ als Anmerkungstyp eingeben, „Text“ als Wertetyp auswählen und eine Sprache als Wert eingeben.
+
+
+
+NOTE: Nachdem Sie den Typ festgelegt und Ihre Änderungen gespeichert haben, können Sie den Typ der Anmerkung nicht ändern. Wenn Sie den Typ ändern müssen, müssen Sie die Anmerkung löschen und eine neue erstellen.
+
+. Wenn Sie Liste als Anmerkungstyp auswählen, gehen Sie folgendermaßen vor:
++
+.. Wählen Sie *Neue Werte hinzufügen auf der Fly* aus, wenn Sie der Anmerkung weitere Werte hinzufügen möchten, wenn Sie auf einer Asset-Seite, die eine flexible Liste erstellt.
++
+Angenommen, Sie befinden sich auf einer Asset-Seite und das Asset hat die City-Anmerkung mit den Werten Detroit, Tampa und Boston. Wenn Sie die Option *Neue Werte hinzufügen auf der Fly* ausgewählt haben, können Sie City wie San Francisco und Chicago direkt auf der Asset-Seite zusätzliche Werte hinzufügen, anstatt zur Seite Anmerkungen zu gehen, um sie hinzuzufügen. Wenn Sie diese Option nicht wählen, können Sie beim Anwenden der Anmerkung keine neuen Anmerkungswerte hinzufügen; dadurch wird eine feste Liste erstellt.
+
+.. Geben Sie einen Wert und eine Beschreibung in die Felder *Wert* und *Beschreibung* ein.
+.. Klicken Sie auf *+Add+*, um weitere Werte hinzuzufügen.
+.. Klicken Sie auf das Papierkorb-Symbol, um einen Wert zu löschen.
+
+
+. Klicken Sie Auf *Speichern*
++
+Ihre Anmerkungen werden in der Liste auf der Seite Anmerkungen angezeigt.
+
+
+
+.Nachdem Sie fertig sind
+In der UI steht die Beschriftung sofort zur Verwendung zur Verfügung.

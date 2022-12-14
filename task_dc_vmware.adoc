@@ -1,0 +1,150 @@
+---
+sidebar: sidebar 
+permalink: task_dc_vmware.html 
+keywords: data collector, VMware, 
+summary: VMware Data Collector wird konfiguriert. 
+---
+= VMware vSphere Data Collector konfigurieren
+:allow-uri-read: 
+
+
+[role="lead"]
+Der Datensammler für VMware vSphere sammelt ESX Host-Informationen und benötigt schreibgeschützte Berechtigungen auf allen Objekten im Virtual Center.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen vom VMware vSphere Data Collector. Für jeden erworbenen Asset-Typ wird die am häufigsten für das Asset verwendete Terminologie angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Virtuelle Festplatte | Festplatte 
+
+
+| Host | Host 
+
+
+| Virtual Machine | Virtual Machine 
+
+
+| Datastore | Datastore 
+
+
+| LUN | Datenmenge 
+
+
+| Fibre-Channel-Port | Port 
+|===
+Hierbei handelt es sich lediglich um allgemeine Terminologiezuordnungen, die für diesen Datensammler möglicherweise nicht alle Fälle darstellen.
+
+
+
+== Anforderungen
+
+Zur Konfiguration dieses Datensammlers sind folgende Informationen erforderlich:
+
+* IP-Adresse des Virtual Center-Servers
+* Schreibgeschützter Benutzername und Kennwort in Virtual Center
+* Für alle Objekte im Virtual Center benötigen wir schreibgeschützte Berechtigungen.
+* SDK-Zugriff auf dem Virtual Center-Server – in der Regel bereits eingerichtet.
+* Port-Anforderungen: http-80 HTTPS-443
+* Zugriff validieren:
++
+** Melden Sie sich mit dem oben genannten Benutzernamen und Kennwort beim Virtual Center Client an
+** Überprüfen Sie, ob das SDK aktiviert ist: telnet <vc_ip> 443
+
+
+
+
+
+
+== Einrichtung und Verbindung
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Name | Eindeutiger Name für den Datensammler 
+
+
+| Erfassungseinheit | Name der Erfassungseinheit 
+|===
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| IP-Adresse für Virtual Center | IP-Adresse des Virtual Center 
+
+
+| Benutzername | Benutzername für den Zugriff auf das Virtual Center 
+
+
+| Passwort | Passwort für den Zugriff auf das Virtual Center 
+|===
+
+
+== Erweiterte Konfiguration
+
+Aktivieren Sie im Bildschirm Erweiterte Konfiguration die Option *VM Performance*, um Leistungsdaten zu sammeln. Bestandserfassung ist standardmäßig aktiviert. Die folgenden Felder können konfiguriert werden:
+
+[cols="2*"]
+|===
+
+
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 20 
+
+
+| Filtern von VMs | Wählen Sie EINEN CLUSTER-, DATACENTER- oder ESX-HOST aus 
+
+
+| Wählen Sie „Ausschließen“ oder „Einschließen“, um eine Liste anzugeben | Filterliste erstellen (CLUSTER, DATACENTER und/oder ESX_HOST) 
+
+
+| Anzahl der Wiederholungen | Der Standardwert ist 3 
+
+
+| Kommunikations-Port | Der Standardwert ist 443 
+
+
+| Geräteliste Filtern... | Diese Liste muss aus exakten String-Übereinstimmungen bestehen - wenn Sie nach ESX_HOST filtern möchten, müssen Sie eine durch Komma getrennte Liste mit den genauen „Namen“ Ihrer ESX-Hosts erstellen, wie sowohl in Cloud Insights als auch vSphere gemeldet. Bei diesen „Namen“ handelt es sich entweder um IP-Adressen, einfache Hostnamen oder vollqualifizierte Domain-Namen (FQDNs) – dies wird durch den Namen dieser Hosts bestimmt, als sie ursprünglich zu vSphere hinzugefügt wurden. Beim Filtern nach CLUSTER Verwenden Sie die Cloud Insights-ähnlichen Cluster-Namen wie von CI auf Hypervisoren gemeldet - Cloud Insights prepends the vSphere Cluster Name with the vSphere Datacenter Name and a backslash - "DC1\clusterA" ist der Cluster-Name Cloud Insights würde über einen Hypervisor in clusterA innerhalb des Rechenzentrums DC1 berichten 
+
+
+| Leistungsintervall (Sek.) | Der Standardwert ist 300 
+|===
+
+
+== Fehlerbehebung
+
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+
+
+==== Inventar
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Fehler: Liste einschließen, um VMs zu filtern, darf nicht leer sein | Wenn Liste einschließen ausgewählt ist, geben Sie gültige DataCenter-, Cluster- oder Hostnamen an, um VMs zu filtern 
+
+
+| Fehler: Es konnte keine Verbindung zu VirtualCenter bei IP hergestellt werden | Mögliche Lösungen: * Überprüfen Sie die eingegebenen Anmeldeinformationen und die eingegebene IP-Adresse. * Versuchen Sie, mit Virtual Center über den VMware Infrastructure Client zu kommunizieren. * Versuchen Sie, mit Virtual Center über Managed Object Browser (z. B. MOB) zu kommunizieren. 
+
+
+| Fehler: VirtualCenter at IP verfügt über kein von JVM einkonformes Zertifikat | Mögliche Lösungen: * Empfohlen: Zertifikat für Virtual Center durch Verwendung von Stronger (z.B. neu generieren 1024-Bit) RSA-Schlüssel * Nicht empfohlen: Ändern Sie die JVM java.security-Konfiguration, um die Einschränkung jdk.certpath.diabledAlgorithms zu nutzen, um einen 512-Bit-RSA-Schlüssel zu ermöglichen. Siehe Versionshinweise zu JDK 7 Update 40 unter "http://www.oracle.com/technetwork/java/javase/7u40-relnotes-2004172.html"[] 
+|===
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

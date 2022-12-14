@@ -1,0 +1,164 @@
+---
+sidebar: sidebar 
+permalink: task_dc_emc_vmax_powermax.html 
+keywords: data collector, EMC, DELL, vmax, powermax 
+summary: Konfiguration von Datensammler der Dell EMC VMAX- und PowerMax-Produktreihe 
+---
+= Datensammler der Dell EMC VMAX- und PowerMax-Gerätefamilie
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights erkennt EMC VMAX- und PowerMax-Speicher-Arrays mithilfe von Solutions Enabler symcli-Befehlen in Verbindung mit einem vorhandenen Solutions Enabler-Server in Ihrer Umgebung. Der vorhandene Solutions Enabler-Server verfügt über eine Verbindung zum VMAX/PowerMax-Speicher-Array über den Zugriff auf Gatekeeper-Volumes.
+
+
+
+== Anforderungen
+
+Bevor Sie diese Datensammlung konfigurieren, sollten Sie sicherstellen, dass Cloud Insights über eine TCP-Verbindung zu Port 2707 auf dem vorhandenen Solutions Enabler-Server verfügt. Cloud Insights erkennt alle Symmetrix-Arrays, die auf diesem Server „lokal“ sind, wie in der Ausgabe der „symcfg-Liste“ dieses Servers zu sehen ist.
+
+* Die Anwendung EMC Solutions Enabler (CLI) mit SMI-S Provider muss auf dem Acquisition Unit-Server installiert sein. Die Version muss mit der Version übereinstimmen oder niedriger als die auf dem Solutions Enabler Server ausgeführte Version sein.
+* Eine ordnungsgemäß konfigurierte Datei {installdir}\EMC\SYMAPI\config\netcnfg ist erforderlich. Diese Datei definiert Dienstnamen für Solutions Enabler-Server sowie die Zugriffsmethode (SECURE / NOSECURE /ANY).
+* Wenn Sie eine Lese-/Schreiblatenz auf Speicherknotenebene benötigen, muss der SMI-S-Provider mit einer laufenden Instanz der UNISPHERE for VMAX-Anwendung kommunizieren.
+* IP-Adresse des Management Solutions Enabler Servers
+* Administratorberechtigungen auf dem Solutions Enabler (SE)-Server
+* Schreibgeschützter Benutzername und Kennwort für die SE-Software
+* Anforderungen für Solutions Enabler Server 6.5X:
++
+** MI-S Provider 3.3.1 für SMIS-S V1.2 installiert
+** Führen Sie nach der Installation \Programme\EMC\SYMCLI\bin>stordaemon starten speichersrvd
+
+
+* DIE UNISPHERE for VMAX-Anwendung muss ausgeführt werden und Statistiken für die EMC VMAX- und PowerMax-Speicher-Arrays sammeln, die von der SMI-S Provider-Installation gemanagt werden
+* Zugriffsvalidierung: Überprüfen Sie, ob der SMI-S-Provider ausgeführt wird: telnet <se_server> 5988
+
+
+
+
+== Terminologie
+
+Cloud Insights erfasst die folgenden Bestandsinformationen aus der Datenquelle EMC VMAX/PowerMax. Für jeden erfassten Asset-Typ wird die am häufigsten für dieses Dokument verwendete Terminologie angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Festplatte | Festplatte 
+
+
+| Festplattengruppe | Festplattengruppe 
+
+
+| Storage | Array-Storage 
+
+
+| Direktor | Storage-Node 
+
+
+| Geräte-Pool, Storage-Ressourcen-Pool (SRP) | Storage-Pool 
+
+
+| Gerät TDEV | Datenmenge 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Konfiguration
+
+*Hinweis:* Wenn die SMI-S-Benutzerauthentifizierung nicht aktiviert ist, werden die Standardwerte im Cloud Insights-Datensammler ignoriert.
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Name Des Service | Dienstname wie in der Datei _netcnfg_ angegeben 
+
+
+| Vollständiger Pfad zur CLI | Vollständiger Pfad zu dem Ordner, der die Symmetrix CLI enthält 
+
+
+| SMI-S-Host-IP-Adresse | IP-Adresse des SMI-S-Hosts 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 40 Minuten. 
+
+
+| Wählen Sie „Ausschließen“ oder „Einschließen“, um eine Liste anzugeben | Geben Sie an, ob die unten aufgeführte Array-Liste beim Sammeln von Daten aufgenommen oder ausgeschlossen werden soll. 
+
+
+| Bestandsfilter Geräteliste | Kommagetrennte Liste der Geräte-IDs, die einbezogen oder ausgeschlossen werden sollen 
+
+
+| Verbindungs-Caching | Wählen Sie die Methode zum Zwischenspeichern von Verbindungen: * LOCAL bedeutet, dass der Cloud Insights Acquisition-Dienst auf dem Solutions Enabler-Server ausgeführt wird, der über eine Fibre-Channel-Verbindung zu den Symmetrix-Arrays verfügt, die Sie ermitteln möchten, und Zugriff auf Gatekeeper-Volumes hat. Dies ist möglicherweise in einigen Konfigurationen der Remote Acquisition Unit (rau) zu sehen. * REMOTE_CACHED ist der Standard und sollte in den meisten Fällen verwendet werden. Hierbei werden die NETCNFG-Dateieinstellungen verwendet, um eine Verbindung über IP mit dem Solutions Enabler-Server herzustellen. Dieser muss über eine Fibre-Channel-Verbindung zu den Symmetrix-Arrays verfügen, die Sie ermitteln möchten, und hat Zugriff auf Gatekeeper-Volumes. * Wenn DIE OPTIONEN REMOTE_CACHED CLI-Befehle fehlschlagen, verwenden Sie DIE REMOTE-Option. Denken Sie daran, dass es den Erfassungsprozess verlangsamen wird (möglicherweise auf Stunden oder sogar Tage in extremen Fällen). Die NETCNFG-Dateieinstellungen werden weiterhin für eine IP-Verbindung zum Solutions Enabler-Server verwendet, der über Fibre Channel-Verbindungen zu den erkannten Symmetrix-Arrays verfügt. *Hinweis:* Diese Einstellung ändert das Cloud Insights-Verhalten nicht in Bezug auf die Arrays, die durch die Ausgabe "symcfg list" als REMOTE aufgeführt werden. Cloud Insights erfasst Daten nur auf Geräten, die mit diesem Befehl als LOKAL angezeigt werden. 
+
+
+| SMI-S-Protokoll | Protokoll für die Verbindung mit dem SMI-S-Provider. Zeigt auch den verwendeten Standardport an. 
+
+
+| SMIS-Port überschreiben | Wenn Sie leer sind, verwenden Sie den Standardport im Feld Verbindungstyp. Andernfalls geben Sie den zu verwendenden Anschluss ein 
+
+
+| SMI-S-Benutzername | Benutzername für den SMI-S Provider Host 
+
+
+| SMI-S-Passwort | Benutzername für den SMI-S Provider Host 
+
+
+| Leistungsintervall (Sek.) | Intervall zwischen Performance-Abstimmungen (standardmäßig 1000 Sekunden) 
+
+
+| hoose 'exclude' oder 'include', um eine Liste anzugeben | Geben Sie an, ob die unten aufgeführte Array-Liste beim Erfassen von Performancedaten einbezogen oder ausgeschlossen werden soll 
+
+
+| Geräteliste Für Leistungsfilter | Kommagetrennte Liste der Geräte-IDs, die einbezogen oder ausgeschlossen werden sollen 
+|===
+
+
+== Fehlerbehebung
+
+Einige Dinge zu versuchen, wenn Sie Probleme mit diesem Datensammler stoßen:
+
+
+
+==== Inventar
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Fehler: Die angeforderte Funktion ist derzeit nicht lizenziert | Installieren Sie die SYMAPI-Serverlizenz. 
+
+
+| Fehler: Es wurden keine Geräte gefunden | Stellen Sie sicher, dass Symmetrix-Geräte vom Solutions Enabler-Server verwaltet werden: - Führen Sie die symcfg-Liste -V aus, um die Liste der konfigurierten Symmetrix-Geräte anzuzeigen. 
+
+
+| Fehler: Ein angeforderter Netzwerkdienst wurde in der Servicedatei nicht gefunden | Stellen Sie sicher, dass der Solutions Enabler Service Name die netcnfg-Datei für Solutions Enabler definiert hat. Diese Datei befindet sich in der Regel unter SYMAPI\config\ in der Installation des Solutions Enabler-Clients. 
+
+
+| Fehler: Die Handshake des Remote-Clients/Servers ist fehlgeschlagen | Überprüfen Sie die letzten speichersrvd.log*-Dateien auf dem Solutions Enabler-Host, den wir zu entdecken versuchen. 
+
+
+| Fehler: Allgemeiner Name im Clientzertifikat ungültig | Bearbeiten Sie die Datei _Hosts_ auf dem Solutions Enabler-Server, damit der Hostname der Acquisition Unit wie in der storsrvd.log auf dem Solutions Enabler-Server angegeben auf der IP-Adresse auflöst. 
+
+
+| Fehler: Die Funktion konnte keinen Speicher abrufen | Stellen Sie sicher, dass genügend freier Speicherplatz im System vorhanden ist, um Solutions Enabler auszuführen 
+
+
+| Fehler: Solutions Enabler konnte nicht alle erforderlichen Daten bereitstellen. | Untersuchen Sie den Integritätsstatus und das Lastprofil von Solutions Enabler 
+
+
+| Fehler: • Der CLI-Befehl "symcfg list -tdev" gibt bei der Erfassung mit Solutions Enabler 7.x von einem Solutions Enabler Server 8.x. möglicherweise falsche Daten zurück • Der CLI-Befehl „symcfg list -srp“ kann bei der Erfassung mit Solutions Enabler 8.1.0 oder früher von einem Solutions Enabler Server 8.3 oder höher falsche Daten zurückgeben. | Vergewissern Sie sich, dass Sie die gleiche Solutions Enabler-Hauptversion verwenden 
+|===
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

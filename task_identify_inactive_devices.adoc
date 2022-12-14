@@ -1,0 +1,24 @@
+---
+sidebar: sidebar 
+permalink: task_identify_inactive_devices.html 
+keywords: inactive, device, 
+summary: Mit der Identifizierung inaktiver Geräte können Sie diese löschen oder einer aktiven Rolle zuweisen. 
+---
+= Identifizieren von inaktiven Geräten
+:allow-uri-read: 
+
+
+[role="lead"]
+Die Ermittlung der vorhandenen und von wem verwendeten Ressourcen ist entscheidend für die „richtige Dimensionierung“ und die Freigabe ungenutzter Infrastruktur. Ressourcen lassen sich leicht neu zuweisen oder ungenutzte Ressourcen abbauen und unnötige Käufe vermeiden.
+
+Führen Sie die folgenden Schritte aus, um inaktive Assets zu identifizieren.
+
+.Schritte
+. Klicken Sie im Menü Cloud Insights auf *Abfragen > Neue Abfrage*
+. Im `Search For` Wählen Sie im Menü den Asset-Typ aus, den Sie abfragen möchten
+. Klicken Sie Auf *+ > Ist Aktiv*
+. Klicken Sie auf *Any* und ändern Sie es in *Nein*
++
+Das System zeigt eine Liste der inaktiven Assets des ausgewählten Gerätetyps an.
+
+

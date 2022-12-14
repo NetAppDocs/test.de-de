@@ -1,0 +1,46 @@
+---
+sidebar: sidebar 
+permalink: task_dc_na_cloud_volumes.html 
+summary: Konfiguration von NetApp Cloud Volumes Services für AWS Data Collector 
+keywords: data collector, NetApp, Cloud, AWS 
+---
+= NetApp Cloud Volumes Services für AWS Data Collector
+:allow-uri-read: 
+
+
+[role="lead"]
+Dieser Datensammler unterstützt die Bestandserfassung von NetApp Cloud Volumes Services für AWS Konfigurationen.
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Region Von Cloud Volumes | Region der NetApp Cloud Volumes Services für AWS 
+
+
+| API-Schlüssel | API-Schlüssel für Cloud Volumes 
+
+
+| Geheimer Schlüssel | Geheimen Schlüssel von Cloud Volumes 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 60 Minuten 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

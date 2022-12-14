@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: task_troubleshooting_windows_acquisition_unit_problems.html 
+summary: Tipps zur Fehlerbehebung bei Problemen mit der Erfassungseinheit unter Windows. 
+keywords: AU, acquisition unit, trioubleshooting 
+---
+= Fehlerbehebung bei Problemen mit der Erfassungseinheit unter Windows
+:allow-uri-read: 
+
+
+[role="lead"]
+Hier finden Sie Vorschläge zur Fehlerbehebung bei Problemen mit Akquisitionseinheiten auf einem Windows-Server.
+
+|===
+
+
+| *Problem:* | *Teste das:* 
+
+
+| AUF der Seite *Admin > Data Collectors* auf der Registerkarte *Acquisition Units* wird „Certificate Expired“ oder „Certificate annuled“ ANGEZEIGT. | Klicken Sie auf das Menü rechts neben der AU und wählen Sie *Verbindung wiederherstellen*. Befolgen Sie die Anweisungen, um Ihre Erfassungseinheit wiederherzustellen: 1. Beenden Sie den AU-Dienst (Acquisition Unit). Klicken Sie auf die Schaltfläche _Stop-Befehl kopieren_, um den Befehl schnell in die Zwischenablage zu kopieren, und fügen Sie diesen Befehl anschließend in eine Eingabeaufforderung auf dem Erfassungsgerät ein. 2. Erstellen Sie eine Datei namens "Token" im Ordner _c:\Programme\Cloud Insights\Acquisition Unit\conf\_ auf der AU. 3. Klicken Sie auf die Schaltfläche _Token kopieren_ und fügen Sie dieses Token in die von Ihnen erstellte Datei ein. 4. Starten Sie den AU-Service. Klicken Sie auf die Schaltfläche _Copy Restart Command_, und fügen Sie den Befehl in eine Eingabeaufforderung auf der AU ein. 
+
+
+| Serveranforderungen nicht erfüllt | Stellen Sie sicher, dass Ihr Akquisitionsgruppenserver oder Ihre VM die Anforderungen erfüllt link:concept_acquisition_unit_requirements.html["Anforderungen"] 
+
+
+| Netzwerkanforderungen nicht erfüllt | Stellen Sie sicher, dass Ihr Acquisition Unit-Server/VM über eine SSL-Verbindung über Port 443 auf Ihre Cloud Insights-Umgebung (<Environment-Name>.c01.cloudinsights.netapp.com) zugreifen kann. Versuchen Sie folgende Befehle: _Ping <Environment-Name>.c01.cloudinsights.netapp.com_ _traceroute <Environment-Name>.c01.cloudinsights.netapp.com_ _curl \https://<environment-name>.c01.cloudinsights.netapp.com_ _wget \https://<environment-name>.c01.cloudinsights.netapp.com_ 
+
+
+| Proxy-Server nicht ordnungsgemäß konfiguriert | Überprüfen Sie Ihre Proxy-Einstellungen und deinstallieren/installieren Sie die Software für die Acquisition Unit, falls erforderlich, um die richtigen Proxy-Einstellungen einzugeben. 1. Versuchen Sie "Curl". Beziehen Sie sich auf "man Curl" Informationen/Dokumentation zu Proxys: --preproxy, --Proxy-* (das ist ein Platzhalter "*", da Curl viele Proxy-Einstellungen unterstützt). 2. Versuchen Sie "wget". In der Dokumentation finden Sie Proxy-Optionen. 
+
+
+| Die Installation der Erfassungseinheit ist in Cloud Insights fehlgeschlagen, bei dem Fehler bei Anmeldeinformationen beim Starten des Erfassungsservice aufgetreten sind (und im acq.log sichtbar). | Dies kann durch die Einbeziehung von Sonderzeichen in die Proxy-Anmeldeinformationen verursacht werden. Deinstallieren Sie AU (_sudo nebundinsights-uninstall.sh_) und installieren Sie sie erneut, ohne Sonderzeichen zu verwenden. 
+
+
+| Berechtigungsprobleme | Stellen Sie sicher, dass Sie als Benutzer mit Administratorrechten angemeldet sind 
+
+
+| Akquisition Wird Nicht Ausgeführt | Informationen finden Sie im Ordner acq.log im Verzeichnis _<install>\Cloud Insights\Acquisition Unit\log_. Starten Sie die Akquisition über Windows Services neu 
+
+
+| Probleme Bei Der Datenerfassung | Senden Sie einen Fehlerbericht von der Data Collector-Startseite, indem Sie auf die Schaltfläche „Fehlerbericht senden“ klicken 
+
+
+| Status: Herzschlag Fehlgeschlagen | Die Acquisition Unit (AU) sendet alle 60 Sekunden einen Herzschlag an Cloud Insights, um den Mietvertrag zu verlängern. Wenn der Heartbeat-Anruf aufgrund eines Netzwerkproblems oder aufgrund von nicht reagierenden Cloud Insights fehlschlägt, wird die Leasing-Zeit der AU nicht aktualisiert. Wenn die Leasingzeit der AU abläuft, zeigt Cloud Insights den Status „Heartbeat failed“ an. Schritte zur Fehlerbehebung: * Überprüfen Sie die Netzwerkverbindung zwischen Acquisition Unit Server und CloudInsights. * Prüfen Sie, ob der Dienst „Erfassungseinheit“ ausgeführt wird. Wenn der Dienst nicht ausgeführt wird, starten Sie den Dienst. * Überprüfen Sie im Protokoll der Erfassungseinheit (<Install dir>:\Programme\Cloud Insights\Acquisition Unit\log\acq.log), ob Fehler auftreten. 
+
+
+| Ich sehe eine Meldung „Heartbeat Error:“ | Dieser Fehler kann auftreten, wenn eine Netzwerkunterbrechung vorliegt, die dazu führt, dass die Kommunikation zwischen der Erfassungseinheit und der Cloud Insights-Umgebung länger als eine Minute unterbrochen wird. Stellen Sie sicher, dass die Verbindung zwischen AU und Cloud Insights stabil und aktiv ist. 
+|===
+
+
+=== Überlegungen zu Proxys und Firewalls
+
+Wenn Ihr Unternehmen Proxy-Nutzung für den Internet-Zugriff erfordert, müssen Sie möglicherweise das Proxy-Verhalten Ihrer Organisation verstehen und bestimmte Ausnahmen für Cloud Insights zu arbeiten suchen. Beachten Sie Folgendes:
+
+* Erstens blockiert Ihr Unternehmen standardmäßig den Zugriff und erlaubt ausschließlich den Zugriff auf bestimmte Websites/Domänen durch Ausnahme? Wenn dies der Fall ist, müssen Sie der Ausnahmeliste die folgende Domäne hinzufügen:
++
+ *.cloudinsights.netapp.com
++
+Ihre Cloud Insights-Erfassungseinheit sowie Ihre Interaktionen in einem Webbrowser mit Cloud Insights werden alle zu Hosts mit diesem Domainnamen aufgerufen.
+
+* Zweitens versuchen einige Proxys, eine TLS/SSL-Inspektion durchzuführen, indem sie Cloud Insights Websites mit digitalen Zertifikaten imitieren, die nicht von NetApp generiert wurden. Das Sicherheitsmodell der Cloud Insights-Erwerbseinheit ist grundsätzlich mit diesen Technologien unvereinbar. Sie würden auch den vorgenannten Domain-Namen von dieser Funktionalität ausgenommen benötigen, damit sich die Cloud Insights Acquisition Unit erfolgreich bei Cloud Insights anmelden und die Datenerkennung erleichtern kann.
+
+
+
+
+==== Anzeigen von Proxy-Endpunkten
+
+Sie können Ihre Proxy-Endpunkte anzeigen, indem Sie beim Onboarding auf den Link *Proxy-Einstellungen* klicken oder auf der Seite *Hilfe > Support* den Link unter _Proxy-Einstellungen_ wählen. Eine Tabelle wie die folgende wird angezeigt. Wenn Sie Cloud Secure in Ihrer Umgebung verwenden, werden auch die konfigurierten Endpunkt-URLs in dieser Liste angezeigt.
+
+image:ProxyEndpoints_NewTable.png["Tabelle Mit Proxy-Endpunkten"]
+
+
+
+=== Ressourcen
+
+Weitere Tipps zur Fehlerbehebung finden Sie im link:https://kb.netapp.com/Advice_and_Troubleshooting/Cloud_Services/Cloud_Insights["NetApp Knowledge Base"] (Support-Anmeldung erforderlich).
+
+Weitere Support-Informationen sind im Cloud Insights erhältlich link:concept_requesting_support.html["Unterstützung"] Seite.

@@ -1,0 +1,75 @@
+---
+sidebar: sidebar 
+permalink: concept_notifications_email.html 
+summary: E-Mail-Adressen für Benachrichtigungen werden hinzugefügt. 
+keywords: email, notifications, signature, recipient, list, subscription 
+---
+= E-Mail-Benachrichtigungen Werden Konfiguriert
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie können eine E-Mail-Liste für abonnementbezogene Benachrichtigungen sowie eine globale E-Mail-Liste mit Empfängern für die Benachrichtigung über Schwellenverletzungen für Leistungsrichtlinien konfigurieren.
+
+Um die Einstellungen für Benachrichtigungen-E-Mail-Empfänger zu konfigurieren, rufen Sie die Seite *Admin > Benachrichtigungen* auf.
+
+
+
+== Empfänger Für Abonnementbenachrichtigung
+
+[role="thumb"]
+image:SubscriptionNotificationSection.png["Abonnement-E-Mail-Benachrichtigungen"]
+
+Um Empfänger für abonnementbezogene Ereignisbenachrichtigungen zu konfigurieren, gehen Sie zum Abschnitt „Empfänger für Abonnementbenachrichtigungen“. Sie können wählen, dass E-Mail-Benachrichtigungen für abonnierte Ereignisse an einen oder alle der folgenden Empfänger gesendet werden:
+
+* Alle Account-Inhaber
+* Alle Administratoren
+* Zusätzliche E-Mail-Adressen, die Sie angeben
+
+
+Im Folgenden finden Sie Beispiele für die Art von Benachrichtigungen, die gesendet werden können, und Benutzeraktionen, die Sie durchführen können.
+
+|===
+
+
+| *Hinweis:* | *Benutzeraktion:* 
+
+
+| Testversion oder Abonnement wurde aktualisiert | Überprüfen Sie die Abonnementdetails auf der link:concept_subscribing_to_cloud_insights.html["Abonnement"] Seite 
+
+
+| Das Abonnement läuft in 90 Tagen ab das Abonnement läuft in 30 Tagen ab | Keine Aktion erforderlich, wenn „Auto Renewal“ aktiviert ist Kontakt link:https://www.netapp.com/us/forms/sales-inquiry/cloud-insights-sales-inquiries.aspx["NetApp Vertrieb"] Um das Abonnement zu verlängern 
+
+
+| Die Testversion endet in 2 Tagen | Verlängern Sie die Testversion vom link:concept_subscribing_to_cloud_insights.html["Abonnement"] Seite. Sie können eine einmalige Testversion erneuern. Kontakt link:https://www.netapp.com/us/forms/sales-inquiry/cloud-insights-sales-inquiries.aspx["NetApp Vertrieb"] Um ein Abonnement zu erwerben 
+
+
+| Testversion oder Abonnement abgelaufen Konto wird das Sammeln von Daten in 48 Stunden beendet Konto wird nach 48 Stunden gelöscht | Kontakt link:https://www.netapp.com/us/forms/sales-inquiry/cloud-insights-sales-inquiries.aspx["NetApp Vertrieb"] Um ein Abonnement zu erwerben 
+|===
+
+
+== Globale Empfängerliste für Warnungen
+
+Für jede Aktion der Warnmeldung werden E-Mail-Benachrichtigungen an die Benachrichtigungsliste gesendet. Sie können Benachrichtigungen an eine globale Empfängerliste senden.
+
+Um die Empfänger globaler Warnmeldungen zu konfigurieren, klicken Sie auf *Admin > Benachrichtigungen* und wählen Sie die gewünschten Empfänger im Abschnitt *Empfänger für globale Monitorbenachrichtigungen* aus.
+
+.image:GlobalMonitorRecipients.png["Empfänger Für Benachrichtigungen Des Globalen Monitors"]
+[role="thumb"]
+Sie können die globale Empfängerliste für einen einzelnen Monitor immer überschreiben, wenn Sie den Monitor erstellen oder ändern.
+
+
+
+== Globale Empfängerliste für Leistungsrichtlinien-Benachrichtigungen
+
+[role="thumb"]
+image:PerformancePolicyNotificationSection.png["E-Mail-Benachrichtigungen Zu Leistungsrichtlinien"]
+
+Um Empfänger zur E-Mail-Liste der globalen Performance Policy-Benachrichtigung hinzuzufügen, gehen Sie zum Abschnitt „Empfänger der Global Performance Policy“ und geben Sie E-Mail-Adressen getrennt durch Kommas ein. E-Mails, die als Warnmeldungen zu Schwellenwerten für die Performance-Richtlinie gesendet werden, werden an alle Empfänger in der Liste gesendet.
+
+Wenn Sie einen Fehler machen, können Sie auf [x] klicken, um einen Empfänger aus der Liste zu entfernen.
+
+Sie können auch einen optionalen Signaturblock hinzufügen, der an die gesendeten E-Mail-Benachrichtigungen angehängt wird.
+
+
+NOTE: Sie können die globale Liste für eine bestimmte Richtlinie überschreiben, wenn Sie diese Richtlinie konfigurieren.

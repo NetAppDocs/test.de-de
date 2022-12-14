@@ -1,0 +1,104 @@
+---
+sidebar: sidebar 
+permalink: task_dc_ms_hyperv.html 
+keywords: data collector, Microsoft, Hyper-V 
+summary: Microsoft Hyper-V-Datensammler konfigurieren. 
+---
+= Microsoft Hyper-V Datensammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Der Microsoft Hyper-V Datensammler erfasst Bestands- und Performancedaten aus der virtualisierten Server Computing-Umgebung.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen vom Microsoft Hyper-V (WMI). Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Virtuelle Festplatte | Virtuelles Laufwerk 
+
+
+| Host | Host 
+
+
+| Virtual Machine | Virtual Machine 
+
+
+| Cluster Shared Volumes (CSV), Partition Volume | Datastore 
+
+
+| Internet SCSI-Gerät, Multi Path SCSI LUN | LUN 
+
+
+| Fibre Channel-Port | Port 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Anforderungen
+
+Zur Konfiguration dieses Datensammlers sind folgende Voraussetzungen erforderlich:
+
+* Für die Hyper-V muss Port 5985 geöffnet sein, damit Daten erfasst und Remote-Zugriff/-Management erfolgen können.
+* IP-Adresse des Knoten der Clustering-Gruppe
+* Lokaler Administrator-Benutzer und Passwort auf dem Hypervisor
+* Benutzerkonto auf Administratorebene
+* Windows Management Instrumentation (WMI)-Befehl, der Standard, der von Windows installiert wird.
+* Port-Anforderungen: Port 135 über WMI & Dynamic TCP Ports zugewiesen 1024-65535 für Windows 2003 und älter und 49152-65535 für Windows 2008.
+* DNS-Auflösung muss erfolgreich sein, auch wenn der Datensammler nur auf eine IP-Adresse verweist
+* Für jeden Hyper-V Hypervisor muss für jede VM, auf jedem Host, „Resource Metering“ aktiviert sein. Dadurch kann jeder Hypervisor auf jedem Gast mehr Daten für Cloud Insights zur Verfügung stellen. Wenn diese Einstellung nicht festgelegt ist, werden für jeden Gast weniger Performance-Metriken erfasst. Weitere Informationen zur Ressourcenmessung finden Sie in der microsoft-Dokumentation:
++
+link:https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/hh831661(v=ws.11)["Hyper-V Übersicht zur Ressourcenmessung"]
+
++
+link:https://docs.microsoft.com/en-us/powershell/module/hyper-v/enable-vmresourcemetering?view=win10-ps["Aktivieren-VMressourcenMetering"]
+
+
+
+
+NOTE: Für den Hyper-V-Datensammler ist eine Windows Acquisition Unit erforderlich.
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| IP-Adresse des physischen Hosts | Die IP-Adresse oder der vollqualifizierte Domänenname für den physischen Host (Hypervisor). 
+
+
+| Benutzername | Administrator-Benutzername für den Hypervisor 
+
+
+| Passwort | Kennwort für den Hypervisor 
+
+
+| NT-Domäne | Der von den Nodes im Cluster verwendete DNS-Name 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 20 Minuten. 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

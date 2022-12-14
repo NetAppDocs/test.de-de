@@ -1,0 +1,81 @@
+---
+sidebar: sidebar 
+permalink: task_getting_started_with_cloud_cost.html 
+summary: Erste Schritte mit der Cloud – Kosten 
+keywords: analysis, cost, analyzer 
+---
+= Erste Schritte mit der Cloud – Kosten
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud-Kosten bieten eine detaillierte Kostenanalyse der vergangenen, aktuellen und geschätzten Ausgaben, um die Cloud-Nutzung in Ihrer Umgebung transparent zu machen. Die Cloud-Kostenkonsole bietet einen klaren Überblick über die Cloud-Ausgaben Ihres Unternehmens und detaillierte Informationen zu einzelnen Workloads, Konten und Services.
+
+Die Cloud-Kosten können die folgenden großen Herausforderungen bewältigen:
+
+* Nachverfolgung und Überwachung Ihrer Cloud-Kosten
+* Identifizierung von Abfall- und potenziellen Optimierungsbereichen
+* Ausführbare Aktionselemente werden bereitgestellt
+
+
+Zum Konfigurieren oder Anzeigen von Cloud-Kosten müssen Sie über die Berechtigungen Cloud Insights_Administrator_ oder_Account-Eigentümer_ verfügen. Sobald er konfiguriert ist, können alle Cloud Insights Benutzer mit diesen Berechtigungen auf Cloud-Kosten zugreifen.
+
+Konfigurieren Sie die Cloud-Kosten, indem Sie sie mit Ihrem Konto _AWS Organi_ verknüpfen. Dies wird manchmal als der bezeichnet link:https://docs.spot.io/cloud-analyzer/getting-started/connect-your-aws-master-payer-account-existing-customer["_Management_"] Konto.
+
+
+NOTE: Cloud-Kosten sind nur für Cloud Insights-Umgebungen in den USA verfügbar und können nur für einzelne AWS-Organisationen konfiguriert werden. Die Cloud-Kosten müssen getrennt von allen AWS Collectors in Cloud Insights konfiguriert werden.
+
+
+
+==== Cloud-Kosten Einrichten
+
+Wenn Sie sich bei Cloud Insights anmelden und zum ersten Mal auf den Menüpunkt *Cloud Cost* klicken, erhalten Sie einen Willkommensbildschirm und eine Aufforderung zur Einrichtung von Cloud Cost.
+
+image:Cloud_Cost_Welcome.png["Cloud-Kosten"]
+
+* Klicken Sie zum Starten* auf die Schaltfläche *AWS Zugangsdaten hinzufügen. Sie erhalten den Bildschirm zur AWS Verbindung. Folgen Sie den Anweisungen auf diesem Bildschirm, um Ihr *AWS Organisationen Konto* mit Cloud Cost zu verknüpfen.
++
+image:Cloud_Cost_Setup_1.png["AWS Connect"]
+
+* Wenn Sie mit der Konfiguration Ihres Kontos fertig sind, wird bei Cloud Cost eine Begrüßungsnachricht angezeigt.
++
+image:Cloud_Cost_Welcome_Wait.png["Willkommen bei Cloud Cost!"]
+
++
+
+NOTE: Eine vollständige Konfiguration der Cloud-Kosten kann bis zu 24 Stunden dauern. Sobald die Konfiguration abgeschlossen ist, erhalten Sie eine E-Mail-Benachrichtigung. Bei Schwierigkeiten können Sie sich an den NetApp Support wenden, indem Sie auf das Chat-Symbol klicken oder die Seite besuchen link:https://spot.io/support["NetApp Spot Support"].
+
+* Nachdem die Einrichtung abgeschlossen ist, wird das Dashboard Ihrer Kostenanalyse, ähnlich dem folgenden Beispiel, durch Klicken auf den Menüpunkt *Cloud Cost* angezeigt.
++
+image:Cloud_Cost_Example_Dashboard.png["Cloud-Kostenbeispiel: Dashboard"]
+
+
+
+
+
+=== Weitere Informationen zu Cloud-Kosten
+
+Cloud-Kosten verbinden die Cloud Insights Umgebung mit der Cloud Analyzer Funktion von link:https://docs.spot.io/cloud-analyzer/["Spot von NetApp"], Bietet Cloud Insights die relevantesten Informationen zu Ihren Cloud-Kostendaten. Wenn Sie oben rechts im Dashboard „Cloud Cost“ auf den Link „_Get Full Analysis_“ klicken, können Sie das vollständige Cloud Analyzer Dashboard in Spot öffnen. Die komplette Analyse kann zusätzliche Daten und Drill-Downs bieten, um Ihnen zusätzlichen Einblick in Ihre Cloud-Ausgaben zu geben.
+
+
+
+=== Fehlerbehebung
+
+Einige Dinge, die Sie versuchen sollten, wenn Probleme auftreten:
+
+[cols="2*"]
+|===
+| Problem: | Versuchen Sie dies: 
+
+
+| Ich habe eine E-Mail von Spot erhalten, die mein Setup bestätigt, aber die Links scheinen für Cloud Insights nicht relevant zu sein | Die Links im Spot E-Mail sind nicht relevant für Cloud Insights Cloud Cost. Links in den E-Mails von Spot ignorieren. 
+
+
+| Cloud Cost präsentiert mir eine Spot Login-Eingabeaufforderung. | Ihre Cloud Cost Session ist möglicherweise abgelaufen. Wechseln Sie zum Cloud Insights-Startbildschirm und anschließend zurück zu Cloud Cost, um Ihre Cloud Cost -Sitzung neu zu starten. 
+
+
+| Ich habe eine Meldung „Cloud Cost Session Conflict Detected“ erhalten. | Cloud-Kostensitzungen, die in mehreren Konten geöffnet werden, werden nicht im selben Browser unterstützt. Melden Sie sich bei Cloud Insights ab und wieder an, um Informationen zu Cloud-Kosten für Ihr Konto anzuzeigen. 
+
+
+| Ich sehe einen Fehler, wenn ich versuche mich anzumelden: "Unautorisiert. Ungültige Anmeldedaten.“ | Vergewissern Sie sich, dass Sie sich mit den richtigen Anmeldedaten anmelden. Wenn das Problem weiterhin besteht, wenden Sie sich an den NetApp Spot Support. 
+|===

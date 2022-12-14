@@ -1,0 +1,58 @@
+---
+sidebar: sidebar 
+permalink: task_config_telegraf_activemq.html 
+keywords: telegraf, installation, install, ActiveMQ 
+summary: HTTP-Datensammler-Konfiguration 
+---
+= ActiveMQ Data Collector
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights verwendet diesen Datensammler, um Metriken aus ActiveMQ zu erfassen.
+
+
+
+== Installation
+
+. Klicken Sie in *Admin > Data Collectors* auf *+Data Collector*. Wählen Sie unter *Services* ActiveMQ.
++
+Wählen Sie das Betriebssystem oder die Plattform aus, auf dem der Telegraf-Agent installiert ist.
+
+. Wenn Sie noch keinen Agent für die Sammlung installiert haben oder einen Agent für ein anderes Betriebssystem oder eine andere Plattform installieren möchten, klicken Sie auf _Anweisungen anzeigen_, um das zu erweitern link:task_config_telegraf_agent.html["Agenten-Installation"] Anweisungen.
+. Wählen Sie den Agent-Zugriffsschlüssel für diesen Datensammler aus. Sie können einen neuen Agent-Zugriffsschlüssel hinzufügen, indem Sie auf die Schaltfläche *+ Agent Access Key* klicken. Best Practice: Verwenden Sie einen anderen Agent-Zugriffsschlüssel nur, wenn Sie Datensammler gruppieren möchten, zum Beispiel nach Betriebssystem/Plattform.
+. Befolgen Sie die Konfigurationsschritte, um den Datensammler zu konfigurieren. Die Anweisungen hängen vom Betriebssystem oder der Plattform ab, die Sie zur Datenerfassung verwenden.
+
+
+image:ActiveMQDCConfigWindows.png["ActiveMQ-Konfiguration"]
+
+
+
+== Einrichtung
+
+Informationen finden Sie unter http://activemq.apache.org/getting-started.html["ActiveMQ-Dokumentation"]
+
+
+
+== Objekte und Zähler
+
+Folgende Objekte und ihre Zähler werden gesammelt:
+
+[cols="<.<,<.<,<.<,<.<"]
+|===
+| Objekt: | Kennungen: | Attribute: | Datenpunkte: 
+
+
+| ActiveMQ-Warteschlange | Namespace Queue Port Server | Node Name Node-IP-Node-UUID | Anzahl Der Warteschlange Anzahl Der Kunden Anzahl Der Ausgleiche Anzahl Warteschlange Größe 
+
+
+| ActiveMQ-Abonnenten | Namespace für Client-ID-Verbindungs-ID-Port-Server | Ist Active Destination Node Name Node IP Node UUID Node OS Selector Subscription | Anzahl Der Entsandten Absendete Warteschlange Anzahl Der Abgesandten Warteschlange Größe Anzahl Der Warteschlange Anzahl Der Ausstehenden Warteschlange Größe 
+
+
+| ActiveMQ-Thema | Thema Port Server Namespace | Node Name Node-IP-Node-UUID-Node-OS | Anzahl Der Ausgleichen Anzahl Der Verbraucher Größe Der Anzahl Der Warteschlangen 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen finden Sie im link:concept_requesting_support.html["Unterstützung"] Seite.

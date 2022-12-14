@@ -1,0 +1,84 @@
+---
+sidebar: sidebar 
+permalink: forensic_alert_detail.html 
+keywords: alert, Critical, Warning, Low, alert detail Synopsis, Time range, Start time, End time, user 
+summary: Alarmdetails 
+---
+= Warnmeldungsdetails
+:allow-uri-read: 
+
+
+[role="lead"]
+Wenn Sie auf das Synopsis klicken, um eine Warnung zu erhalten, wird die Seite mit ausführlichen Informationen für den Benutzer und die Warnung geöffnet.
+
+
+
+== Auf der Seite Warnungsdetails wird der Benutzer angezeigt
+
+Warnungsdetails enthält Informationen zu der auf der Seite Meldungen ausgewählten Warnmeldung.
+
+* Der Schweregrad der Meldung
+* Der Benutzer, der die Warnung und den Alarmtyp angehoben hat:
++
+** Anormaler Zugriff Durch Benutzer
+** Anormaler Zugang Durch Die Gemeinschaft
+** Anormaler Zugriff durch Benutzer in der Community
+** Benutzer hat sich vielen Communitys angeschlossen
+
+
+* Datum und Uhrzeit der Erkennung der Warnmeldung
+* Die ergriffene Aktion
++
+** Isoliert
+** Andere
+** Andere
+
+
+* Der Status der Meldung
++
+** Neu
+** In Bearbeitung
+** Abgelehnt
+** Behoben
+
+
+* Aktivitätsrate des Benutzers ändern
++
+** Typische Aktivitäten pro Stunde
+** Aktivitäten pro Stunde, wenn die Warnung erhöht wurde.
+** Prozentsatz der Tarifänderung, die die Warnmeldung verursacht hat.
+
+
+* Ein Diagramm mit dem historischen durchschnittlichen Aktivitätsrate und der Aktivitätrate, die zur Meldung geführt hat.
+
+
+
+
+=== Verwandter Benutzer
+
+* Benutzername und Titel
+* Abteilung
+* E-Mail mit einem Link zur E-Mail-Adresse
+* Manager An
+* Telefon
+* Standort
+
+
+
+
+=== Aktivität
+
+Zeigt die Aktivität des Benutzers für die letzten 7 Tage und den letzten Standort an, auf den der Benutzer Zugriff hat.
+
+* Aktivitäten:
++
+** Lesen
+** Andere
+** Erstellen
+
+
+* Gesamtanzahl der Warnungen in den letzten sieben Tagen.
+* Gesamtzahl der Aktivitäten in den letzten 7 Tagen.
+
+
+Klicken Sie auf *Aktivitätsdetails anzeigen*, um auf das zuzugreifen link:forensic_activity_history["Aktivitätsverlauf"] Des zu untersuchenden Benutzers.

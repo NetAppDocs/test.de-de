@@ -1,0 +1,23 @@
+---
+sidebar: sidebar 
+permalink: task_view_queries.html 
+summary: Anzeigen von erstellten Abfragen 
+keywords: query, queries, viewing 
+---
+= Anzeigen von Abfragen
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie können Ihre Abfragen anzeigen, um Ihre Assets zu überwachen und zu ändern, wie Ihre Abfragen die Daten zu Ihren Assets anzeigen.
+
+.Schritte
+. Melden Sie sich bei Ihrem Cloud Insights-Mandanten an.
+. Klicken Sie auf *Abfragen* und wählen Sie *Alle Anfragen anzeigen*. Sie können die Anzeige von Abfragen mit einer der folgenden Methoden ändern:
+. Sie können Text in das Filterfeld eingeben, um nach bestimmten Abfragen zu suchen.
+. Sie können die Sortierreihenfolge der Spalten in der Tabelle der Abfragen durch Klicken auf den Pfeil in der Spaltenüberschrift auf aufsteigender (Aufwärtspfeil) oder absteigender (Abwärtspfeil) ändern.
+. Wenn Sie die Größe einer Spalte ändern möchten, bewegen Sie den Mauszeiger über die Spaltenüberschrift, bis ein blauer Balken angezeigt wird. Legen Sie die Maus über die Leiste, und ziehen Sie sie nach rechts oder links.
+. Um eine Spalte zu verschieben, klicken Sie auf die Spaltenüberschrift und ziehen Sie sie nach rechts oder links.
+
+
+Beachten Sie beim Blättern durch die Abfrageergebnisse, dass sich die Ergebnisse ändern können, wenn Cloud Insights Ihre Datensammler automatisch abfragt. Dies kann dazu führen, dass einige Elemente fehlen oder einige Elemente in der Reihenfolge erscheinen, je nachdem, wie sie sortiert sind.

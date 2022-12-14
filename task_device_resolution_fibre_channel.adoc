@@ -1,0 +1,121 @@
+---
+sidebar: sidebar 
+permalink: task_device_resolution_fibre_channel.html 
+keywords: Automatic, AR, AHR, Host, automatic device resolution, FC, Identify 
+summary:  
+---
+= Fibre Channel-Geräteauflösung
+:allow-uri-read: 
+
+
+[role="lead"]
+Auf dem Bildschirm Fibre Channel Identify werden WWN und WWPN von Fibre Channel-Geräten angezeigt, deren Hosts nicht durch automatische Geräteauflösung identifiziert wurden. Auf dem Bildschirm werden auch alle Geräte angezeigt, die durch manuelle Geräteauflösung gelöst wurden.
+
+Geräte, die durch manuelle Auflösung aufgelöst wurden, enthalten den Status _OK_ und identifizieren die Regel, die zum Identifizieren des Geräts verwendet wird. Fehlende Geräte haben den Status _Unidentifiziert_. Geräte, die ausdrücklich von der Identifizierung ausgeschlossen sind, haben den Status _excluded_. Die Gesamtabdeckung für die Identifizierung von Geräten ist auf dieser Seite aufgeführt.
+
+Sie führen Massenaktionen durch, indem Sie auf der linken Seite des Bildschirms Fibre Channel Identify mehrere Geräte auswählen. Aktionen können auf einem einzelnen Gerät ausgeführt werden, indem Sie den Mauszeiger über ein Gerät bewegen und die Schaltflächen _identifizieren_ oder _Unidentifizieren_ ganz rechts in der Liste auswählen.
+
+Der Link „_Total Coverage_“ zeigt eine Liste der für Ihre Konfiguration verfügbaren Geräte an:
+
+* SRM-Alias
+* Storage-Alias
+* Alias wechseln
+* Zonen
+* Benutzerdefiniert
+
+
+
+
+==== Manuelles Hinzufügen eines Fibre-Channel-Geräts
+
+Sie können Cloud Insights manuell ein Fibre Channel-Gerät hinzufügen, indem Sie die Funktion _Manual Add_ verwenden, die auf der Registerkarte Fibre Channel Identify für Geräteauflösung verfügbar ist. Dieser Prozess kann für die Voridentifizierung eines Geräts verwendet werden, das in Zukunft entdeckt werden soll.
+
+.Bevor Sie beginnen
+Zum erfolgreichen Hinzufügen einer Geräteidentifikation zum System müssen Sie die WWN- oder IP-Adresse und den Gerätenamen kennen.
+
+.Über diese Aufgabe
+Sie können Host, Speicher, Band oder Unbekanntes Fibre Channel-Gerät manuell hinzufügen.
+
+.Verfahren
+. Melden Sie sich in der Weboberfläche von Cloud Insights an
+. Klicken Sie Auf *Verwalten > Geräteauflösung*
+. Klicken Sie auf die Registerkarte * Fibre Channel Identify*.
+. Klicken Sie auf die Schaltfläche *Hinzufügen*.
++
+Das Dialogfeld *Gerät hinzufügen* wird angezeigt
+
+. Geben Sie die WWN- oder IP-Adresse, den Gerätenamen ein, und wählen Sie den Gerätetyp aus.
++
+Das Gerät, das Sie eingeben, wird der Geräteliste auf der Registerkarte Fibre Channel Identify hinzugefügt. Die Regel wird als _manuell_ bezeichnet.
+
+
+
+
+
+==== Importieren der Fibre-Channel-Gerätekennung aus einer CSV-Datei
+
+Sie können die Identifikation von Fibre-Channel-Geräten mithilfe einer Geräteliste in einer CSV-Datei manuell in die Cloud Insights-Geräteauflösung importieren.
+
+. Bevor Sie beginnen
+
+
+Sie benötigen eine korrekt formatierte CSV-Datei, um die Geräteidentifizierungen direkt in die Geräteauflösung importieren zu können. Die .CSV-Datei für Fibre Channel-Geräte erfordert folgende Informationen:
+
+|===
+
+
+| WWN | IP | Name | Typ 
+|===
+Die Datenfelder müssen in Anführungszeichen eingeschlossen werden, wie im folgenden Beispiel gezeigt.
+
+....
+"WWN","IP","Name","Type"
+"WWN:2693","ADDRESS2693|IP2693","NAME-2693","HOST"
+"WWN:997","ADDRESS997|IP997","NAME-997","HOST"
+"WWN:1860","ADDRESS1860|IP1860","NAME-1860","HOST"
+....
+
+NOTE: Als Best Practice wird empfohlen, zunächst die Fibre Channel-Identify-Informationen in eine .CSV-Datei zu exportieren, die gewünschten Änderungen in dieser Datei vorzunehmen und die Datei dann wieder in die Fibre Channel Identify zu importieren. Dadurch wird sichergestellt, dass die erwarteten Spalten in der richtigen Reihenfolge vorhanden sind.
+
+Um Fibre Channel zu importieren, identifizieren Sie Informationen:
+
+. Melden Sie sich in der Cloud Insights Web-UI an.
+. Klicken Sie Auf *Verwalten > Geräteauflösung*
+. Wählen Sie die Registerkarte * Fibre Channel Identify* aus.
+. Klicken Sie auf die Schaltfläche * Identifizieren > aus Datei identifizieren*.
+. Navigieren Sie zu dem Ordner, der Ihre .CSV-Dateien zum Importieren enthält, und wählen Sie die gewünschte Datei aus.
++
+Die von Ihnen eingegebenen Geräte werden der Geräteliste auf der Registerkarte Fibre Channel Identify hinzugefügt. Die „Regel“ wird als Handbuch bezeichnet.
+
+
+
+
+
+==== Exportieren der Identifizierungen von Fibre Channel-Geräten in eine CSV-Datei
+
+Sie können vorhandene Identifizierungen für Fibre Channel-Geräte von der Cloud Insights-Geräteauflösung in eine CSV-Datei exportieren. Sie können eine Geräteidentifikation exportieren, damit Sie sie ändern und dann wieder in Cloud Insights importieren können, wo sie dann verwendet wird, um Geräte zu identifizieren, die denen ähneln, die ursprünglich mit der exportierten Identifizierung übereinstimmen.
+
+.Über diese Aufgabe
+Dieses Szenario kann verwendet werden, wenn Geräte ähnliche Attribute haben, die einfach in der .CSV-Datei bearbeitet und dann wieder in das System importiert werden können.
+
+Wenn Sie eine Fibre-Channel-Gerätekennung in eine CSV-Datei exportieren, enthält die Datei die folgenden Informationen in der angezeigten Reihenfolge:
+
+|===
+
+
+| WWN | IP | Name | Typ 
+|===
+.Verfahren
+. Melden Sie sich in der Cloud Insights Web-UI an.
+. Klicken Sie Auf *Verwalten > Geräteauflösung*
+. Wählen Sie die Registerkarte * Fibre Channel Identify* aus.
+. Wählen Sie das Fibre-Channel-Gerät oder die Geräte aus, deren Kennung Sie exportieren möchten.
+. Klicken Sie auf die Option *Export* image:ExportButton.png[""] Schaltfläche.
++
+Wählen Sie aus, ob die .CSV-Datei geöffnet oder die Datei gespeichert werden soll.
+
+
+
+Verwandte Themen:link:task_device_resolution_ip.html["IP-Geräteauflösung"]
+link:task_device_resolution_rules.html["Geräterauflösungsregeln Werden Erstellt"]
+link:task_device_resolution_preferences.html["Einstellen Der Einstellungen Für Die Geräteauflösung"]

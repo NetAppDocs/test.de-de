@@ -1,0 +1,75 @@
+---
+sidebar: sidebar 
+permalink: reporting_storage_manager_dashboard.html 
+summary: Mit dem Storage Manager Dashboard können Sie Ihre Storage-Services täglich managen. 
+keywords: reporting, cognos, data warehouse, dwh, smd, storage manager dashboard 
+---
+= Storage Manager Dashboard
+:allow-uri-read: 
+
+
+[role="lead"]
+Das Storage Manager Dashboard bietet Ihnen eine zentrale Visualisierung, mit der Sie die Ressourcennutzung im Laufe der Zeit mit dem akzeptablen Bereich und den vorherigen Aktivitätstagen vergleichen und kontrastieren können. Wenn nur die wichtigsten Performance-Metriken für Ihre Storage-Services angezeigt werden, können Sie Entscheidungen zur Wartung Ihres Datacenters treffen.
+
+
+NOTE: Die Berichtsfunktion ist in Cloud Insights verfügbar link:concept_subscribing_to_cloud_insights.html["Premium Edition"].
+
+Das Dashboard besteht aus sieben Komponenten, die kontextbezogene Informationen zu bestimmten Aspekten Ihrer Storage-Umgebung enthalten. Sie können die Aspekte Ihrer Storage-Services detailliert analysieren und einen Abschnitt, der für Sie am wichtigsten ist, analysieren.
+
+
+
+== Zusammenfassung
+
+image:Reporting-SMD.png["Storage Manager Dashboard"]
+
+Diese Komponente zeigt die genutzte im Vergleich zur nutzbaren Storage-Kapazität, die Switch-Ports insgesamt gegenüber der Anzahl der verbundenen Switch-Ports sowie die Gesamtauslastung des verbundenen Switch-Ports gegenüber der Bandbreite und die jeweiligen Trends im Laufe der Zeit an. Sie können die tatsächliche Auslastung im Vergleich zum niedrigen, mittleren und hohen Bereich anzeigen, sodass Sie die Nutzung anhand eines Ziels vergleichen und einen Kontrast zwischen Projektionen und den gewünschten ist-Werten festlegen können. Für Kapazität und Switch Ports können Sie dieses Ziel konfigurieren. Die Prognose basiert auf einer Extrapolation der aktuellen Wachstumsrate und des festgelegten Datums. Wenn die prognostizierte genutzte Kapazität, die auf dem zukünftigen Projektionsdatum der Nutzung basiert, das Ziel überschreitet, wird neben der Kapazität eine Warnmeldung (roter Kreis) angezeigt.
+
+
+
+=== Kapazität Des Storage-Tiers
+
+Diese Komponente zeigt die genutzte Tier-Kapazität im Vergleich zur dem Tier zugewiesenen Kapazität. Dadurch wird angegeben, wie die genutzte Kapazität über einen Zeitraum von 12 Monaten erhöht oder verringert wird und wie viele Monate für die volle Kapazität übrig sind. Die Kapazitätsauslastung wird mit Werten für die tatsächliche Nutzung, die Nutzungsprognose und ein Ziel für die Kapazität angezeigt, die Sie konfigurieren können. Wenn die prognostizierte genutzte Kapazität, die auf dem zukünftigen Projektionsdatum der Nutzung basiert, die Zielkapazität überschreitet, wird neben einer Tier eine Warnmeldung (roter Kreis) angezeigt.
+
+Sie können auf eine beliebige Ebene klicken, um den Bericht Storage Pools Capacity and Performance Details anzuzeigen, in dem freie Kapazitäten und nicht genutzte Kapazitäten, Anzahl der Tage bis zur vollen Auslastung sowie Angaben zur Performance (IOPS und Reaktionszeit) für alle Pools in der ausgewählten Tier angezeigt werden. Sie können auch auf einen beliebigen Speicher- oder Speicherpool-Namen in diesem Bericht klicken, um die Asset-Seite anzuzeigen, auf der der aktuelle Status dieser Ressource zusammengefasst wird.
+
+
+
+=== Täglicher Storage-Traffic
+
+Diese Komponente zeigt die Performance der Umgebung, falls ein großes Wachstum, Änderungen oder potenzielle Probleme im Vergleich zu den vorangegangenen sechs Monaten auftreten. Es zeigt auch den durchschnittlichen Verkehr gegenüber dem Verkehr für die letzten sieben Tage, und für den Vortag. Sie können Anomalien in der Performance der Infrastruktur visualisieren, da sie Informationen liefert, die sowohl zyklische (vorherige sieben Tage) als auch saisonale Schwankungen (vorherige sechs Monate) hervorheben.
+
+Sie können auf den Titel (täglicher Speicherverkehr) klicken, um den Bericht Speicherdatenverkehr anzuzeigen, der die Heatmap des stündlichen Speicherverkehrs für den Vortag für jedes Speichersystem anzeigt. Klicken Sie auf einen beliebigen Speichernamen in diesem Bericht, um die Seite „Anlage“ anzuzeigen, auf der der der aktuelle Status dieser Ressource zusammengefasst wird.
+
+
+
+=== Datacenter voll Zeit
+
+Diese Komponente zeigt alle Datacenter im Vergleich zu allen Tiers und wie viel Kapazität für jeden Storage Tier verbleibt, basierend auf prognostizierten Wachstumsraten. Die Füllstandkapazität wird blau angezeigt. Je dunkler die Farbe ist, desto geringer ist die Zeit, die die Tier an der Position verlassen hat, bevor sie voll ist.
+
+Sie können auf einen Abschnitt einer Ebene klicken, um den Bericht „Storage Pools Days to Full Details“ anzuzeigen. Dieser zeigt die Gesamtkapazität, die freie Kapazität und die Anzahl der Tage an, die für alle Pools in der ausgewählten Tier und im Datacenter voll werden sollen. Klicken Sie auf einen beliebigen Speicher- oder Speicherpool-Namen in diesem Bericht, um die Seite Anlage anzuzeigen, auf der der der aktuelle Status dieser Ressource zusammengefasst wird.
+
+
+
+=== Top 10 Applikationen
+
+Diese Komponente zeigt die 10 wichtigsten Applikationen auf Grundlage der genutzten Kapazität an. Unabhängig davon, wie der Tier die Daten organisiert, werden in diesem Bereich die aktuelle Kapazität und der Anteil der Infrastruktur angezeigt. Sie können die Benutzerfreundlichkeit der letzten sieben Tage visualisieren, um zu sehen, ob der Verbraucher akzeptable (oder, was noch wichtiger ist, nicht akzeptable) Reaktionszeiten hat.
+
+In diesem Bereich werden auch Trendanalysen angezeigt, die angeben, ob die Applikationen ihre Service Level Objectives (SLOs) hinsichtlich der Performance erfüllen. Sie können die Mindestreaktionszeit der letzten Woche, das erste Quartil, das dritte Quartil und die maximale Reaktionszeit anzeigen, wobei ein Median im Vergleich zu einer akzeptablen SLO angezeigt wird, die Sie konfigurieren können. Wenn die mittlere Antwortzeit für eine Applikation außerhalb des zulässigen SLO-Bereichs liegt, wird neben der Applikation ein Alarm (ein roter Kreis) angezeigt. Sie können auf eine Anwendung klicken, um die Asset-Seite anzuzeigen, auf der der aktuelle Status dieser Ressource zusammengefasst wird.
+
+
+
+=== Storage Tiers Tägliche Performance
+
+Diese Komponente zeigt eine Zusammenfassung der Performance der Tier für Reaktionszeit und IOPS für die letzten sieben Tage. Die Performance wird mit einer SLO verglichen, die Sie konfigurieren können. Dadurch sehen Sie, ob es Möglichkeiten gibt, die Storage Tiers zu konsolidieren, die von diesen Tiers bereitgestellten Workloads neu auszurichten oder Probleme mit bestimmten Tiers zu identifizieren. Wenn sich die mittlere Antwortzeit oder der mittlere IOPS außerhalb des akzeptablen SLO-Bereichs befindet, wird eine Warnmeldung (ein roter Kreis) neben einer Tier angezeigt.
+
+Sie können auf einen Tier-Namen klicken, um den Bericht Storage Pools Capacity and Performance Details anzuzeigen. Er enthält Angaben zu freier und genutzter Kapazität, Anzahl der Tage bis zur vollen Auslastung sowie Angaben zur Performance (IOPS und Reaktionszeit) für alle Pools in der ausgewählten Tier. Klicken Sie auf einen beliebigen Speicher- oder Speicherpool in diesem Bericht, um die Seite Anlage anzuzeigen, auf der der aktuelle Status dieser Ressource zusammengefasst wird.
+
+
+
+=== „Verlorene“ Kapazität
+
+Diese Komponente zeigt die gesamte verwaiste Kapazität und verwaiste Kapazität je Tier. Sie wird verglichen mit einem akzeptablen Bereich für die gesamte nutzbare Kapazität und zeigt die tatsächliche verwaiste Kapazität an. Verwaiste Kapazität wird durch die Konfiguration und die Performance definiert. Der nach der Konfiguration verwaiste Storage beschreibt die Situation, in der einem Host Speicher zugewiesen ist. Die Konfiguration wurde jedoch nicht ordnungsgemäß ausgeführt, und der Host kann nicht auf den Speicher zugreifen. Diese Performance ist dann verwaist, wenn der Storage korrekt konfiguriert ist, damit ein Host auf sie zugreifen kann. Es gab jedoch keinen Lagerverkehr.
+
+Der horizontale gestapelte Balken zeigt die zulässigen Bereiche an. Je dunkler das Grau ist, desto unannehmbarer ist die Situation. Die tatsächliche Situation wird mit dem schmalen Bronzebalken angezeigt, der die tatsächliche verwaiste Kapazität anzeigt.
+
+Sie können auf eine Tier klicken, um den Bericht „Verlorene Storage-Details“ anzuzeigen. In diesem Bericht werden alle Volumes angezeigt, die nach Konfiguration und Performance der ausgewählten Tier als „verwaist“ identifiziert wurden. Klicken Sie in diesem Bericht auf eine beliebige Ablage, einen Speicherpool oder ein beliebiges Volume, um die Seite „Asset“ anzuzeigen, auf der der aktuelle Status dieser Ressource zusammengefasst wird.

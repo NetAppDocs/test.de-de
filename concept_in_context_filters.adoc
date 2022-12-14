@@ -1,0 +1,41 @@
+---
+sidebar: sidebar 
+permalink: concept_in_context_filters.html 
+summary: Sie können nach Objekten filtern, die direkt mit dem aktuellen Asset verknüpft sind. 
+keywords: Assets, landing page, filtering, context, related 
+---
+= Filtern nach Objekten im Kontext
+:allow-uri-read: 
+
+
+[role="lead"]
+Wenn Sie ein Widget auf der Landing Page eines Assets konfigurieren, können Sie die Filter _in-Context_ so einstellen, dass nur Objekte angezeigt werden, die direkt mit dem aktuellen Asset verknüpft sind. Wenn Sie ein Widget hinzufügen, werden standardmäßig _alle_ Objekte des ausgewählten Typs in Ihrer Umgebung angezeigt. Mit in-Context-Filtern können Sie nur die Daten anzeigen, die für Ihre aktuelle Anlage relevant sind.
+
+Auf den meisten Asset-Landing-Pages können Sie über Widgets nach Objekten filtern, die mit dem aktuellen Asset verknüpft sind. In den Dropdown-Menüs Filter werden Objekttypen angezeigt, die ein Verknüpfungssymbol anzeigen image:LinkIcon.png["Link-Symbol"] Kann im Kontext des aktuellen Assets gefiltert werden.
+
+Beispielsweise können Sie auf einer Storage Asset-Seite ein Balkendiagramm-Widget hinzufügen, um die wichtigsten IOPS nur für interne Volumes auf diesem Storage anzuzeigen. Standardmäßig werden beim Hinzufügen eines Widgets _alle_ interne Volumes in Ihrer Umgebung angezeigt.
+
+So zeigen Sie nur interne Volumes der aktuellen Storage-Ressourcen an:
+
+.Schritte
+. Öffnen Sie eine Asset-Seite für jedes *Storage*-Asset.
+. Klicken Sie auf *Bearbeiten*, um die Asset-Seite im Bearbeitungsmodus zu öffnen.
+. Klicken Sie auf *Widget hinzufügen* und wählen Sie _Balkendiagramm_.
+. Wählen Sie *Internes Volumen* für den Objekttyp, der auf dem Balkendiagramm angezeigt werden soll. Beachten Sie, dass der Objekttyp des internen Volumes über ein Verknüpfungssymbol verfügt image:LinkIcon.png["Link-Symbol"] Daneben. Das Symbol „Verknüpfung“ ist standardmäßig aktiviert.
++
+image:LinkingObjects.png["Balkendiagramme"]
+
+. Wählen Sie „_IOPS – Total_“, und stellen Sie alle weiteren Filter ein, die Sie mögen.
+. Das Feld *Roll Up* können Sie ausblenden, indem Sie auf das [X] neben dem Feld klicken. Das Feld *Anzeigen* wird angezeigt.
+. Wählen Sie diese Option, um die Top 10 anzuzeigen.
+. Speichern Sie das Widget.
++
+Das Balkendiagramm zeigt nur die internen Volumes an, die sich auf der aktuellen Speicherressource befinden.
+
+
+
+Das Widget wird auf den Asset-Seiten für alle Speicherobjekte angezeigt. Wenn der in-Context-Link im Widget aktiviert ist, zeigt das Balkendiagramm Daten für interne Volumes an, die sich nur auf die aktuell angezeigte Speicherressource beziehen.
+
+Um die Verknüpfung der Objektdaten zu aufheben, bearbeiten Sie das Widget und klicken Sie auf das Link-Symbol image:LinkIconEnabled.png["Link-Symbol Aktiviert"] Neben dem Objekttyp. Der Link wird deaktiviert image:LinkIconDisabled.png["Link-Symbol Deaktiviert"] Und das Diagramm zeigt Daten von _all_ Objekten in Ihrer Umgebung an.
+
+Sie können auch verwenden link:concept_dashboard_features.html#variables["*Sondervariablen in Widgets*"] Um Asset-bezogene Informationen auf Landing Pages anzuzeigen.

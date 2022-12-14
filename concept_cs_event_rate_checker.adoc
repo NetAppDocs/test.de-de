@@ -1,0 +1,169 @@
+---
+sidebar: sidebar 
+permalink: concept_cs_event_rate_checker.html 
+summary: Dieses Skript kann ausgeführt werden, um die Ereignisrate in der SVM zu prüfen, bevor eine ONTAP SVM DSC installiert wird 
+keywords: event, checker, rate, sizing 
+---
+= Ereignisprüfung der SVM
+:allow-uri-read: 
+
+
+[role="lead"]
+Das Event Rate Checker wird verwendet, um die kombinierte Ereignisrate von NFS/SMB in der SVM zu prüfen, bevor Sie einen ONTAP SVM Data Collector installieren, um zu ermitteln, wie viele SVMs ein Agent Machine überwachen können.
+
+Voraussetzungen:
+
+* Cluster-IP
+* Benutzername und Passwort für den Cluster-Admin
+
+
+
+NOTE: Wenn dieses Skript ausgeführt wird, sollte kein ONTAP SVM Data Collector für die SVM ausgeführt werden, für die die Ereignisrate ermittelt wird.
+
+Schritte
+
+. Installieren Sie den Agent, indem Sie die Anweisungen in CloudSecure befolgen.
+. Führen Sie nach der Installation des Agent das Skript _Server_Data_Rate_Checker.sh_ als Sudo-Benutzer aus:
++
+ /opt/netapp/cloudsecure/agent/install/svm_event_rate_checker.sh
+. Dieses Skript erfordert die Installation von _sshapass_ auf dem linux-Rechner. Es gibt zwei Möglichkeiten, es zu installieren:
++
+.. Führen Sie den Befehl „Fiolwing“ aus:
++
+ linux_prompt> yum install sshpass
+.. Wenn das nicht funktioniert, laden Sie _sshapass_ aus dem Internet auf den linux-Rechner herunter, und führen Sie den folgenden Befehl aus:
++
+ linux_prompt> rpm -i sshpass
+
+
+. Geben Sie die richtigen Werte ein, wenn Sie dazu aufgefordert werden. Ein Beispiel hierfür finden Sie unten.
+. Das Skript dauert etwa 5 Minuten.
+. Nach Abschluss des Durchlaufs wird die Ereignisrate vom SVM gedruckt. Sie können die Ereignisrate pro SVM in der Konsolenausgabe überprüfen:
++
+ “Svm svm_rate is generating 100 events/sec”.
+
+
+. Jeder ONTAP SVM Data Collector kann einer einzelnen SVM zugeordnet werden. Dies bedeutet, dass jeder Data Collector die Anzahl der von einer einzelnen SVM generierten Ereignisse erhalten kann.
+
+
+Beachten Sie Folgendes:
+
+A) Ein Agent-Rechner kann folgende Aufgaben erfüllen:
+
+|===
+
+
+| Agent-Gerätekonfiguration | Anzahl der SVM Data Collectors | Max. Ereignisrate, die der Agent-Rechner verarbeiten kann 
+
+
+| 4 Cores, 16 GB | 10 Datensammler | 20.000 Ereignisse/Sek. 
+
+
+| 4 Kerne, 32 GB | 20 Datensammler | 20.000 Ereignisse/Sek. 
+|===
+B) um Ihre gesamten Ereignisse zu berechnen, fügen Sie die für alle SVMs erzeugten Ereignisse für diesen Agenten hinzu.
+
+C) Wenn das Skript nicht während der Stoßzeiten ausgeführt wird oder der Spitzenverkehr schwer vorherzusagen ist, dann einen Ereignissatz-Puffer von 30 % behalten.
+
+B + C sollte kleiner Als A sein, andernfalls kann der Agent-Rechner nicht überwacht werden.
+
+Mit anderen Worten, die Anzahl der Datensammler, die einem einzelnen Agenten-Rechner hinzugefügt werden können, sollte der folgenden Formel entsprechen:
+
+ Sum of all Event rate of all Data Source Collectors + Buffer Event rate of 30% < 20000 events/second
+
+
+=== Beispiel
+
+Lassen Sie uns sagen, wir haben drei SVMS mit Ereignissätzen von 100, 200 und 300 Ereignissen pro Sekunde.
+
+Wir verwenden die Formel:
+
+....
+ (100+200+300) + [(100+200+300)*30%] = 600+180 = 780events/sec
+780 events/second is < 20000 events/second, so the 3 SVMs can be monitored via one agent box.
+....
+Die Konsolenausgabe ist auf dem Agent-Rechner im Dateinamen __fpolicy_stat_<SVM Name>.log_ im vorliegenden Arbeitsverzeichnis verfügbar.
+
+Das Skript kann in den folgenden Fällen fehlerhafte Ergebnisse liefern:
+
+* Falsche Anmeldedaten, IP oder SVM-Name werden angegeben.
+* Eine bereits vorhandene fpolicy mit demselben Namen, der gleichen Sequenznummer usw. gibt einen Fehler.
+* Das Skript wird während des Laufs abrupt unterbrochen.
+
+
+Ein Beispiel für einen Skriptdurchlauf ist unten dargestellt:
+
+ [root@ci-cs-data agent]# /opt/netapp/cloudsecure/agent/install/svm_event_rate_checker.sh
+....
+Enter the cluster ip: 10.192.139.166
+Enter the username to SSH: admin
+Enter the password:
+Getting event rate for NFS and SMB events.
+Available SVMs in the Cluster
+-----------------------------
+QA_SVM
+Stage_SVM
+Qa-fas8020
+Qa-fas8020-01
+Qa-fas8020-02
+audit_svm
+svm_rate
+vs_new
+vs_new2
+....
+....
+-----------------------------
+Enter [1/5] SVM name to check (press enter to skip): svm_rate
+Enter [2/5] SVM name to check (press enter to skip): audit_svm
+Enter [3/5] SVM name to check (press enter to skip):
+Enter [4/5] SVM name to check (press enter to skip):
+Enter [5/5] SVM name to check (press enter to skip):
+Running check for svm svm_rate...
+Running check for svm audit_svm...
+Waiting 5 minutes for stat collection
+Stopping sample svm_rate_sample
+Stopping sample audit_svm_sample
+fpolicy stats of svm svm_rate is saved in fpolicy_stat_svm_rate.log
+Svm svm_rate is generating 100 SMB events/sec and 100 NFS events/sec
+Overall svm svm_rate is generating 200 events/sec
+fpolicy stats of svm audit_svm is saved in fpolicy_stat_audit_svm.log
+Svm audit_svm is generating 200 SMB events/sec and 100 NFS events/sec
+Overall svm audit_svm is generating 300 events/sec
+....
+ [root@ci-cs-data agent]#
+
+
+== Fehlerbehebung
+
+|===
+
+
+| Frage: Wenn ich dieses Skript auf einer SVM lasse, die bereits für Cloud Secure konfiguriert ist, benutzt es nur die bestehende fpolicy-Konfiguration auf der SVM oder richtet es einen temporären ein und führt den Prozess aus? 
+
+
+| Antwort: Der Event-Ratenüberprüfung kann auch für eine SVM, die bereits für Cloud Secure konfiguriert ist, problemlos ausgeführt werden. Es sollte keine Auswirkungen geben. 
+
+
+| Frage: Kann ich die Anzahl der SVMs erhöhen, auf denen das Skript ausgeführt werden kann? 
+
+
+| Antwort: Ja. Bearbeiten Sie einfach das Skript und ändern Sie die maximale Anzahl der SVMs von 5 in eine beliebige Zahl. 
+
+
+| Frage: Wenn ich die Anzahl der SVMs erhöhe, wird es die Zeit für das Ausführen des Skripts verkürzen? 
+
+
+| Antwort: Nein Das Skript wird für maximal 5 Minuten ausgeführt, selbst wenn die Anzahl der SVMs erhöht wird. 
+
+
+| Frage: Kann ich die Anzahl der SVMs erhöhen, auf denen das Skript ausgeführt werden kann? 
+
+
+| Antwort: Ja. Sie müssen das Skript bearbeiten und die maximale Anzahl an SVMs von 5 in eine beliebige andere Maximalzahl ändern. 
+
+
+| Frage: Wenn ich die Anzahl der SVMs erhöhe, wird es die Zeit für das Ausführen des Skripts verkürzen? 
+
+
+| Antwort: Nein Das Skript läuft für maximal 5 Minuten, selbst wenn die Anzahl der SVMs erhöht wird. 
+|===

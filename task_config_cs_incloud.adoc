@@ -1,0 +1,55 @@
+---
+sidebar: sidebar 
+permalink: task_config_cs_incloud.html 
+keywords: Cloud, Storage, AWS, Cloud Volumes, Cloud ONTAP, firewall, VPC, Subnet, 
+summary: Cloud Secure verwendet Datensammler, um Datei- und Benutzerzugriffsdaten von Geräten zu erfassen. 
+---
+= Konfigurieren des Cloud Volumes ONTAP Data Collectors
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Secure verwendet Datensammler, um Datei- und Benutzerzugriffsdaten von Geräten zu erfassen.
+
+
+
+== Cloud Volumes ONTAP Storage-Konfiguration
+
+In der OnCommand Cloud Manager Dokumentation können Sie eine AWS Instanz mit einem Node/HA für das Hosting des Cloud Secure Agent konfigurieren:https://docs.netapp.com/us-en/occm/index.html[]
+
+Führen Sie nach Abschluss der Konfiguration die Schritte aus, um die SVM einzurichten:https://docs.netapp.com/us-en/cloudinsights/task_add_collector_svm.html[]
+
+
+
+== Agent-Gerätekonfiguration
+
+Konfigurieren Sie die Maschine, die als Cloud Secure-Agent verwendet werden soll, mit den folgenden Schritten:
+
+.Schritte
+. Melden Sie sich bei der AWS Konsole an, und navigieren Sie zur Seite EC2-instances, und wählen Sie _Launch Instance_ aus.
+. Wählen Sie eine RHEL- oder CentOS AMI-Lösung mit der entsprechenden Version aus, wie auf dieser Seite erwähnt:https://docs.netapp.com/us-en/cloudinsights/concept_cs_agent_requirements.html[]
+. Wählen Sie die VPC und das Subnetz aus, in der die Cloud-ONTAP-Instanz residiert.
+. Wählen Sie _t2.xlarge_ (4 vcpus und 16 GB RAM) als zugewiesene Ressourcen aus.
++
+.. Erstellen Sie die EC2-Instanz.
+
+
+. Installieren Sie die erforderlichen Linux-Pakete mithilfe des YUM-Paketmanagers:
++
+.. Installieren Sie die nativen Linux-Pakete _wget_ und _unzip_.
+
+
+
+
+
+
+== Installieren Sie den Cloud Secure Agent
+
+. Melden Sie sich als Administrator oder Account-Inhaber in Ihrer Cloud Insights-Umgebung an.
+. Navigieren Sie zu Cloud Secure *Admin > Data Collectors* und klicken Sie auf die Registerkarte *Agents*.
+. Klicken Sie auf *+Agent* und geben Sie RHEL als Zielplattform an.
+. Kopieren Sie den Befehl Agenteninstallation.
+. Fügen Sie den Befehl „Agent Installation“ in die RHEL EC2-Instanz ein, bei der Sie angemeldet sind. Dies installiert den Cloud Secure-Agent, der alle zur Verfügung stellt link:concept_cs_agent_requirements.html["Agent-Voraussetzungen"] Werden erfüllt.
+
+
+Ausführliche Schritte finden Sie über den folgenden Link: https://docs.netapp.com/us-en/cloudinsights/task_cs_add_agent.html#steps-to-install-agent

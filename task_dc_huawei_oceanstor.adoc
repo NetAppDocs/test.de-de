@@ -1,0 +1,103 @@
+---
+sidebar: sidebar 
+permalink: task_dc_huawei_oceanstor.html 
+keywords: data collector, Huawei, OceanStor, Dorado 
+summary: 'Konfigurieren des Datensammlers Huawei OceanStor (REST/HTTPS)' 
+---
+= Huawei OceanStor Datensammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights verwendet den Datensammler Huawei OceanStor (REST/HTTPS), um Inventar und Performance für Huawei OceanStor und OceanStor Dorado Storage zu ermitteln.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestands- und Leistungsinformationen vom Huawei OceanStor. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Storage-Pool | Storage-Pool 
+
+
+| File-System | Internes Volumen 
+
+
+| Controller | Storage-Node 
+
+
+| FC-Port (zugeordnet) | Volume-Zuordnung 
+
+
+| Host FC Initiator (zugeordnet) | Volume-Maske 
+
+
+| NFS/CIFS-Freigabe | Share 
+
+
+| ISCSI-Link-Ziel | ISCSI-Ziel-Node 
+
+
+| ISCSI-Link-Initiator | ISCSI-Initiator-Node 
+
+
+| Festplatte | Festplatte 
+
+
+| LUN | Datenmenge 
+|===
+
+
+== Anforderungen
+
+Zur Konfiguration dieses Datensammlers sind folgende Anforderungen erforderlich:
+
+* IP-Adresse des Geräts
+* Anmeldeinformationen für den Zugriff auf OceanStor Geräte-Manager
+* Port 8088 muss verfügbar sein
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| OceanStor Host-IP-Adresse | IP-Adresse oder vollqualifizierter Domain-Name des OceanStor Device Managers 
+
+
+| Benutzername | Name, der zur Anmeldung beim OceanStor Device Manager verwendet wird 
+
+
+| Passwort | Passwort zur Anmeldung beim OceanStor Device Manager 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| TCP-Port | TCP-Port zur Verbindung mit dem OceanStor Device Manager. Der Standardwert ist 8088. 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 60 Minuten. 
+
+
+| Leistungsintervall (Sek.). | Der Standardwert beträgt 300 Sekunden. 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

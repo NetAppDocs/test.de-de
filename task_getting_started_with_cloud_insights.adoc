@@ -1,0 +1,100 @@
+---
+sidebar: sidebar 
+permalink: task_getting_started_with_cloud_insights.html 
+summary: Erste Schritte mit Cloud Insights 
+keywords: invite, roles, data collector, acquisition unit, AU 
+---
+= Erste Schritte zum Sammeln von Daten
+:allow-uri-read: 
+
+
+Nachdem Sie sich zum ersten Mal bei Cloud Insights angemeldet haben und sich zum ersten Mal in Ihrer Umgebung anmelden, führen Sie die folgenden Schritte durch, um mit der Erfassung und dem Management der Daten zu beginnen.
+
+Datensammler erkennen Informationen aus Ihren Datenquellen, wie Speichergeräte, Netzwerk-Switches und virtuelle Maschinen. Die erfassten Informationen werden für Analysen, Validierung, Monitoring und Fehlerbehebung verwendet.
+
+Cloud Insights nutzt drei Arten von Datensammlern:
+
+* Betriebssysteme
+* Services
+* Infrastruktur
+
+
+Wählen Sie Ihren ersten Datensammler von den unterstützten Anbietern und Modellen aus. Sie können später ganz einfach weitere Datensammler hinzufügen.
+
+
+
+== Installieren Sie eine Akquisitionseinheit
+
+Wenn Sie einen Datensammler _Infrastructure_ ausgewählt haben, muss eine Erfassungseinheit Daten in Cloud Insights injizieren. Sie müssen die Software Acquisition Unit auf einem Server oder einer VM herunterladen und installieren, um Daten für Cloud Insights zu sammeln. Eine einzelne Erfassungseinheit kann für mehrere Datensammler verwendet werden.
+
+image:NewLinuxAUInstall.png["Anweisungen für Linux AU"]
+
+* Folgen Sie den link:task_configure_acquisition_unit.html["Anweisungen"] Wird angezeigt, um Ihre Akquisitionseinheit zu installieren. Sobald die Software für die Erfassungseinheit installiert ist, wird die Schaltfläche Weiter angezeigt, und Sie können mit dem nächsten Schritt fortfahren.
+
+
+image:NewAUDetected.png["Neue AU erkannt"]
+
+Sie können bei Bedarf später weitere Akquisitionseinheiten einrichten. So können Sie beispielsweise unterschiedliche Erfassungseinheiten wünschen, die Informationen aus Datacentern in verschiedenen Regionen erfassen.
+
+
+
+== Konfigurieren Sie den Data Collector - Infrastruktur
+
+Für _Infrastructure_ Datensammler werden Sie aufgefordert, die präsentierten Datensammler-Felder auszufüllen:
+
+* Geben Sie dem Datensammler einen eindeutigen und aussagekräftigen Namen.
+* Geben Sie ggf. den Benutzernamen und das Kennwort ein, um eine Verbindung zum Gerät herzustellen.
+* Füllen Sie alle anderen Pflichtfelder in den Abschnitten_Configuration_ und_Advanced Configuration_ aus.
+* Klicken Sie auf *Verbindung testen*, um die Verbindung zum Gerät zu testen.
+* Klicken Sie auf *Collector hinzufügen*, um den Datensammler zu speichern.
+
+
+Sie können später zusätzliche Datensammler konfigurieren.
+
+
+
+== Konfigurieren Sie den Data Collector - Betriebssysteme und Dienste
+
+
+
+=== Betriebssystem:
+
+Wählen Sie für Datensammler _Betriebssystem_ eine Plattform (MacOS, Linux, Windows) aus, um einen Cloud Insights-Agent zu installieren. Sie müssen mindestens einen Agenten haben, um Daten von Services zu erfassen. Der Agent erfasst auch Daten vom Host selbst, zur Verwendung in Cloud Insights. Diese Daten werden in Widgets usw. als „Knoten“-Daten kategorisiert
+
+* Öffnen Sie ein Terminal- oder Befehlsfenster auf dem Agent-Host oder der VM, und fügen Sie den angezeigten Befehl ein, um den Agenten zu installieren.
+* Klicken Sie nach Abschluss der Installation auf *Setup abschließen*.
+
+
+
+
+=== Dienste:
+
+Für _Service_ Datensammler, klicken Sie auf eine Kachel, um die Instructions-Seite für diesen Dienst zu öffnen.
+
+* Wählen Sie eine Plattform und einen Agent Access Key.
+* Wenn auf dieser Plattform kein Agent installiert ist, befolgen Sie die Anweisungen, um den Agent zu installieren.
+* Klicken Sie auf *Weiter*, um die Seite mit den Anweisungen für den Datensammler zu öffnen.
+* Befolgen Sie die Anweisungen, um den Datensammler zu konfigurieren.
+* Wenn die Konfiguration abgeschlossen ist, klicken Sie auf *Setup abschließen*.
+
+
+
+
+== Dashboards Hinzufügen
+
+Je nach Art des ersten zu konfigurierenden Datensammlers (Speicher, Switch usw.) wird ein oder mehrere relevante Dashboards importiert. Wenn Sie beispielsweise einen Speicher-Datensammler konfiguriert haben, wird ein Satz speicherbezogener Dashboards importiert, und ein Dashboard wird als Ihre Cloud Insights-Startseite festgelegt. Sie können die Startseite über die Liste *Dashboards > Alle Dashboards anzeigen* ändern.
+
+Sie können später weitere Dashboards importieren, oder link:concept_dashboards_overview.html["Erstellen Sie Ihre eigene"].
+
+
+
+== Mehr ist nicht nötig
+
+Nach Abschluss des anfänglichen Einrichtungsvorgangs beginnt Ihre Umgebung mit der Erfassung der Daten.
+
+Wenn der anfängliche Setup-Vorgang unterbrochen wird (z. B. wenn Sie das Browser-Fenster schließen), müssen Sie die folgenden Schritte manuell ausführen:
+
+* Wählen Sie einen Data Collector aus
+* Installieren Sie einen Agenten oder eine Akquisitionseinheit, wenn Sie dazu aufgefordert werden
+* Konfigurieren Sie den Data Collector
+

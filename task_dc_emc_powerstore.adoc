@@ -1,0 +1,102 @@
+---
+sidebar: sidebar 
+permalink: task_dc_emc_powerstore.html 
+keywords: data collector, PowerStore, EMC, DELL 
+summary: KONFIGURIEREN DES DELL EMC PowerStore-Datensammlers. 
+---
+= Dell EMC PowerStore-Datensammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Der EMC PowerStore Data Collector sammelt Bestandsdaten aus dem EMC PowerStore-Speicher. Zur Konfiguration benötigt der Datensammler die IP-Adresse der Speicherprozessoren sowie einen schreibgeschützten Benutzernamen und ein Kennwort.
+
+Der EMC PowerStore Datensammler erfasst die Replikationsbeziehungen zwischen Volume und Volume, die PowerStore über andere Speicher-Arrays hinweg koordiniert. Cloud Insights zeigt für jeden PowerStore Cluster ein Storage-Array an und sammelt Bestandsdaten für Knoten und Storage-Ports auf diesem Cluster. Es werden keine Storage-Pool- oder Volume-Daten erfasst.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen von diesem Datensammler. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Host | Host 
+
+
+| Host_Volume_Zuordnung | Host_Volume_Zuordnung 
+
+
+| Hardware (es hat Laufwerke unter „extra_Details“-Objekt): Laufwerke | Festplatte 
+
+
+| Appliance | Storage Pool 
+
+
+| Cluster | Storage Array Durchführt 
+
+
+| Knoten | StorageNode 
+
+
+| fc_Port | Port 
+
+
+| Datenmenge | Datenmenge 
+
+
+| InternalVolume | File_System 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Anforderungen
+
+Zur Konfiguration dieses Datensammlers sind folgende Informationen erforderlich:
+
+* IP-Adresse oder vollqualifizierter Domain-Name des Speicherprozessors
+* Schreibgeschützter Benutzername und Kennwort
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| PowerStore Gateway(s) | IP-Adressen oder vollqualifizierte Domain-Namen des PowerStore-Speichers 
+
+
+| Benutzername | Benutzername für PowerStore 
+
+
+| Passwort | Passwort, das für PowerStore verwendet wird 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| HTTPS-Port | Der Standardwert ist 443 
+
+
+| Abfrageintervall für Bestand (Minuten) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 60 Minuten. 
+|===
+Die PowerStore Performance-Sammlung von Cloud Insight nutzt die 5-minütigen Granularitätsquelldaten von PowerStore. Beispielsweise fragt Cloud Insights alle fünf Minuten nach diesen Daten ab. Dies ist nicht konfigurierbar.
+
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

@@ -1,0 +1,256 @@
+---
+sidebar: sidebar 
+permalink: API_Overview.html 
+keywords: API, customer API, premium, JSON, Swagger, Access Token, token 
+summary: Die Cloud Insights-API ermöglicht die Integration in andere Applikationen, z. B. Monitoring- und Reporting-Systeme. 
+---
+= Cloud Insights API
+:allow-uri-read: 
+
+
+[role="lead"]
+Die Cloud Insights API ermöglicht NetApp Kunden und unabhängigen Software-Anbietern (ISVs) die Integration von Cloud Insights in andere Applikationen wie CMDB- oder andere Ticketsysteme.
+
+Beachten Sie, dass Cloud Insights APIs entsprechend Ihrer aktuellen Ausgabe verfügbar sind:
+
+[cols="<,^s,^s,^s"]
+|===
+| API-Kategorie | Basic | Standard | Premium 
+
+
+| Erfassungseinheit | image:SmallCheckMark.png[""] | image:SmallCheckMark.png[""] | image:SmallCheckMark.png[""] 
+
+
+| Datenerfassung | image:SmallCheckMark.png[""] | image:SmallCheckMark.png[""] | image:SmallCheckMark.png[""] 
+
+
+| Meldungen |  | image:SmallCheckMark.png[""] | image:SmallCheckMark.png[""] 
+
+
+| Ressourcen |  | image:SmallCheckMark.png[""] | image:SmallCheckMark.png[""] 
+
+
+| Datenaufnahme |  | image:SmallCheckMark.png[""] | image:SmallCheckMark.png[""] 
+|===
+
+
+== Anforderungen für den API-Zugriff
+
+* Ein API-Zugriffstoken-Modell wird verwendet, um den Zugriff zu gewähren.
+* Das Management von API-Token wird von Cloud Insights-Benutzern mit der Administratorrolle durchgeführt.
+
+
+
+
+== API-Dokumentation (Swagger)
+
+Die neuesten API-Informationen finden Sie, indem Sie sich bei Cloud Insights anmelden und zu *Admin > API Acccess* navigieren. Klicken Sie auf den Link *API Documentation*.
+
+image:API_Documentation.png["API-Dokumentation"]
+
+Die API-Dokumentation ist Swagger-basiert, die eine kurze Beschreibung und Verwendungsinformationen für die API, und ermöglicht es Ihnen, es in Ihrer Umgebung zu testen.
+
+image:API_Swagger_Example.png["Beispiel für API-Swagger"]
+
+
+
+== API-Zugriffs-Tokens
+
+Bevor Sie die Cloud Insights-API verwenden, müssen Sie ein oder mehrere *API-Zugriffstoken* erstellen. Access Tokens werden für angegebene API-Kategorien verwendet und können Lese- und/oder Schreibberechtigungen gewähren. Sie können auch die Ablauffrist für jedes Access Token festlegen. Alle APIs unter den angegebenen Kategorien gelten für das Access Token. Jedes Token ist ungültig für einen Benutzernamen oder ein Kennwort.
+
+So erstellen Sie ein Access Token:
+
+* Klicken Sie auf *Admin > API Access*
+* Klicken Sie auf *+API Access Token*
++
+** Geben Sie Den Namen Des Tokens Ein
+** Wählen Sie API-Kategorien
+** Geben Sie die Berechtigungen an, die für diesen API-Zugriff gewährt wurden
+** Legen Sie Den Ablauf Des Tokens Fest
+
+
+
+
+
+NOTE: Ihr Token kann nur während des Erstellungsvorgangs in die Zwischenablage kopiert und gespeichert werden. Token können nicht abgerufen werden, nachdem sie erstellt wurden. Daher wird dringend empfohlen, das Token zu kopieren und an einem sicheren Ort zu speichern. Sie werden aufgefordert, auf die Schaltfläche *Copy API Access Token* zu klicken, bevor Sie den Bildschirm zur Tokenerstellung schließen können.
+
+Sie können Token deaktivieren, aktivieren und widerrufen. Deaktivierte Token können aktiviert werden.
+
+Tokens gewähren aus Kundensicht allgemeinen Zugang zu APIs; Management des Zugriffs auf APIs im Umfang ihres eigenen Mandanten. Diese Schlüssel können Kunden-Administratoren ohne direkte Beteiligung des Cloud Insights Back-End-Personals erteilen und widerrufen.
+
+Die Anwendung erhält ein Zugriffstoken, nachdem ein Benutzer den Zugriff erfolgreich authentifiziert und autorisiert hat, und übergibt das Access Token dann als Berechtigung, wenn es die Ziel-API anruft. Das übergebene Token informiert die API, dass der Inhaber des Tokens berechtigt ist, auf die API zuzugreifen und bestimmte Aktionen durchzuführen, die vom Umfang festgelegt wurden, der während der Autorisierung gewährt wurde.
+
+Der HTTP-Header, in dem das Access Token übergeben wird, ist *X-CloudInsights-ApiKey:*.
+
+Verwenden Sie zum Abrufen von Lagerbeständen beispielsweise Folgendes:
+
+ curl https://<tenant_host_name>/rest/v1/assets/storages -H 'X-CloudInsights-ApiKey: <API_Access_Token>'
+Wobei _<API_Access_Token>_ das Token ist, das Sie bei der Erstellung des API-Zugriffsschlüssels gespeichert haben.
+
+
+
+== API-Kategorien
+
+Die Cloud Insights-API ist kategoribasiert und enthält derzeit die folgenden Kategorien:
+
+* DIE KATEGORIE „ASSETS“ enthält Asset-, Abfrage- und Such-APIs.
++
+** Assets: Listen Sie Objekte der obersten Ebene auf und rufen Sie ein bestimmtes Objekt oder eine Objekthierarchie ab.
+** Abfrage: Abrufen und Verwalten von Cloud Insights-Abfragen.
+** Import: Importieren Sie Anmerkungen oder Anwendungen und weisen Sie sie Objekten zu
+** Suche: Suchen Sie ein bestimmtes Objekt, ohne die eindeutige ID oder den vollständigen Namen des Objekts zu kennen.
+
+
+* DIE DATENERFASSUNGSKATEGORIE wird zum Abrufen und Verwalten von Datensammlern verwendet.
+* Mithilfe der DATENAUFNAHMERKATEGORIE können Aufnahmedaten und benutzerdefinierte Metriken abgerufen und gemanagt werden, beispielsweise von Telegraf-Agenten
+
+
+Weitere Kategorien und/oder APIs werden möglicherweise im Laufe der Zeit verfügbar sein. Die neuesten API-Informationen finden Sie im link:#api-documentation-swagger["API-Swagger-Dokumentation"].
+
+Beachten Sie, dass die API-Kategorien, auf die ein Benutzer Zugriff hat, auch vom abhängen link:concept_user_roles.html["Benutzerrolle"] Sie verfügen über alle Cloud Insights Funktionen (Monitoring, Cloud Secure, Reporting).
+
+
+
+== Inventurtraversal
+
+In diesem Abschnitt wird beschrieben, wie eine Hierarchie von Cloud Insights-Objekten durchlaufen wird.
+
+
+
+=== Objekte Der Obersten Ebene
+
+Einzelne Objekte werden in Anfragen durch eine eindeutige URL (in JSON als „selbst“ bezeichnet) identifiziert und erfordern Kenntnisse über Objekttyp und interne ID Für einige der Objekte der obersten Ebene (Hosts, Storage usw.) bietet DIE REST API Zugriff auf die vollständige Sammlung.
+
+Das allgemeine Format einer API-URL lautet:
+
+ https://<tenant>/rest/v1/<category>/<object>
+Um beispielsweise alle Speicher von einem Mandanten mit dem Namen _mysite.c01.cloudinsights.netapp.com_ abzurufen, lautet die Anfrage-URL:
+
+ https://mysite.c01.cloudinsights.netapp.com/rest/v1/assets/storages
+
+
+=== Kinder und verwandte Objekte
+
+Objekte auf oberster Ebene, wie z. B. Speicherung, können für andere Kinder und verwandte Objekte verwendet werden. Zum Beispiel, um alle Datenträger für einen bestimmten Speicher abzurufen, verketten Sie die Speicher-URL „selbst“ mit „/Disks“, zum Beispiel:
+
+ https://<tenant>/rest/v1/assets/storages/4537/disks
+
+
+== Erweitert
+
+Viele API-Befehle unterstützen den Parameter *Expand*, der zusätzliche Details zum Objekt oder URLs für verwandte Objekte enthält.
+
+Der gemeinsame Expand-Parameter ist _Expands_. Die Antwort enthält eine Liste aller verfügbaren spezifischen Expands für das Objekt.
+
+Beispiel: Wenn Sie Folgendes anfordern:
+
+ https://<tenant>/rest/v1/assets/storages/2782?expand=_expands
+Die API gibt alle verfügbaren Expands für das Objekt wie folgt zurück:
+
+image:expands.gif["Expands Beispiel"]
+
+Jede Erweiterung enthält Daten, eine URL oder beides. Der Parameter Expand unterstützt mehrere und verschachtelte Attribute, z. B.:
+
+ https://<tenant>/rest/v1/assets/storages/2782?expand=performance,storageResources.storage
+Mit Expand lassen sich zahlreiche verwandte Daten in einer einzigen Lösung integrieren. NetApp rät Ihnen, nicht zu viele Informationen gleichzeitig anzufordern. Dies kann zu einer Verschlechterung der Performance führen.
+
+Um dies zu entmutigen, können Anfragen nach Beständen der obersten Ebene nicht erweitert werden. Beispielsweise können Sie keine Expand-Daten für alle Speicherobjekte gleichzeitig anfordern. Die Clients müssen die Liste der Objekte abrufen und dann spezifische Objekte auswählen, die erweitert werden sollen.
+
+
+
+== Performance-Daten
+
+Performancedaten werden über viele Geräte als separate Proben erfasst. Jede Stunde (Standard) Cloud Insights aggregiert und fasst Performance-Muster zusammen.
+
+Die API ermöglicht den Zugriff auf sowohl die Proben als auch auf die zusammengefassten Daten. Bei einem Objekt mit Performance-Daten ist eine Performance-Zusammenfassung als _Expand=Performance_ verfügbar. Die Zeitreihen für den Leistungsverlauf sind über die verschachtelte_Expand=Performance.history_ verfügbar.
+
+Beispiele für Performance-Datenobjekte:
+
+* Storage Performance
+* StoragePoolPerformance
+* PortPerformance
+* DiskPerformance
+
+
+Eine Leistungsmetric hat eine Beschreibung und Kategorie und enthält eine Sammlung von Leistungsübersichten. Beispiel: Latenz, Datenverkehr und Rate.
+
+Eine Leistungsübersicht enthält eine Beschreibung, Einheit, Beispielstartzeit, Probenendzeit und eine Sammlung von zusammengefassten Werten (Strom, min, max, avg usw.), die aus einem einzelnen Leistungszähler über einen Zeitbereich (1 Stunde, 24 Stunden, 3 Tage usw.) berechnet werden.
+
+image:API_Performance.png["Beispiel für eine API-Performance"]
+
+Das resultierende Wörterbuch für Leistungsdaten enthält die folgenden Schlüssel:
+
+* „Selbst“ ist die eindeutige URL des Objekts
+* „History“ ist die Liste der Paare von Zeitstempel und Karte von Zählerwerten
+* Jeder andere Wörterbuchschlüssel („diskThrughput“ usw.) ist der Name einer Leistungsmetrik.
+
+
+Jeder Performance-Datenobjekttyp verfügt über einen eigenen Satz von Performance-Kennzahlen. Das Performance-Objekt der virtuellen Maschine unterstützt beispielsweise „diskThrughput“ als Leistungskennzahl. Jede unterstützte Leistungsmetrik ist eine bestimmte „performanceCategory“, die im metrischen Wörterbuch dargestellt wird. Cloud Insights unterstützt mehrere Performance-Metrik-Kategorien, die später in diesem Dokument aufgeführt sind. Jedes Wörterbuch der Leistungsmetrik hat auch das Feld „Beschreibung“, das eine vom Menschen lesbare Beschreibung dieser Leistungsmetrik und eine Reihe von Zähleinträgen mit Leistungszusammenfassung ist.
+
+Der Zähler der Leistungsübersicht ist die Zusammenfassung der Leistungsindikatoren. Er zeigt typische aggregierte Werte wie Min., Max. Und Avg für einen Zähler sowie den neuesten beobachteten Wert, den Zeitbereich für zusammengefasste Daten, den Einheitstyp für Zähler und die Schwellenwerte für Daten. Nur Schwellenwerte sind optional; die restlichen Attribute müssen angegeben werden.
+
+Leistungsübersichten stehen für diese Zählertypen zur Verfügung:
+
+* Lesen – Zusammenfassung für Lesevorgänge
+* Write – Zusammenfassung für Schreibvorgänge
+* Gesamt: Zusammenfassung für alle Operationen. Es kann höher sein als die einfache Summe von Lesen und Schreiben; es kann auch andere Operationen.
+* Total Max – Zusammenfassung für alle Operationen. Dies ist der maximale Gesamtwert im angegebenen Zeitbereich.
+
+
+
+
+== Kennzahlen Für Die Objekt-Performance
+
+Die API kann detaillierte Metriken für Objekte in Ihrer Umgebung zurückgeben, z. B.:
+
+* Storage-Performance-Kennzahlen wie IOPS (Anzahl der ein-/Ausgabe-Anfragen pro Sekunde), Latenz oder Durchsatz.
+
+
+* Kennzahlen zur Switch-Performance, z. B. Datenverkehrsnutzung, BB Credit Zero Daten oder Port-Fehler.
+
+
+Siehe link:#api-documentation-swagger["API-Swagger-Dokumentation"] Weitere Informationen zu Metriken für die einzelnen Objekttypen.
+
+
+
+== Performance-Verlaufsdaten
+
+Verlaufsdaten werden in Leistungsdaten als Liste der Zeitstempel- und Zählermaps-Paare präsentiert.
+
+Verlaufszähler werden basierend auf dem Objektnamen der Performance-Metrik benannt. Das Performance-Objekt der virtuellen Maschine unterstützt beispielsweise „diskThrughput“, so dass die Geschichtskarte Schlüssel mit den Namen „diskThrughput.read“, „diskThrughput.write“ und „diskThrughput.total“ enthält.
+
+
+NOTE: Zeitstempel befindet sich im UNIX-Zeitformat.
+
+Dies ist ein Beispiel für einen Performance-Daten-JSON für eine Festplatte:
+
+image:DiskPerformanceExample.png["Festplatten-Performance-JSON"]
+
+
+
+== Objekte mit Kapazitätsattributen
+
+Objekte mit Kapazitätsattributen verwenden grundlegende Datentypen und das kapazitätItem zur Darstellung.
+
+
+
+=== KapazitätArtikel
+
+KapazitätItem ist eine einzige logische Einheit der Kapazität. Er hat „Wert“ und „highThreshold“ in Einheiten, die durch sein übergeordnetes Objekt definiert sind. Zudem unterstützt es eine optionale Übersichtskarte, in der die Konstruktion des Kapazitätswerts erläutert wird. So wäre beispielsweise die Gesamtkapazität eines 100 TB StoragePool ein KapazitätItem mit einem Wert von 100. Die Aufschlüsselung kann 60 TB für „Daten“ und 40 TB für „Snapshots“ zugewiesen zeigen.
+
+Hinweis:: „HighThreshold“ stellt systemdefinierte Schwellenwerte für die entsprechenden Metriken dar, mit denen ein Kunde Alarme oder visuelle Hinweise auf Werte generieren kann, die außerhalb des zulässigen konfigurierten Messebereiches liegen.
+
+
+Die folgende Anzeige zeigt die Kapazität von StoragePools mit mehreren Kapazitätszählern:
+
+image:StoragePoolCapacity.png["Beispiel Für Die Speicherpool-Kapazität"]
+
+
+
+== Suchen von Objekten mit Suchen
+
+Die Such-API ist ein einfacher Einstiegspunkt zum System. Der einzige Eingabeparameter für die API ist eine freie Zeichenfolge, und der resultierende JSON enthält eine kategorisierte Liste der Ergebnisse. Kategorien sind verschiedene Asset-Typen aus dem Inventar, wie Speicher, Hosts, Datenspeicher usw. Jede Kategorie würde eine Liste von Objekten des Kategorietyps enthalten, die den Suchkriterien entsprechen.
+
+Cloud Insights ist eine erweiterbare (offene) Lösung, die die Integration in Orchestrierungs-, Business-Management-, Änderungs- und Ticketsysteme anderer Anbieter sowie in individuelle CMDB-Integrationen ermöglicht.
+
+Die RESTful API von Cloud Insight ist ein primärer Integrationspunkt für eine einfache und effektive Datenverschiebung und ermöglicht Anwendern nahtlosen Zugriff auf ihre Daten.

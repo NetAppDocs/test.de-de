@@ -1,0 +1,303 @@
+---
+sidebar: sidebar 
+permalink: concept_device_resolution_regex_examples.html 
+keywords: Automatic, AR, AHR, Host, automatic device resolution, FC, Identify, regex, expressions 
+summary:  
+---
+= Beispiele für reguläre Ausdrücke
+:allow-uri-read: 
+
+
+[role="lead"]
+Wenn Sie den regulären Ausdrucks-Ansatz als Ihre Ausgangs-Benennungsstrategie ausgewählt haben, können Sie die Beispiele für reguläre Ausdrücke als Leitfäden für Ihre eigenen Ausdrücke verwenden, die in den automatischen Auflösungsmethoden von Cloud Insights verwendet werden.
+
+
+
+=== Formatieren von regulären Ausdrücken
+
+Wenn Sie reguläre Ausdrücke für die automatische Auflösung von Cloud Insights erstellen, können Sie das Ausgabeformat konfigurieren, indem Sie Werte in ein Feld mit dem Namen _FORMAT_ eingeben.
+
+Die Standardeinstellung ist \1. Das bedeutet, dass ein Zonenname, der dem regulären Ausdruck entspricht, durch den Inhalt der ersten Variablen ersetzt wird, die durch den regulären Ausdruck erstellt wurde. In einem regelmäßigen Ausdruck werden variable Werte durch parteiliche Aussagen erzeugt. Wenn mehrere parenthetische Aussagen auftreten, werden die Variablen numerisch von links nach rechts referenziert. Die Variablen können in beliebiger Reihenfolge im Ausgabeformat verwendet werden. Konstanttext kann auch in die Ausgabe eingefügt werden, indem es dem FORMATFELD hinzugefügt wird.
+
+Möglicherweise haben Sie beispielsweise die folgenden Zonennamen für diese Zonenbenennung:
+
+ [Zone number]_[data center]_[hostname]_[device type]_[interface number]
+* S123_Miami_hostname1_Filer_FC1
+* S14_Tampa_hostname2_Switch_FC4
+* S3991_Boston_Hostname3_windows2K_FC0
+* S44_Raleigh_Hostnamen 4_solaris_FC1
+
+
+Möglicherweise soll die Ausgabe im folgenden Format vorliegen:
+
+ [hostname]-[data center]-[device type]
+Dazu müssen Sie die Felder Hostname, Rechenzentrum und Gerätetyp in Variablen erfassen und in der Ausgabe verwenden. Der folgende reguläre Ausdruck würde dies tun:
+
+ .*?_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_([a-zA-Z0-9]+)_.*
+Da es drei Gruppen von Klammern gibt, würden die Variablen \1, \2 und \3 ausgefüllt.
+
+Sie können dann das folgende Format verwenden, um die Ausgabe in Ihrem bevorzugten Format zu empfangen:
+
+ \2-\1-\3
+Ihr Output wäre wie folgt:
+
+....
+hostname1-Miami-filer
+hostname2-Tampa-switch
+hostname3-Boston-windows2K
+hostname4-Raleigh-solaris
+....
+Die Bindestriche zwischen den Variablen liefern ein Beispiel für konstanten Text, der in die formatierte Ausgabe eingefügt wird.
+
+
+
+=== Beispiel 1 mit Zonennamen
+
+In diesem Beispiel verwenden Sie den regulären Ausdruck, um einen Hostnamen aus dem Zonennamen zu extrahieren. Sie können einen regulären Ausdruck erstellen, wenn Sie etwas Ähnliches wie die folgenden Zonennamen haben:
+
+* S0032_myComputer1Name-HBA0
+* S0434_myComputer1Name-HBA1
+* S0432_myComputer1Name-HBA3
+
+
+Der reguläre Ausdruck, mit dem Sie den Hostnamen erfassen können, lautet:
+
+ S[0-9]+_([a-zA-Z0-9]*)[_-]HBA[0-9]
+Das Ergebnis ist eine Übereinstimmung aller Zonen, die mit S beginnen, gefolgt von einer beliebigen Kombination von Ziffern, gefolgt von einem Unterstrich, dem alphanumerischen Hostnamen (myComputer1Name), einem Unterstrich oder Bindestrich, den Großbuchstaben HBA und einer einzelnen Ziffer (0-9). Der Hostname allein ist in der Variablen *\1* gespeichert.
+
+Der reguläre Ausdruck kann in seine Komponenten unterteilt werden:
+
+* „S“ steht für den Zonennamen und beginnt den Ausdruck. Dies entspricht nur einem „S“ am Anfang des Zonennamens.
+* Die Zeichen [0-9] in Klammern geben an, dass das folgende „S“ eine Ziffer zwischen 0 und 9, einschließlich sein muss.
+* Das +-Zeichen gibt an, dass das Auftreten der Informationen in den vorhergehenden Klammern 1 oder mehr Mal bestehen muss.
+* Der _ (Unterstrich) bedeutet, dass den Ziffern nach S sofort nur ein Unterstrich im Zonennamen folgen muss. In diesem Beispiel verwendet die Namenskonvention für die Zone den Unterstrich, um den Zonennamen vom Hostnamen zu trennen.
+* Nach dem erforderlichen Unterstrich geben die Klammern an, dass das in enthaltene Muster in der Variablen \1 gespeichert wird.
+* Die in Klammern getierten Zeichen [A-ZA-Z0-9] geben an, dass es sich bei den Zeichen um alle Buchstaben (unabhängig von Groß- und Kleinschreibung) und Zahlen handelt.
+* Das * (Sternchen) nach den Klammern zeigt an, dass die Klammern 0 oder mehr Mal auftreten.
+* Die Klammern [_-] (Unterstrich und Strich) geben an, dass dem alphanumerischen Muster ein Unterstrich oder ein Strich folgen muss.
+* Die Buchstaben HBA im regulären Ausdruck geben an, dass diese genaue Reihenfolge der Zeichen im Zonennamen erfolgen muss.
+* Der letzte Satz mit Klammern [0-9] entspricht einer einstelligen Ziffer von 0 bis 9, inklusive.
+
+
+
+
+=== Beispiel 2
+
+überspringen Sie in diesem Beispiel den ersten Unterstrich "_", dann passen Sie E und alles danach bis zum zweiten "_", und überspringen Sie danach alles.
+
+*ZONE:* Z_E2FHDBS01_E1NETAPP
+
+*Hostname:* E2FHDBS01
+
+*RegEXP:* .*?_(E.*?)_.*?
+
+
+
+=== Beispiel 3
+
+Die Klammern "( )" um den letzten Abschnitt im regulären Ausdruck (unten) geben an, welcher Teil der Hostname ist. Wenn VSAN3 der Hostname sein soll, lautet dies: [A-ZA-Z0-9]+_([A-ZA-Z0-9]+).*
+
+*ZONE:* A_VSAN3_SR48KENT_A_CX2578_SPA0
+
+*Hostname:* SR48KENT
+
+*RegExp:* [A-ZA-Z0-9]+_[A-ZA-Z0-9]+_([A-ZA-Z0-9]+).*
+
+
+
+=== Beispiel 4 zeigt ein komplizierteren Benennungsmuster
+
+Sie können einen regulären Ausdruck erstellen, wenn Sie etwas Ähnliches wie die folgenden Zonennamen haben:
+
+* MyComputerName123-HBA1_Symm1_FA3
+* MyComputerName123-HBA2_Symm1_FA5
+* MyComputerName123-HBA3_Symm1_FA7
+
+
+Der reguläre Ausdruck, mit dem Sie diese erfassen können, wäre:
+
+ ([a-zA-Z0-9]*)_.*
+Die Variable \1 enthält nach der Auswertung durch diesen Ausdruck nur _myComputerName123_.
+
+Der reguläre Ausdruck kann in seine Komponenten unterteilt werden:
+
+* Die Klammern geben an, dass das in enthaltene Muster in der Variablen \1 gespeichert wird.
+* Die Klammern [A-ZA-Z0-9] bedeuten, dass jeder Buchstabe (unabhängig vom Fall) oder jede Ziffer übereinstimmen wird.
+* Das * (Sternchen) nach den Klammern zeigt an, dass die Klammern 0 oder mehr Mal auftreten.
+* Das Zeichen _ (Unterstrich) im regulären Ausdruck bedeutet, dass der Zonenname unmittelbar nach dem alphanumerischen String, der mit den vorangegangenen Klammern übereinstimmt, einen Unterstrich aufweisen muss.
+* Der . (Periode) entspricht einem beliebigen Zeichen (ein Platzhalter).
+* Das Sternchen * (Sternchen) zeigt an, dass der Platzhalter für den vorherigen Zeitraum 0 oder mehr Mal auftreten kann.
++
+Mit anderen Worten, die Kombination .* zeigt jedes Zeichen an, jede beliebige Anzahl von Zeiten.
+
+
+
+
+
+=== Beispiel 5 zeigt Zonennamen ohne Muster an
+
+Sie können einen regulären Ausdruck erstellen, wenn Sie etwas Ähnliches wie die folgenden Zonennamen haben:
+
+* MyComputerName_HBA1_Symm1_FA1
+* MyComputerName123_HBA1_Symm1_FA1
+
+
+Der reguläre Ausdruck, mit dem Sie diese erfassen können, wäre:
+
+ (.*?)_.*
+Die Variable \1 enthält _MyComputerName_ (im Beispiel für den ersten Zonennamen) oder _myComputerName123_ (im Beispiel für den zweiten Zonennamen). Dieser reguläre Ausdruck würde somit alles vor dem ersten Unterstrich entsprechen.
+
+Der reguläre Ausdruck kann in seine Komponenten unterteilt werden:
+
+* Die Klammern geben an, dass das in enthaltene Muster in der Variablen \1 gespeichert wird.
+* Das .* (Periodensternzeichen) stimmt mit einem beliebigen Zeichen überein, beliebig oft.
+* Das * (Sternchen) nach den Klammern zeigt an, dass die Klammern 0 oder mehr Mal auftreten.
+* Die ? Charakter macht den Match nicht-gierig. Dies zwingt es, beim ersten Unterstrich nicht beim letzten zu stimmen.
+* Die Zeichen _.* entsprechen dem ersten gefundenen Unterstrich und allen Zeichen, die ihm folgen.
+
+
+
+
+=== Beispiel 6 zeigt Computernamen mit einem Muster an
+
+Sie können einen regulären Ausdruck erstellen, wenn Sie etwas Ähnliches wie die folgenden Zonennamen haben:
+
+* Storage1_Switch1_myComputerName123A_A1_FC1
+* Storage2_Switch2_myComputerName123B_A2_FC2
+* Storage3_Switch3_myComputerName123T_A3_FC3
+
+
+Der reguläre Ausdruck, mit dem Sie diese erfassen können, wäre:
+
+ .*?_.*?_([a-zA-Z0-9]*[ABT])_.*
+Da die Namenskonvention für die Zone mehr ein Muster hat, könnten wir den obigen Ausdruck verwenden, der allen Instanzen eines Hostnamen (MyComputerName im Beispiel) entspricht, der entweder mit Einer A, einem B oder einem T endet und diesen Hostnamen in die \1-Variable setzt.
+
+Der reguläre Ausdruck kann in seine Komponenten unterteilt werden:
+
+* Das .* (Periodensternzeichen) stimmt mit einem beliebigen Zeichen überein, beliebig oft.
+* Die ? Charakter macht den Match nicht-gierig. Dies zwingt es, beim ersten Unterstrich nicht beim letzten zu stimmen.
+* Das Unterstrich-Zeichen entspricht dem ersten Unterstrich im Zonennamen.
+* Somit entspricht die erste Kombination .*?_ den Zeichen Storage1_ im Beispiel des ersten Zonennamens.
+* Die zweite Kombination .*?_ verhält sich wie die erste, stimmt aber im Beispiel für den Namen der ersten Zone mit Switch1_ überein.
+* Die Klammern geben an, dass das in enthaltene Muster in der Variablen \1 gespeichert wird.
+* Die Klammern [A-ZA-Z0-9] bedeuten, dass jeder Buchstabe (unabhängig vom Fall) oder jede Ziffer übereinstimmen wird.
+* Das * (Sternchen) nach den Klammern zeigt an, dass die Klammern 0 oder mehr Mal auftreten.
+* Die Klammern im regulären Ausdruck [ABT] entsprechen einem einzelnen Zeichen im Zonennamen, das A, B oder T. sein muss
+* Der _ (Unterstrich) nach den Klammern zeigt an, dass der [ABT]-Zeichenabgleiche einen Unterstrich nachgehen muss.
+* Das .* (Periodensternzeichen) stimmt mit einem beliebigen Zeichen überein, beliebig oft.
+
+
+Das Ergebnis würde daher dazu führen, dass die Variable \1 alle alphanumerischen Zeichenfolgen enthält, die:
+
+* Zuvor waren einige alphanumerische Zeichen und zwei Unterstriche
+* Gefolgt von einem Unterstrich (und dann einer beliebigen Anzahl alphanumerischer Zeichen)
+* Hatte vor dem dritten Unterstrich einen letzten Charakter von A, B oder T.
+
+
+
+
+=== Beispiel 7
+
+*Zone:* myComputerName123_HBA1_Symm1_FA1
+
+*Hostname:* myComputerName123
+
+*RegExp:* ([A-ZA-Z0-9]+)_.*
+
+
+
+=== Beispiel 8
+
+Dieses Beispiel findet alles vor dem ersten _.
+
+Zone: MyComputerName_HBA1_Symm1_FA1
+
+MyComputerName123_HBA1_Symm1_FA1
+
+Hostname: MyComputerName
+
+Regexp: (.*?)_.*
+
+Beispiel 9 Dieses Beispiel findet alles nach dem 1. _ Und bis zur zweiten _.
+
+*Zone:* Z_MyComputerName_StorageName
+
+*Hostname:* MyComputerName
+
+*RegEXP:* .*?_(.*?)_.*?
+
+
+
+=== Beispiel 10
+
+Dieses Beispiel extrahiert „MyComputerName123“ aus den Zonenbeispielen.
+
+*Zone:* Storage1_Switch1_MyComputerName123A_A1_FC1
+
+Storage2_Switch2_MyComputerName123B_A2_FC2
+
+Storage3_Switch3_MyComputerName123T_A3_FC3
+
+*Hostname:* MyComputerName123
+
+*RegExp:* .*?_.*?_([A-ZA-Z0-9]+)*[ABT]_.*
+
+
+
+=== Beispiel 11
+
+*Zone:* Storage1_Switch1_MyComputerName123A_A1_FC1
+
+*Hostname:* MyComputerName123A
+
+*RegExp:* .*?_.*?_([A-ZA-z0-9]+)_.*?_
+
+
+
+=== Beispiel 12
+
+Die ^ (umgangen oder caret) *innen eckige Klammern* negiert den Ausdruck, zum Beispiel, [^FF] bedeutet alles außer Groß- oder Kleinbuchstaben F, und [^a-z] bedeutet alles außer Kleinbuchstaben a bis z, und im obigen Fall alles außer dem _. Die Formatanweisung fügt den Namen des Ausgabehosts in „-“ hinzu.
+
+*Zone:* mhs_apps44_d_A_10a0_0429
+
+*Hostname:* mhs-apps44-d
+
+*RegExp:* ([^_]+)_([ab]).*Format in Cloud Insights: \1-\2 ([^_]+)_ ([^_]+)_([^_]+).*Format in Cloud Insights: \1-\2-\3
+
+
+
+=== Beispiel 13
+
+In diesem Beispiel wird der Speicher-Alias durch "\" getrennt und der Ausdruck muss mit "\\" definieren, dass tatsächlich "\" in der Zeichenfolge verwendet wird und dass diese nicht Teil des Ausdrucks selbst sind.
+
+*Speicheralias:* \Hosts\E2DOC01C1\E2DOC01N1
+
+*Hostname:* E2DOC01N1
+
+*RegEXP:* \\.*?\\.*?\\(.*?)
+
+
+
+=== Beispiel 14
+
+Dieses Beispiel extrahiert „PD-RV-W-AD-2“ aus den Zonenbeispielen.
+
+*ZONE:* PD_D-PD-RV-W-AD-2_01
+
+*HOSTNAME:* PD-RV-W-AD-2
+
+*RegExp:* [^-]+-(.*-\d+).*
+
+
+
+=== Beispiel 15
+
+Die Formateinstellung in diesem Fall fügt dem Hostnamen die „US-BV-“ hinzu.
+
+*ZONE:* SRV_USBVM11_F1
+
+*HOSTNAME:* US-BV-M11
+
+*RegEXP:* SRV_USBV([A-Za-z0-9]+)_F[12]
+
+*Format:* US-BV-\1

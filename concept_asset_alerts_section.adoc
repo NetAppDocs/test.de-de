@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: concept_asset_alerts_section.html 
+summary: Übersicht über den Abschnitt „Verwandte Meldungen“ in Cloud Insights. 
+keywords: asset, landing page, violations, Alerts, 
+---
+= Abschnitt „Hinweise auf der Seite „Ressourcen“
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie können den Abschnitt „Verwandte Warnungen“ einer Asset-Seite verwenden, um alle Warnmeldungen anzuzeigen, die in Ihrer Umgebung als Ergebnis eines Monitors auftreten, der einem Asset zugewiesen ist. Monitore generieren Warnungen auf der Grundlage von festgelegten Bedingungen. So können Sie Implikationen identifizieren und die Auswirkungen und Ursache des Problems auf eine schnelle und effektive Korrektur analysieren.
+
+Das folgende Beispiel zeigt einen typischen Abschnitt „Verwandte Warnungen“, der auf einer Asset-Seite angezeigt wird:
+
+image:Alerts_on_Landing_Page.png["Verwandte Warnungstabelle"]
+
+Im Abschnitt „Verwandte Warnungen“ können Sie die Warnmeldungen anzeigen und verwalten, die in Ihrem Netzwerk aufgrund von Überwachungsbedingungen auftreten, die einem Asset zugewiesen sind.
+
+.Schritte
+* Suchen Sie eine Asset-Seite, indem Sie einen der folgenden Schritte ausführen:
++
+** Geben Sie den Namen des Assets im Suchbereich ein, und wählen Sie das Element aus der Liste aus.
+** Klicken Sie in einem Dashboard-Widget auf den Namen eines Assets.
+** Fragen Sie nach einem Satz von Assets ab, und wählen Sie in der Ergebnisliste ein aus.
+
+
+
+
+Die Seite Anlage wird angezeigt. Im Abschnitt „Verwandte Warnungen“ werden die Zeit angezeigt, zu der die Warnmeldung ausgelöst wurde, sowie der aktuelle Status der Warnmeldung und der Monitor, der sie ausgelöst hat. Sie können auf die Alarm-ID klicken, um die Landing Page für die Warnmeldung zur weiteren Untersuchung zu öffnen.

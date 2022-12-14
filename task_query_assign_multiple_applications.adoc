@@ -1,0 +1,46 @@
+---
+sidebar: sidebar 
+permalink: task_query_assign_multiple_applicationss.html 
+summary: Verwenden Sie eine Abfrage, um mehreren Anwendungen oder Anmerkungen zuzuweisen oder mehrere Anwendungen oder Anmerkungen aus Objekten zu entfernen. 
+keywords: query, queries, application, annotation, multiple 
+---
+= Zuweisen mehrerer Anwendungen zu oder Entfernen mehrerer Anwendungen aus Assets
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie können mehrere Anwendungen mit einer Abfrage zuweisen oder aus mehreren Anlagen entfernen, anstatt sie manuell zuweisen oder entfernen zu müssen.
+
+
+NOTE: Mit diesen Schritten können Sie Anmerkungen auf die gleiche Weise hinzufügen oder entfernen.
+
+.Bevor Sie beginnen
+Sie müssen bereits eine Abfrage erstellt haben, die alle Assets findet, die Sie bearbeiten möchten.
+
+.Schritte
+. Klicken Sie auf *Abfragen* und wählen Sie *Alle Anfragen anzeigen*.
++
+Die Seite Abfragen wird angezeigt.
+
+. Klicken Sie auf den Namen der Abfrage, die die Assets findet.
++
+Die Liste der mit der Abfrage verknüpften Assets wird angezeigt.
+
+. Wählen Sie die gewünschten Assets in der Liste aus, oder klicken Sie auf das oberste Kontrollkästchen, um alle auszuwählen.
++
+Der image:BulkActions.png["Aktionen"] Die Schaltfläche wird angezeigt.
+
+. Um den ausgewählten Assets eine Anwendung hinzuzufügen, klicken Sie auf image:BulkActions.png["Aktionen"] Und wählen Sie *Anwendung hinzufügen*.
+. Wählen Sie eine oder mehrere Anwendungen aus.
++
+Sie können jedoch mehrere Applikationen für Hosts, interne Volumes, qtrees und Virtual Machines auswählen. Sie können nur eine Anwendung für ein Volume oder eine Freigabe auswählen.
+
+. Klicken Sie Auf *Speichern*.
+. Klicken Sie auf, um eine der Assets zugewiesene Anwendung zu entfernen image:BulkActions.png["Aktionen"] Und wählen Sie *Anwendung entfernen*.
+. Wählen Sie die Anwendung oder die Anwendungen aus, die Sie entfernen möchten.
+. Klicken Sie Auf *Löschen*.
+
+
+Neue Anwendungen, die Sie zuweisen, überschreiben alle Anwendungen auf dem Asset, die von einem anderen Asset abgeleitet wurden. Beispielsweise übernehmen Volumes Applikationen von Hosts, und wenn neuen Applikationen einem Volume zugewiesen werden, hat die neue Applikation Vorrang vor der abgeleiteten Applikation.
+
+Nachdem Sie bei einer Massenlösch-Aktion auf „ _Save_“ oder „ _Remove_“ geklickt haben, informiert Cloud Insights Sie darüber, dass die Aktion einige Zeit in Anspruch nehmen wird. Sie können diese Meldung verwerfen; die Aktion wird im Hintergrund fortgesetzt.

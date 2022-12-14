@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: concept_asset_summary_section.html 
+summary: Überblick über den Abschnitt „Übersicht der Assets“ in Cloud Insights. 
+keywords: asset, summary, landing page, topology 
+---
+= Abschnitt „Ressourcen-Seite-Übersicht“
+:allow-uri-read: 
+
+
+[role="lead"]
+Im Abschnitt Zusammenfassung einer Asset-Seite werden allgemeine Informationen zu einem Asset angezeigt, einschließlich der Frage, ob Kennzahlen oder Leistungsrichtlinien für Bedenken sorgen. Potenzielle Problembereiche werden durch einen roten Kreis gekennzeichnet.
+
+image:Summary_Section_Example.png[""]
+
+Hinweis: Die im Abschnitt Zusammenfassung angezeigten Informationen variieren je nach Art des anzuzeigenden Assets.
+
+Sie können auf einen der Asset-Links klicken, um die Asset-Seiten anzuzeigen. Wenn Sie beispielsweise einen Speicherknoten anzeigen, können Sie auf einen Link klicken, um die Asset-Seite des zugehörigen Speichers anzuzeigen.
+
+Sie können die Metriken anzeigen, die mit der Ressource verknüpft sind. Ein roter Kreis neben einer Metrik zeigt an, dass Sie mögliche Probleme diagnostizieren und lösen müssen.
+
+
+NOTE: Sie können feststellen, dass die Volume-Kapazität bei einigen Storage-Assets größer als 100 % sein kann. Das liegt an Metadaten, die sich auf die Kapazität des Volumes beziehen, die Teil der verbrauchten Kapazitätsdaten sind, die von der Ressource gemeldet wurden.
+
+Falls zutreffend, können Sie auf einen Warnlink klicken, um die mit dem Gerät verknüpfte Warnung und den Monitor anzuzeigen.
+
+
+
+== Topologie
+
+Auf bestimmten Asset-Seiten enthält der Abschnitt Zusammenfassung einen Link, um die Topologie des Assets und dessen Verbindungen anzuzeigen.
+
+Die Topologie ist für die folgenden Asset-Typen verfügbar:
+
+* Applikation
+* Festplatte
+* Fabric
+* Host
+* Internes Volumen
+* Port
+* Switch
+* Virtual Machine
+* VMDK
+* Datenmenge
+
+
+image:TopologyExample.png[""]

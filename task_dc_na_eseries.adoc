@@ -1,0 +1,137 @@
+---
+sidebar: sidebar 
+permalink: task_dc_na_eseries.html 
+keywords: data collector, ontap, clustered ontap 
+summary: NetApp E-Series Data Collector konfigurieren. 
+---
+= NetApp E-Series Datensammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Die NetApp E-Series Datensammlung sammelt Bestands- und Performance-Daten. Der Collector unterstützt die Firmware 7.x+ unter Verwendung derselben Konfigurationen und meldet dieselben Daten.
+
+
+
+== Terminologie
+
+Cloud Insight erfasst die folgenden Bestandsinformationen aus dem NetApp E-Series Data Collector. Für jeden erfassten Asset-Typ wird die am häufigsten für dieses Dokument verwendete Terminologie angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Festplatte | Festplatte 
+
+
+| Volume-Gruppe | Festplattengruppe 
+
+
+| Storage Array Durchführt | Storage 
+
+
+| Controller | Storage-Node 
+
+
+| Volume-Gruppe | Storage-Pool 
+
+
+| Datenmenge | Datenmenge 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Terminologie der E-Series (Landing Page)
+
+Die folgenden Begriffe gelten für Objekte oder Referenzen, die Sie auf den Asset-Landing-Pages der NetApp E-Series finden können. Viele dieser Bedingungen gelten auch für andere Datensammler.
+
+
+
+=== Storage
+
+* Modell – Modellname des Geräts.
+* Anbieter – derselbe Anbietername, den Sie sehen würden, wenn Sie eine neue Datenquelle konfigurieren würden
+* Seriennummer: Die Seriennummer des Arrays. Bei Storage-Systemen der Cluster-Architektur wie NetApp Clustered Data ONTAP ist diese Seriennummer möglicherweise weniger nützlich als die einzelnen Seriennummern der Storage-Nodes
+* IP: In der Regel werden die in der Datenquelle konfigurierten IP(s) oder Hostnamen(s) verwendet
+* Microcode-Version – Firmware
+* Rohkapazität – Basis-2-Zusammenfassung aller physischen Laufwerke im System, unabhängig von ihrer Rolle
+* Latenz – eine Darstellung der Workloads, die sich auf dem Host auslasten, sowohl bei Lese- als auch bei Schreibzugriffen. Idealerweise beziehen Cloud Insights diesen Wert direkt ein, ist dies jedoch häufig nicht der Fall. Anstelle des Arrays, die dies anbieten, führt Cloud Insights in der Regel eine IOPS-gewichtete Berechnung aus den Statistiken der einzelnen Volumes durch.
+* Durchsatz – der Gesamthost des Arrays mit Blick auf den Durchsatz. Idealerweise direkt aus dem Array bezogen, falls nicht verfügbar, fasst Cloud Insights den Durchsatz der Volumes zusammen, um diesen Wert abzuleiten
+* Verwaltung – dieser kann einen Hyperlink für die Verwaltungsschnittstelle des Geräts enthalten. Erstellt programmgesteuert durch die Cloud Insights Datenquelle im Rahmen der Bestandsberichterstattung
+
+
+
+
+=== Storage-Pool
+
+* Storage – auf welchem Storage-Array dieser Pool lebt. Obligatorisch
+* Typ – ein beschreibenden Wert aus einer Liste mit einer Aufzählung der Möglichkeiten. Am häufigsten wird „Thin Provisioning“ oder „RAID-Gruppe“ sein
+* Node – Wenn die Architektur dieses Speicherarrays so ist, dass Pools zu einem bestimmten Speicherknoten gehören, wird sein Name hier als Hyperlink zu seiner eigenen Landing Page angezeigt
+* Verwendet Flash Pool – Ja/Nein-Wert
+* Redundanz: RAID-Level oder Schutzschema. E-Series berichtet „RAID 7“ für DDP Pools
+* Kapazität – die Werte hier sind die logische genutzte, nutzbare Kapazität und die logische Gesamtkapazität sowie der dafür genutzte Prozentsatz. Zu diesen beiden Werten zählen die „Erhaltung“ der Kapazität der E-Series, was sowohl in Zahlen als auch in Prozent höher ist als die der E-Series eigenen Benutzeroberfläche angezeigt werden kann
+* Überprovisionierung der Kapazität: Wenn Sie mithilfe von Effizienztechnologien eine Summe der Volume- oder internen Volume-Kapazitäten zugewiesen haben, die größer sind als die logische Kapazität des Speicherpools, wird der prozentuale Wert hier größer als 0 % sein.
+* Snapshot – verwendete und insgesamt Snapshot-Kapazitäten, wenn Ihre Storage Pool-Architektur einem Teil ihrer Kapazität dedizierte Bereiche für Snapshots widmet
+* Auslastung – ein Prozentwert, der den höchsten ausgelastet anteil der Festplatte anzeigt, die zur Kapazität dieses Speicherpools beiträgt. Die Festplattenauslastung ist nicht unbedingt mit der Array-Performance korreliert – die Auslastung kann aufgrund von Festplattenwiederherstellungen, Deduplizierungsaktivitäten usw. bei Abwesenheit von Host-gestützten Workloads sehr hoch sein. Außerdem können viele Arrays Replikationsimplementierungen die Festplattenauslastung steigern, während sie nicht als Volume-Workload angezeigt werden.
+* IOPS – die Summe der IOPS aller Festplatten, die Kapazität in diesem Storage-Pool beitragen. Wenn Festplatten-IOPS auf einer bestimmten Plattform nicht verfügbar sind, wird dieser Wert aus der Summe der Volume-IOPS für alle Volumes in diesem Speicherpool bezogen
+* Durchsatz – der Gesamtdurchsatz aller Festplatten, die Kapazität zu diesem Speicherpool beitragen. Wenn der Festplattendurchsatz auf einer bestimmten Plattform nicht verfügbar ist, wird dieser Wert für alle Volumes in diesem Speicherpool aus der Summe des Volumes abgerufen
+
+
+
+
+=== Storage-Node
+
+* Storage – welches Storage-Array gehört zu diesem Node? Obligatorisch
+* HA-Partner: Auf Plattformen, auf denen ein Node auf einen und nur einen anderen Node Failover ausgeführt wird, ist er allgemein zu sehen
+* Status: Systemzustand des Node. Nur verfügbar, wenn das Array ordnungsgemäß genug ist, um von einer Datenquelle inventarisiert zu werden
+* Modell: Modellname des Knotens
+* Version – Versionsname des Geräts.
+* Seriennummer: Die Seriennummer des Node
+* Speicher: Sockel 2 Speicher, falls verfügbar
+* Auslastung – im Allgemeinen eine CPU-Auslastungsnummer, oder im Fall von NetApp ONTAP, ein Controller-Stressindex. Die Auslastung ist derzeit für die NetApp E-Series nicht verfügbar
+* IOPS: Eine Zahl, die die Host-gestützten IOPS auf diesem Controller repräsentiert. Idealerweise direkt aus dem Array bezogen. Wenn nicht verfügbar, wird der Wert berechnet, indem alle IOPS für Volumes zusammengefasst werden, die ausschließlich zu diesem Node gehören.
+* Latenz – eine Zahl, die die typische Host-Latenz oder Antwortzeit auf diesem Controller repräsentiert. Wenn nicht verfügbar, wird er idealerweise direkt aus dem Array bezogen. Wird das System dann berechnet, wenn die gewichtete IOPS-Berechnung aus den Volumes durchgeführt wird, die ausschließlich zu diesem Node gehören.
+* Durchsatz: Eine Zahl, die den Host-basierten Durchsatz auf diesem Controller repräsentiert. Falls nicht verfügbar, wird der gesamte Durchsatz aus dem Array bezogen, wenn er nicht verfügbar ist, wird er berechnet, indem der gesamte Durchsatz für Volumes zusammengefasst wird, die ausschließlich zu diesem Node gehören.
+* Prozessoren: Anzahl der CPUs
+
+
+
+
+== Anforderungen
+
+* Die IP-Adresse jedes Controllers im Array
+* Port-Anforderung 2463
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Kommagetrennte Liste der Array-SANtricity-Controller-IPs | IP-Adressen und/oder vollqualifizierte Domain-Namen für die Array Controller 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 30 Minuten 
+
+
+| Leistungsintervall bis zu 3600 Sekunden | Der Standardwert ist 300 Sekunden 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Datensammler finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

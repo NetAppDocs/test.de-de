@@ -1,0 +1,162 @@
+---
+sidebar: sidebar 
+permalink: cs_alert_data.html 
+keywords: alert, attack, ransomware, activity, security, abnormal 
+summary: Cloud Secure erstellt Warnmeldungen bei anormalen Benutzeraktivitäten oder potenziellen Angriffen. Auf der Seite „Meldungen“ werden diese Aktivitäten für eine schnelle und einfache Untersuchung aufgeführt. 
+---
+= Meldungen
+:allow-uri-read: 
+
+
+[role="lead"]
+Die Seite „Cloud Secure-Warnungen“ zeigt eine Übersicht über die letzten Angriffe und/oder Warnungen und ermöglicht Ihnen, Details zu jedem Problem anzuzeigen.
+
+image:CloudSecureAlertsListPage.png["Alarmliste"]
+
+
+
+== Alarm
+
+In der Alarmliste wird ein Diagramm angezeigt, in dem die Gesamtanzahl der potenziellen Angriffe und/oder Warnungen angezeigt wird, die im ausgewählten Zeitraum angehoben wurden, gefolgt von einer Liste der Angriffe und/oder Warnungen, die in diesem Zeitraum aufgetreten sind. Sie können den Zeitbereich ändern, indem Sie die Schieberegler für Startzeit und Endzeit in der Grafik anpassen.
+
+Für jede Meldung wird Folgendes angezeigt:
+
+*Potentielle Angriffe:*
+
+* Der _Potential Attack_-Typ (z. B. Ransomware oder Sabotage)
+* Datum und Uhrzeit des potenziellen Angriffs wurde _entdeckt_
+* Der _Status_ der Warnmeldung:
++
+** Neu (Standard für neue Warnmeldungen)
+** In Bearbeitung
+** Behoben
+** Abgelehnt
++
+Ein Administrator kann den Status der Warnmeldung ändern und eine Notiz hinzufügen, um die Untersuchung zu unterstützen.
+
++
+image:CloudSecureChangeAlertStatus.png["Ändern Sie Den Alarmstatus"]
+
+
+
+* Der _User_, dessen Verhalten die Warnung ausgelöst hat
+* _Nachweis_ des Angriffs (zum Beispiel wurde eine große Anzahl von Dateien verschlüsselt)
+* Die _Aktion wurde ausgeführt_ (zum Beispiel wurde ein Snapshot erstellt)
+
+
+*Warnungen:*
+
+* Das _anormale Verhalten_, das die Warnung ausgelöst hat
+* Das Datum und die Uhrzeit, zu der das Verhalten erkannt wurde_
+* Der _Status_ der Warnmeldung:
++
+** Neu (Standard für neue Warnmeldungen)
+** In Bearbeitung
+** Behoben
+** Abgelehnt
++
+Ein Administrator kann den Status der Warnmeldung ändern und eine Notiz hinzufügen, um die Untersuchung zu unterstützen.
+
+
+
+* Der _User_, dessen Verhalten die Warnung ausgelöst hat
+* Eine Beschreibung des _Change_ (z. B. eine abnormale Erhöhung des Dateizugriffs)
+* Die _Aktion Ausgeführt_
+
+
+
+
+== Filteroptionen
+
+Sie können Warnungen nach folgenden Kriterien filtern:
+
+* Der _Status_ der Warnmeldung
+* Spezifischer Text in der _Note_
+* Die Art von _attacks/Warnings_
+* Der_Benutzer_, dessen Aktionen die Warnung/Warnung ausgelöst haben
+
+
+
+
+== Die Seite „Warndetails“
+
+Sie können auf der Seite mit den Warnmeldungen auf einen Alarm-Link klicken, um eine Detailseite für die Meldung zu öffnen. Die Alarmdetails können je nach Angriffstyp oder Alarmtyp variieren. Eine Seite mit den Details zum Angriff durch Ransomware kann beispielsweise folgende Informationen enthalten:
+
+
+
+=== Zusammenfassung:
+
+* Angriffstyp (Ransomware, Sabotage) und Alarm-ID (zugewiesen von Cloud Secure)
+* Datum und Uhrzeit des Angriffs
+* Es wurde eine Aktion ausgeführt (beispielsweise ein automatischer Snapshot erstellt. Die Zeit des Snapshots wird direkt unter der Zusammenfassung angezeigt)
+* Status (Neu, in Bearbeitung usw.)
+
+
+
+
+=== Abschnitt „Angriffsergebnisse“:
+
+* Anzahl der betroffenen Volumes und Dateien
+* Eine begleitende Zusammenfassung der Detektion
+* Ein Diagramm mit Dateiaktivitäten während des Angriffs
+
+
+
+
+=== Abschnitt „Verwandte Benutzer“:
+
+In diesem Abschnitt werden Details zu dem Benutzer angezeigt, der an dem potenziellen Angriff beteiligt ist, einschließlich einer Grafik der Top-Aktivität für den Benutzer.
+
+Seite zu Warnungen (Dieses Beispiel zeigt einen potenziellen Ransomware-Angriff auf):image:RansomwareAlertExample.png["Beispiel Für Ransomware-Warnungen"]
+
+Detailseite (dieses Beispiel zeigt einen potenziellen Ransomware-Angriff.):image:RansomwareDetailPageExample.png["Beispiel Für Die Detailseite Von Ransomware"]
+
+
+
+== _Snapshot_ Aktion durchführen
+
+Cloud Secure schützt Ihre Daten, indem bei der Erkennung schädlicher Aktivitäten automatisch Snapshots erstellt werden. So wird sichergestellt, dass Ihre Daten sicher gesichert werden.
+
+Sie können definieren link:cs_automated_response_policies.html["Automatisierte Antwortrichtlinien"] Die einen Snapshot machen, wenn Ransomware-Angriff oder eine andere abnormale Benutzeraktivität erkannt wird. Sie können einen Snapshot auch manuell von der Warnungsseite aus erstellen.
+
+Automatische Momentaufnahme:image:AlertActionsAutomaticExample.png["Aktionsbildschirm Für Warnmeldungen, 1000"]
+
+Manuelle Momentaufnahme:image:AlertActionsExample.png["Aktionsbildschirm Für Warnmeldungen, 1000"]
+
+
+
+== Warnbenachrichtigungen
+
+Für jede Aktion der Warnmeldung werden E-Mail-Benachrichtigungen an eine Benachrichtigungsliste gesendet. Um Warnungsempfänger zu konfigurieren, klicken Sie auf *Admin > Benachrichtigungen* und geben Sie für jeden Empfänger eine E-Mail-Adresse ein.
+
+
+
+== Aufbewahrungsrichtlinie
+
+Warnungen und Warnungen werden 13 Monate lang aufbewahrt. Warnungen und Warnungen, die älter als 13 Monate sind, werden gelöscht. Wenn die Cloud Secure-Umgebung gelöscht wird, werden zudem alle der Umgebung zugeordneten Daten gelöscht.
+
+
+
+== Fehlerbehebung
+
+|===
+| Problem: | Versuchen Sie Das: 
+
+
+| Gibt es für von Cloud Secure (CS) erstellten Snapshots eine Spülzeit/Archivierungsdauer für CS Snapshots? | Nein Für CS-Snapshots ist kein Spülzeitraum/Archivierungszeitraum festgelegt. Der Benutzer muss die Spülrichtlinie für CS-Snapshots definieren. Weitere Informationen finden Sie im link:https://library.netapp.com/ecmdocs/ECMP1196819/html/GUID-27D0E37F-5AF1-4AF9-BDEB-9A4B7AF3B4A9.html["ONTAP-Dokumentation"] Über das Einrichten der Richtlinien. 
+
+
+| Es besteht die Situation, dass ONTAP stündliche Snapshots pro Tag erstellt. Wird Cloud Secure (CS) Snapshots ihn beeinträchtigen? Wird CS Schnappschuss den stündlichen Snapshot-Platz machen? Wird der stündliche StandardSnapshot angehalten? | Cloud Secure-Schnappschüsse werden die stündlichen Schnappschüsse nicht beeinflussen. CS Snapshots nehmen keinen stündlichen Snapshot-Platz in Anspruch und sollten wie zuvor fortgesetzt werden. Der standardmäßige stündliche Snapshot wird nicht angehalten. 
+
+
+| Was geschieht, wenn die Maximalanzahl der Snapshots in ONTAP erreicht wird? | Falls die maximale Anzahl an Snapshots erreicht wird, schlägt nachfolgende Snapshots fehl. Cloud Secure weist darauf hin, dass der Snapshot voll ist. Benutzer müssen Snapshot-Richtlinien definieren, um die ältesten Snapshots zu löschen, sonst werden keine Snapshots erstellt. Ab ONTAP 9.3 und älteren Versionen kann ein Volume bis zu 255 Snapshot Kopien enthalten. Ab ONTAP 9.4 kann ein Volume bis zu 1023 Snapshot Kopien enthalten. Weitere Informationen finden Sie in der ONTAP-Dokumentation link:https://docs.netapp.com/ontap-9/index.jsp?topic=%2Fcom.netapp.doc.dot-cm-cmpr-960%2Fvolume__snapshot__autodelete__modify.html["Richtlinie zum Löschen von Snapshots wird festgelegt"]. 
+
+
+| Cloud Secure kann überhaupt keine Schnappschüsse mehr machen. | Stellen Sie sicher, dass die Rolle, die zum Erstellen von Snapshots verwendet wird, Link hat: https://docs.netapp.com/us-en/cloudinsights/task_add_collector_svm.html#a-note-about-permissions[proper Rechte zugewiesen]. Stellen Sie sicher, dass _csrole_ mit entsprechenden Zugriffsrechten für die Erstellung von Snapshots erstellt wird: Security Login role create -vserver <vservername> -role csrolle -cmddirname „Volume Snapshot“ -Access all 
+
+
+| Snapshots versagen bei älteren Warnfunktionen auf SVMs, die aus Cloud Secure entfernt und anschließend wieder hinzugefügt wurden. Für neue Warnmeldungen, die nach dem erneuten Hinzufügen der SVM auftreten, werden Snapshots erstellt. | Dies ist ein seltenes Szenario. Falls dies der Fall ist, melden Sie sich bei ONTAP an und erstellen Sie die Snapshots manuell, um die älteren Meldungen zu erhalten. 
+
+
+| Auf der Seite „ Details der Warnmeldung “ wird die Meldung „Letzter Versuch fehlgeschlagen“ unter der Schaltfläche „_Take Snapshot_“ angezeigt. Wenn Sie den Fehler bewegen, wird „API-Befehl aufrufen hat Timeout für den Datensammler mit id“ angezeigt. | Dies kann passieren, wenn ein Datensammler über SVM Management IP zu Cloud Secure hinzugefügt wird, wenn sich die LIF der SVM in ONTAP in _deaktiviertes_ -Status befindet. Aktivieren Sie die entsprechende LIF in ONTAP und lösen Sie _take Snapshot manuell_ von Cloud Secure aus. Die Aktion „Snapshot“ wird dann erfolgreich ausgeführt. 
+|===

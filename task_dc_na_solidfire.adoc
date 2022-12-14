@@ -1,0 +1,112 @@
+---
+sidebar: sidebar 
+permalink: task_dc_na_solidfire.html 
+summary: NetApp SolidFire Data Collector konfigurieren 
+keywords: data collector, queries, create 
+---
+= NetApp SolidFire All-Flash Array Datensammler
+:allow-uri-read: 
+
+
+[role="lead"]
+Der NetApp SolidFire All-Flash Array Data Collector unterstützt die Bestandsaufnahme und Performance der iSCSI- und Fibre Channel SolidFire-Konfigurationen.
+
+Der SolidFire Datensammler nutzt die SolidFire REST API. Die Erfassungseinheit, in der sich der Datensammler befindet, muss in der Lage sein, HTTPS-Verbindungen zum TCP-Port 443 an der SolidFire-Cluster-Management-IP-Adresse zu initiieren. Der Datensammler benötigt Zugangsdaten, die in der Lage sind, REST-API-Abfragen auf dem SolidFire Cluster zu erstellen.
+
+
+
+== Terminologie
+
+Cloud Insights erwirbt die folgenden Bestandsinformationen vom NetApp SolidFire All-Flash Array Data Collector. Die am häufigsten für diese Ressource verwendete Terminologie wird für jeden von Cloud Insights erfassten Asset-Typ angezeigt. Beachten Sie bei der Anzeige oder Fehlerbehebung dieses Datensammlers die folgende Terminologie:
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Laufwerk | Festplatte 
+
+
+| Cluster | Storage 
+
+
+| Knoten | Storage-Node 
+
+
+| Datenmenge | Datenmenge 
+
+
+| Fibre-Channel-Port | Port 
+
+
+| Volume Access Group, LUN-Zuweisung | Volume-Zuordnung 
+
+
+| ISCSI-Sitzung | Volume-Maske 
+|===
+Hinweis: Es handelt sich hierbei nur um allgemeine Terminologiezuordnungen. Diese stellen für diesen Datensammler möglicherweise nicht alle Fälle dar.
+
+
+
+== Anforderungen
+
+Die folgenden Anforderungen gelten für die Konfiguration dieses Datensammlers:
+
+* Management Virtual IP-Adresse
+* Schreibgeschützter Benutzername und Anmeldeinformationen
+* Port 443
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Management Virtual IP-Adresse (MVIP) | Management-virtuelle IP-Adresse des SolidFire-Clusters 
+
+
+| Benutzername | Name, der zur Anmeldung im SolidFire Cluster verwendet wird 
+
+
+| Passwort | Passwort, das zur Anmeldung beim SolidFire Cluster verwendet wird 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Verbindungstyp | Wählen Sie den Verbindungstyp 
+
+
+| Kommunikations-Port | Für NetApp API verwendeter Port 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 20 Minuten 
+
+
+| Leistungsintervall (Sek.) | Der Standardwert ist 300 Sekunden 
+|===
+
+
+== Fehlerbehebung
+
+Wenn SolidFire einen Fehler meldet, wird er in Cloud Insights wie folgt angezeigt:
+
+_Beim Versuch, Daten abzurufen, wurde eine Fehlermeldung von einem SolidFire-Gerät empfangen. Der Aufruf war <method> (<parameterString> ). Die Fehlermeldung vom Gerät war (überprüfen Sie die Bedienungsanleitung des Geräts): <message>_
+
+Wo?
+
+* Die <-Methode> ist eine HTTP-Methode, z. B. GET oder PUT.
+* Der <parameterString> ist eine kommagetrennte Liste von Parametern, die im REST-Aufruf enthalten waren.
+* Die Meldung <message> ist das Gerät, das als Fehlermeldung zurückgegeben wurde.
+
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

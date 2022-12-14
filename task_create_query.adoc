@@ -1,0 +1,102 @@
+---
+sidebar: sidebar 
+permalink: task_create_query.html 
+summary: Abfragen ermöglichen die schnelle und einfache Identifikation von Ressourcen und Metriken von Interesse. 
+keywords: query, queries 
+---
+= Abfragen Werden Erstellt
+:allow-uri-read: 
+
+
+[role="lead"]
+Mit Abfragen können Sie die Assets in Ihrer Umgebung auf granularer Ebene durchsuchen und so nach den gewünschten Daten filtern und die Ergebnisse nach Ihren Wünschen sortieren.
+
+Sie können z. B. eine Abfrage für _Volumes_ erstellen, einen Filter hinzufügen, um bestimmte _Storage_ zu den ausgewählten Volumes zu finden, einen weiteren Filter hinzufügen, um eine bestimmte _Annotation_ zu finden, z. B. „Tier 1“ auf den ausgewählten Speichern, Und schließlich noch einen Filter hinzufügen, um alle Speicher mit _IOPS - Read (IO/s)_ größer als 25 zu finden. Wenn die Ergebnisse angezeigt werden, können Sie die mit der Abfrage verknüpften Datenspalten in aufsteigender oder absteigender Reihenfolge sortieren.
+
+Hinweis: Wenn ein neuer Datensammler hinzugefügt wird, der Assets erfasst oder Anmerkungen oder Anwendungszuweisungen vorgenommen werden, können Sie diese neuen Assets, Anmerkungen oder Anwendungen erst nach der Indizierung der Abfragen abfragen. Die Indizierung erfolgt in regelmäßigen Abständen oder während bestimmter Ereignisse, z. B. bei der Ausführung von Anmerkungsregeln.
+
+.Das Erstellen einer Abfrage ist sehr einfach:
+. Navigieren Sie zu *Abfragen > *+Neue Abfrage*.
+. Wählen Sie in der Liste „Auswählen...“ den Objekttyp aus, nach dem Sie abfragen möchten. Sie können durch die Liste blättern oder Sie können mit der Eingabe beginnen, um schneller zu finden, wonach Sie suchen.
+
+
+.Bildlaufliste:
+image:QueryDrop-DownList.png["Abfrage Dropdown"]
+
+.Typ-zu-Suche:
+image:QueryPageFilter.png["Eingabe zum Suchen"]
+
+Sie können Filter hinzufügen, um Ihre Anfrage weiter einzuschränken, indem Sie im Feld *Filtern nach* auf die Schaltfläche *+* klicken. Zeilen nach Objekt oder Attribut gruppieren. Bei der Arbeit mit Integrationsdaten (Kubernetes, ONTAP Advanced Metrics usw.) können Sie, falls gewünscht, mehrere Attribute gruppieren.
+
+image:QueryFilterExample.png["Abfrage Filtern und Gruppierung"]
+
+Die Liste der Abfrageergebnisse zeigt je nach dem gesuchten Objekttyp eine Reihe von Standardspalten an. Um die Spalten hinzuzufügen, zu entfernen oder zu ändern, klicken Sie auf das Zahnradsymbol rechts neben der Tabelle. Die verfügbaren Spalten variieren je nach Asset/metrischem Typ.
+
+image:QuerySelectColumns.png["Wählen Sie Spalten Aus"]
+
+Nachdem Sie Ihre Anfrage so konfiguriert haben, dass Sie die gewünschten Ergebnisse anzeigen, können Sie auf die Schaltfläche *Speichern* klicken, um die Abfrage für die zukünftige Verwendung zu speichern. Geben Sie ihm einen aussagekräftigen und eindeutigen Namen.
+
+
+
+=== Mehr zum Filtern
+
+
+
+==== Platzhalter und Ausdrücke
+
+Wenn Sie in Abfragen oder Dashboard-Widgets nach Text- oder Listenwerten filtern, werden Sie beim Eingeben mit der Option angezeigt, basierend auf dem aktuellen Text einen *Platzhalter-Filter* zu erstellen. Wenn Sie diese Option auswählen, werden alle Ergebnisse angezeigt, die dem Platzhalterausdruck entsprechen. Sie können auch *Expressions* mit NOT oder ODER erstellen, oder Sie können die Option "Keine" auswählen, um nach Null-Werten im Feld zu filtern.
+
+image:Type-Ahead-Example-ingest.png["Platzhalter-Filter"]
+
+Filter basierend auf Platzhalter oder Ausdrücken (z. B. NICHT, ODER, „Keine“ usw.) wird im Filterfeld dunkelblau angezeigt. Elemente, die Sie direkt aus der Liste auswählen, werden hellblau angezeigt.
+
+image:Type-Ahead-Example-Wildcard-DirectSelect.png["Ergebnisse Des Platzhalterfilters"]
+
+Beachten Sie, dass die Platzhalter- und Ausdrucksfilterung mit Text oder Listen funktioniert, jedoch nicht mit numerischen Werten, Daten oder Booleanen.
+
+
+
+==== Verfeinern Von Filtern
+
+Sie können den Filter wie folgt verfeinern:
+
+|===
+
+
+| Filtern | Das macht es | Beispiel | Ergebnis 
+
+
+| * (Sternchen) | Ermöglicht Ihnen die Suche nach allem | vol. | Gibt alle Ressourcen zurück, die mit „vol“ beginnen und mit „RHEL“ enden 
+
+
+| ? (Fragezeichen) | Ermöglicht die Suche nach einer bestimmten Anzahl von Zeichen | BOS-PRD??-S12 | Gibt BOS-PRD zurück**__12_**-S12, BOS-PRD**__23_**-S12 und so weiter 
+
+
+| ODER | Ermöglicht Ihnen die Angabe mehrerer Elemente | FAS2240, CX600 ODER FAS3270 | Gibt eine beliebige von FAS2440, CX600 oder FAS3270 zurück 
+
+
+| NICHT | Ermöglicht das Ausschließen von Text aus den Suchergebnissen | NICHT EMC* | Liefert alles zurück, was nicht mit „EMC“ beginnt 
+
+
+| _Keine_ | Sucht in allen Feldern nach Null-Werten | _Keine_ | Gibt Ergebnisse an, bei denen das Zielfeld leer ist 
+
+
+| Nicht * | Sucht nach Null-Werten in Feldern _Text-only_ | Nicht * | Gibt Ergebnisse an, bei denen das Zielfeld leer ist 
+|===
+Wenn Sie einen Filter in doppelte Anführungszeichen einschließen, behandelt Insight alles zwischen dem ersten und dem letzten Zitat als exakte Übereinstimmung. Alle Sonderzeichen oder Operatoren in den Angeboten werden als Literale behandelt. Wenn Sie beispielsweise nach „*“ filtern, erhalten Sie Ergebnisse, die ein wortwörtlicher Stern sind; das Sternchen wird in diesem Fall nicht als Platzhalter behandelt. Die Operatoren OR und NOT werden auch als Literalzeichenfolgen behandelt, wenn sie in doppelten Anführungszeichen eingeschlossen sind.
+
+
+
+=== Was mache ich jetzt, wenn ich Abfrageergebnisse habe?
+
+Durch Abfragen können Sie einfach Anmerkungen hinzufügen oder Anwendungen zu Assets zuweisen. Beachten Sie, dass Sie Ihren Bestandsbeständen (Festplatte, Speicher usw.) nur Anwendungen oder Anmerkungen zuweisen können. Integrationsmetriken können keine Anmerkungen oder Anwendungszuweisungen übernehmen.
+
+Um den Anlagen, die sich aus Ihrer Abfrage ergeben, eine Anmerkung oder Anwendung zuzuweisen, wählen Sie die Anlage(en) mithilfe der Checkbox-Spalte links in der Ergebnistabelle aus. Klicken Sie dann rechts auf die Schaltfläche *Massenaktionen*. Wählen Sie die gewünschte Aktion aus, die auf die ausgewählten Assets angewendet werden soll.
+
+image:QueryVolumeBulkActions.png["Beispiel Für Massenaktionen Abfragen"]
+
+
+
+=== Abfrage zu Anmerkungsregeln erforderlich
+
+Wenn Sie konfigurieren link:task_create_annotation_rules.html["Anmerkungsregeln"], Jede Regel muss eine zugrunde liegende Abfrage haben, um mit zu arbeiten. Aber wie Sie oben gesehen haben, können Abfragen so breit oder so eng gemacht werden, wie Sie benötigen.

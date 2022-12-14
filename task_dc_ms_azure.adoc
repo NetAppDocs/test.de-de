@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: task_dc_ms_azure.html 
+keywords: data collector, azure, 
+summary: Azure Compute Data Collector konfigurieren. 
+---
+= Konfigurieren des Azure Compute-Datensammlers
+:allow-uri-read: 
+
+
+[role="lead"]
+Cloud Insights erfasst mithilfe des Azure Computing-Datensammlers Bestands- und Performance-Daten aus Azure Computing-Instanzen.
+
+
+
+== Anforderungen
+
+Sie benötigen die folgenden Informationen, um diesen Datensammler zu konfigurieren.
+
+* Port-Anforderung: 443 HTTPS
+* Azure OAuth 2.0 Redirect URI (login.microsoftonline.com)
+* Azure Management Rest-IP (management.azure.com)
+* Azure Resource Manager IP (management.core.windows.net)
+* Azure Service Principal Application (Client)-ID (Reader-Rolle erforderlich)
+* Azure Service Principal Authentifizierungsschlüssel (Benutzerkennwort)
+* Sie müssen ein Azure Konto für die Cloud Insights-Erkennung einrichten.
++
+Sobald das Konto ordnungsgemäß konfiguriert ist und Sie die Applikation in Azure registrieren, verfügen Sie über die erforderlichen Zugangsdaten, um die Azure Instanz mit Cloud Insights zu ermitteln. Über den folgenden Link wird beschrieben, wie Sie das Konto für die Ermittlung einrichten.https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal[]
+
+
+
+
+
+== Konfiguration
+
+Geben Sie die Daten in die Felder des Datensammlers gemäß der folgenden Tabelle ein:
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Azure Service Principal Application (Client)-ID (Reader-Rolle erforderlich) | Anmelde-ID bei Azure. Erfordert Zugriff auf die Leserrolle. 
+
+
+| Azure-Mandanten-ID | Microsoft Mandanten-ID 
+
+
+| Authentifizierungsschlüssel Des Azure Service Principal | Anmeldeauthentifizierungsschlüssel 
+
+
+| Ich verstehe, dass Microsoft mir API-Anforderungen in Rechnung stellt | Überprüfen Sie dies, um zu überprüfen, ob Microsoft Ihnen die durch eine Insight-Umfrage gestellten API-Anforderungen abrechnungen aufstellt. 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Der Standardwert ist 60 
+
+
+| Wählen Sie „exclude“ oder „include“, um VMs nach Tags zu filtern | Geben Sie an, ob VM's by Tags beim Sammeln von Daten einbezogen oder ausgeschlossen werden sollen. Wenn ‘include’ ausgewählt ist, kann das Feld Tag-Schlüssel nicht leer sein. 
+
+
+| Markieren Sie Schlüssel und Werte, nach denen VMs gefiltert werden sollen | Klicken Sie auf *+ Filter Tag*, um die VMs (und die zugehörigen Festplatten) auszuwählen, die durch Filtern nach Schlüsseln und Werten, die Schlüssel und Werte von Tags auf der VM entsprechen, einzuschließen bzw. auszuschließen. Tag-Schlüssel erforderlich, Tag-Wert ist optional. Wenn der Tag-Wert leer ist, wird die VM solange gefiltert, wie sie dem Tag-Schlüssel entspricht. 
+
+
+| Leistungsintervall (Sek.) | Der Standardwert ist 300 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

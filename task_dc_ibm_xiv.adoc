@@ -1,0 +1,112 @@
+---
+sidebar: sidebar 
+permalink: task_dc_ibm_xiv.html 
+keywords: IBM, XIV, SAN, A9000 
+summary: Konfigurieren des Datensammlers IBM XIV/A9000 
+---
+= Konfiguration des IBM XIV/A9000 Datensammlers
+:allow-uri-read: 
+
+
+[role="lead"]
+Der Datensammler IBM XIV und A9000 (CLI) verwendet die XIV-Befehlszeilenschnittstelle, um Bestandsdaten zu sammeln, während die Performance erfasst wird, indem SMI-S-Aufrufe zum XIV/A9000 Array ausführt, auf dem ein SMI-S-Provider über Port 7778 ausgeführt wird.
+
+
+
+== Terminologie
+
+[cols="2*"]
+|===
+| Anbieter-/Modelllaufzeit | Laufzeit Für Cloud Insights 
+
+
+| Festplatte | Festplatte 
+
+
+| Storage-System | Storage 
+
+
+| Storage-Pool | Storage-Pool 
+
+
+| Datenmenge | Datenmenge 
+|===
+
+
+== Anforderungen
+
+Zur Konfiguration und Nutzung dieses Datensammlers müssen die folgenden Anforderungen erfüllt sein:
+
+* Port-Anforderung: TCP-Port 7778
+* Schreibgeschützter Benutzername und Kennwort
+* Das XIV CLI muss auf der AU installiert sein
+
+
+
+
+== Performance-Anforderungen erfüllt
+
+Im Folgenden sind Anforderungen für die Performance-Erfassung aufgeführt:
+
+* SMI-S Agent 1.4 oder höher
+* SMI-S-kompatibler CIMService auf Array. Bei den meisten XIV Arrays ist standardmäßig ein Cimserver installiert.
+* Für den Cimserver muss eine Benutzeranmeldung bereitgestellt werden. Die Anmeldung muss vollständigen Lesezugriff auf die Arraykonfiguration und -Eigenschaften haben.
+* SMI-S-Namespace. Der Standardwert ist root/ibm. Dies ist im Cimserver konfigurierbar.
+* Port-Anforderungen: 5988 für HTTP, 5989 für HTTPS.
+* Unter folgendem Link finden Sie Informationen zur Erstellung eines Kontos für die SMI-S-Performance-Sammlung: http://publib.boulder.ibm.com/infocenter/tivihelp/v4r1/index.jsp?topic=%2Fcom.ibm.tpc_V41.doc%2Ffqz0_t_adding_cim_agent.html[]
+
+
+
+
+== Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| XIV IP-Adresse | IP-Adresse oder vollqualifizierter Domain-Name des XIV Storage 
+
+
+| Benutzername | Benutzername für den XIV Storage 
+
+
+| Passwort | Passwort für den XIV-Speicher 
+
+
+| Vollständiger Pfad zu XIV CLI Directory | Vollständiger Pfad zum Ordner mit der XIV CLI 
+
+
+| SMI-S-Host-IP-Adresse | IP-Adresse des SMI-S-Hosts 
+|===
+
+
+== Erweiterte Konfiguration
+
+[cols="2*"]
+|===
+| Feld | Beschreibung 
+
+
+| Abfrageintervall für Bestand (min) | Intervall zwischen Bestandsabstimmungen Der Standardwert ist 40 Minuten. 
+
+
+| SMI-S-Protokoll | Protokoll für die Verbindung mit dem SMI-S-Provider. Zeigt auch den Standardport an. 
+
+
+| SMI-S-Port überschreiben | Wenn Sie leer sind, verwenden Sie den Standardport im Feld Verbindungstyp. Andernfalls geben Sie den zu verwendenden Anschluss ein 
+
+
+| Benutzername | Benutzername für den SMI-S Provider Host 
+
+
+| Passwort | Kennwort für den SMI-S Provider-Host 
+
+
+| Leistungsintervall (Sek.) | Intervall zwischen Performance-Abstimmungen Der Standardwert beträgt 300 Sekunden. 
+|===
+
+
+== Fehlerbehebung
+
+Weitere Informationen zu diesem Data Collector finden Sie im link:concept_requesting_support.html["Unterstützung"] Oder auf der link:https://docs.netapp.com/us-en/cloudinsights/CloudInsightsDataCollectorSupportMatrix.pdf["Data Collector Supportmatrix"].

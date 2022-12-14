@@ -1,0 +1,334 @@
+---
+sidebar: sidebar 
+permalink: reporting_creating_custom_reports.html 
+summary: 'Verwenden von Tools zur Erstellung benutzerdefinierter („Ad-hoc“) Berichte' 
+keywords: reporting, cognos, data warehouse, dwh, ad-hoc, custom 
+---
+= Erstellen Von Benutzerdefinierten Berichten
+:allow-uri-read: 
+
+
+[role="lead"]
+Sie können die Tools zur Erstellung benutzerdefinierter Berichte verwenden. Nachdem Sie Berichte erstellt haben, können Sie sie speichern und regelmäßig ausführen. Die Ergebnisse der Berichte können automatisch per E-Mail an sich selbst und andere gesendet werden.
+
+
+NOTE: Die Berichtsfunktion ist in Cloud Insights verfügbar link:concept_subscribing_to_cloud_insights.html["Premium Edition"].
+
+Die Beispiele in diesem Abschnitt veranschaulichen den folgenden Prozess, der für jedes der Cloud Insights-Berichtsdatenmodelle verwendet werden kann:
+
+* Ermitteln einer Frage, die mit einem Bericht beantwortet werden soll
+* Ermitteln der für die Ergebnisse erforderlichen Daten
+* Auswählen von Datenelementen für den Bericht
+
+
+Bevor Sie Ihren benutzerdefinierten Bericht erstellen, müssen Sie einige erforderliche Aufgaben ausführen. Wenn Sie diese nicht ausfüllen, können die Berichte ungenau oder unvollständig sein.
+
+Wenn Sie beispielsweise den Gerätekennungsprozess nicht abschließen, sind die Kapazitätsberichte nicht korrekt. Oder, wenn Sie die Einrichtung von Annotationen (wie z. B. Tiers, Geschäftsbereiche und Datacenter) nicht abschließen, werden in Ihren individuellen Berichten möglicherweise keine Daten aus der gesamten Domäne genau gemeldet oder „N/A“ für einige Datenpunkte angezeigt.
+
+Bevor Sie Ihre Berichte entwerfen, führen Sie die folgenden Aufgaben aus:
+
+* Alle konfigurieren link:task_configure_data_collectors.html["Datensammler"] Richtig.
+* Geben Sie Annotationen (z. B. Tiers, Datacenter und Geschäftsbereiche) auf Geräten und Ressourcen in Ihrer Umgebung ein. Da Cloud Insights Reporting historische Daten erfasst, ist es vorteilhaft, Anmerkungen vor der Berichterstellung stabil zu lassen.
+
+
+
+
+=== Berichtserstellung
+
+Der Prozess der Erstellung benutzerdefinierter (auch als „Ad-hoc“ bezeichnet) Berichte umfasst mehrere Aufgaben:
+
+* Planen Sie die Ergebnisse Ihres Berichts.
+* Daten identifizieren, um Ergebnisse zu unterstützen
+* Wählen Sie das Datenmodell aus (z. B. Chargeback-Datenmodell, Bestandsdatenmodell usw.), das die Daten enthält.
+* Datenelemente für den Bericht auswählen.
+* Optional können Sie Berichtsergebnisse formatieren, sortieren und filtern.
+
+
+
+
+==== Planen der Ergebnisse Ihres benutzerdefinierten Berichts
+
+Bevor Sie die Tools zur Erstellung von Berichten öffnen, sollten Sie die gewünschten Ergebnisse aus dem Bericht planen. Mit den Tools zur Erstellung von Berichten können Sie problemlos Berichte erstellen und benötigen möglicherweise keine umfangreiche Planung. Es ist jedoch sinnvoll, den Berichtsinfragesteller zu den Berichtanforderungen zu verstehen.
+
+* Geben Sie die genaue Frage an, die Sie beantworten möchten. Beispiel:
++
+** Wie viel Kapazität habe ich noch übrig?
+** Wie hoch sind die Kosten für die Rückberechnung pro Geschäftsbereich?
+** Wie groß ist die Kapazität je Tier, um sicherzustellen, dass die Geschäftsbereiche auf die richtige Storage-Tier ausgerichtet sind?
+** Wie kann ich einen Strom- und Kühlungsbedarf vorhersagen? (Fügen Sie benutzerdefinierte Metadaten durch Hinzufügen von Annotationen zu Ressourcen hinzu.)
+
+
+* Ermitteln Sie die Datenelemente, die Sie zur Unterstützung der Antwort benötigen.
+* Identifizieren Sie die Beziehungen zwischen Daten, die in der Antwort angezeigt werden sollen. Nehmen Sie keine unlogischen Beziehungen in Ihre Frage auf, zum Beispiel: „Ich möchte die Ports sehen, die sich auf die Kapazität beziehen.“
+* Ermitteln der für Daten erforderlichen Berechnungen
+* Bestimmen Sie, welche Filtertypen erforderlich sind, um die Ergebnisse zu begrenzen.
+* Bestimmen, ob aktuelle oder historische Daten verwendet werden müssen.
+* Legen Sie fest, ob Sie Zugriffsberechtigungen für Berichte festlegen müssen, um die Daten auf bestimmte Zielgruppen zu beschränken.
+* Ermitteln Sie, wie der Bericht verteilt werden soll. Sollte er beispielsweise per E-Mail an einen festgelegten Zeitplan gesendet oder im Bereich „Team Content Folder“ enthalten sein?
+* Bestimmen Sie, wer den Bericht verwalten soll. Dies kann sich auf die Komplexität des Designs auswirken.
+* Erstellen Sie ein Modell des Berichts.
+
+
+
+
+==== Tipps für das Design von Berichten
+
+Bei der Erstellung von Berichten sind einige Tipps hilfreich.
+
+* Legen Sie fest, ob Sie aktuelle oder historische Daten verwenden müssen.
++
+Die meisten Berichte müssen nur über die neuesten Daten berichten, die in der Cloud Insights verfügbar sind.
+
+* Cloud Insights-Berichte liefern zwar Verlaufsdaten zu Kapazität und Performance, jedoch nicht zum Inventar.
+* Jeder sieht alle Daten, aber möglicherweise müssen Sie die Daten auf bestimmte Zielgruppen beschränken.
++
+Um die Informationen für verschiedene Benutzer zu segmentieren, können Sie Berichte erstellen und Zugriffsberechtigungen für sie festlegen.
+
+
+
+
+
+== Reporting-Datenmodelle
+
+Cloud Insights umfasst mehrere Datenmodelle, aus denen Sie entweder vordefinierte Berichte auswählen oder Ihren eigenen benutzerdefinierten Bericht erstellen können.
+
+Jedes Datenmodell enthält einen einfachen Data Marts und einen erweiterten Data Marts:
+
+* Der einfache Data Mart bietet schnellen Zugriff auf die am häufigsten verwendeten Datenelemente und enthält nur den letzten Snapshot der Data Warehouse-Daten, enthält keine Verlaufsdaten.
+* Der erweiterte Data Marts stellt alle Werte und Details zur Verfügung, die über den einfachen Data Marts verfügbar sind, und bietet Zugriff auf historische Datenwerte.
+
+
+
+
+=== Kapazitätsdatenmodell
+
+Mit können Sie Fragen zur Storage-Kapazität, Auslastung des Filesystems, zur internen Volume-Kapazität, Port-Kapazität, qtree-Kapazität, beantworten. Und Kapazität von Virtual Machines (VMs). Das Kapazitätsdatenmodell ist ein Container für mehrere Kapazitätsmodelle. Mit diesem Datenmodell können Sie Berichte erstellen, die verschiedene Arten von Fragen beantworten:
+
+
+
+=== Modell für Storage- und Storage-Pool-Kapazitätsdaten
+
+Ermöglicht das Antworten auf Fragen zur Ressourcenplanung von Storage-Kapazitäten, einschließlich Storage- und Storage-Pools, und umfasst sowohl physische als auch virtuelle Storage-Pool-Daten. Dieses einfache Datenmodell unterstützt Sie bei der Beantwortung von Fragen hinsichtlich Kapazität im Boden und der Kapazitätsauslastung von Storage-Pools nach Tier und Datacenter im Laufe der Zeit. Neue Kapazitätsberichte sind die Basis für ein Datenmodell, da es sich um ein einfacheres, zielgerichtetes Datenmodell handelt. Sie können Fragen wie die folgenden beantworten, indem Sie dieses Datenmodell verwenden:
+
+* Welches ist der voraussichtliche Termin für die Erreichung der Kapazitätsgrenze von 80 % meines physischen Storage?
+* Wie hoch ist die physische Storage-Kapazität auf einem Array für eine bestimmte Tier?
+* Wie groß ist meine Speicherkapazität nach Hersteller und Familie sowie nach Rechenzentrum?
+* Welchen Trend geht zur Storage-Auslastung bei einem Array für alle Tiers?
+* Welches sind meine 10 wichtigsten Storage-Systeme bei höchster Auslastung?
+* Wie sieht der Trend zur Storage-Auslastung der Storage Pools aus?
+* Wie viel Kapazität ist bereits zugewiesen?
+* Welche Kapazität ist für die Zuweisung verfügbar?
+
+
+
+
+=== Datenmodell für die Dateisystemauslastung
+
+Dieses Datenmodell bietet eine Übersicht über die Kapazitätsauslastung durch Hosts auf Filesystem-Ebene. Administratoren können zugewiesene und genutzte Kapazität pro Filesystem ermitteln, den Typ des Filesystems festlegen und Trendstatistiken nach Filesystem-Typ ermitteln. Folgende Fragen können Sie mit diesem Datenmodell beantworten:
+
+* Wie groß ist das Filesystem?
+* Wo sind die Daten aufbewahrt und wie wird auf sie zugegriffen, z. B. lokal oder SAN?
+* Was sind historische Trends für die Kapazität des Filesystems? Und was können wir dann, basierend auf diesen, für zukünftige Anforderungen erwarten?
+
+
+
+
+=== Internes Datenmodell für die Volume-Kapazität
+
+Hier können Sie Fragen zur verwendeten Kapazität des internen Volume, zu der zugewiesenen Kapazität und zur Kapazitätsauslastung beantworten:
+
+* Welche internen Volumes haben eine Auslastung über einem vordefinierten Schwellenwert?
+* Welche internen Volumes besteht in der Gefahr, dass die Kapazität aufgrund von Trends nicht mehr verfügbar ist? 8 welche Kapazität wird genutzt im Vergleich zur zugewiesenen Kapazität bei unseren internen Volumes?
+
+
+
+
+=== Datenmodell für Port-Kapazität
+
+Mit dieser Option können Sie Fragen zu Switch-Port-Konnektivität, Portstatus und Portgeschwindigkeit im Laufe der Zeit beantworten. Sie können folgende Fragen beantworten, um Ihnen beim Kauf neuer Switches zu helfen: Wie kann ich eine Prognose zum Portverbrauch erstellen, die die Verfügbarkeit von Ressourcen (Ports) prognostiziert (je nach Rechenzentrum, Switch-Anbieter und Port-Geschwindigkeit)?
+
+* Welche Ports werden wahrscheinlich zu Kapazitätsknapp, wenn es um Datengeschwindigkeit, Datacenter, Anbieter und Anzahl der Host- und Storage-Ports geht?
+* Welche Trends haben die Switch-Port-Kapazität im Laufe der Zeit?
+* Welche Port-Geschwindigkeiten werden verwendet?
+* Welche Art von Port-Kapazität ist erforderlich und welches Unternehmen wird gerade dabei sein, einen bestimmten Port-Typ oder einen bestimmten Anbieter zu nutzen?
+* Wie lange kann diese Kapazität optimal erworben und verfügbar gemacht werden?
+
+
+
+
+=== Datenmodell für qtree Kapazität
+
+Ermöglicht die Trend-Nutzung von qtree (mit Daten wie genutzter bzw. zugewiesener Kapazität) im Laufe der Zeit. Sie können die Informationen nach verschiedenen Dimensionen anzeigen, beispielsweise nach Geschäftseinheit, Applikation, Ebene und Service Level. Folgende Fragen können Sie mit diesem Datenmodell beantworten:
+
+* Wie hoch ist die genutzte Kapazität von qtrees im Vergleich zu den Limits, die pro Applikation oder Geschäftseinheit gesetzt werden?
+* Welche Trends haben wir bei unserer genutzten und freien Kapazität, sodass wir Kapazitäten planen können?
+* Welche Geschäftseinheiten nutzen die größte Kapazität?
+* Welche Applikationen belegen die größte Kapazität?
+
+
+
+
+=== Datenmodell für VM-Kapazität
+
+Ermöglicht Ihnen, Berichte über Ihre virtuelle Umgebung und deren Kapazitätsauslastung zu erstellen. Mit diesem Datenmodell können Sie Änderungen des Kapazitätsverbrauchs über die Zeit für VMs und Datenspeicher berichten. Das Datenmodell bietet außerdem Thin Provisioning und Chargeback-Daten für Virtual Machines.
+
+* Wie kann ich das Kapazitätszuordnungsberechnung basierend auf der Kapazität bestimmen, die für VMs und Datenspeicher bereitgestellt wird?
+* Welche Kapazitäten werden nicht von VMs genutzt, und welcher Anteil ungenutzte Kapazitäten ist frei, verwaist oder anderer?
+* Welche Anschaffungen müssen wir anhand von Verbrauchstrends erwerben?
+* Wie hoch sind meine Storage-Effizienzeinsparungen durch Storage Thin Provisioning und Deduplizierungstechnologien?
+
+
+Die Kapazitäten im VM-Kapazitätsdatenmodell werden von virtuellen Festplatten (VMDKs) genutzt. Das bedeutet, dass die bereitgestellte Größe einer VM mit dem VM-Kapazitätsdatenmodell die Größe der virtuellen Festplatten entspricht. Dies unterscheidet sich von der bereitgestellten Kapazität in der Ansicht Virtual Machines in Cloud Insights, die die bereitgestellte Größe für die VM selbst anzeigt.
+
+
+
+=== Datenmodell für Volume-Kapazität
+
+Ermöglicht die Analyse sämtlicher Volumes in Ihrer Umgebung und die Organisation von Daten nach Anbieter, Modell, Tier, Service Level und Datacenter.
+
+Sie können die Kapazität für verwaiste Volumes, ungenutzte Volumes und Datensicherungs-Volumes (zur Replizierung genutzt) anzeigen. Außerdem können Sie unterschiedliche Volume-Technologien (iSCSI oder FC) sehen und virtuelle Volumes mit nicht-virtuellen Volumes vergleichen, um Probleme bei der Array-Virtualisierung zu beheben.
+
+Sie können Fragen wie die folgenden mit diesem Datenmodell beantworten:
+
+* Welche Volumes haben eine Auslastung, die über einem vordefinierten Schwellenwert liegt?
+* Welchen Trend geht in meinem Datacenter hinsichtlich verwaister Volume-Kapazität?
+* Wie viel meiner Datacenter-Kapazität ist virtualisiert oder Thin Provisioning?
+* Wie viel meiner Datacenter-Kapazität muss für die Replizierung reserviert werden?
+
+
+
+
+=== Modell für die Kostenzuordnung
+
+Ermöglicht das Antworten auf Fragen zur genutzten Kapazität und zugewiesenen Kapazität in Storage-Ressourcen (Volumes, interne Volumes und qtrees). Dieses Datenmodell liefert Informationen zur Kostenverrechnung und Transparenz der Storage-Kapazität nach Hosts, Applikationen und Geschäftseinheiten und schließt sowohl aktuelle als auch historische Daten ein. Berichtsdaten können nach Service Level und Storage Tier kategorisiert werden.
+
+Sie können dieses Datenmodell verwenden, um Berichte zur Rückberechnung zu erstellen, indem Sie die Menge an Kapazität ermitteln, die von einer Geschäftseinheit verwendet wird. Dieses Datenmodell ermöglicht Ihnen die Erstellung einheitlicher Berichte für verschiedene Protokolle (einschließlich NAS, SAN, FC und iSCSI).
+
+* Bei Storage ohne interne Volumes werden Berichte zur Kostenverrechnung nach Volumes angezeigt.
+* Zur Speicherung mit internen Volumes:
++
+** Wenn den Volumes Geschäftseinheiten zugewiesen sind, werden Chargeback-Berichte nach Volumes angezeigt.
+** Wenn Geschäftseinheiten nicht Volumes zugewiesen, aber qtrees zugewiesen sind, werden Chargeback-Berichte durch qtrees angezeigt.
+** Wenn Geschäftseinheiten nicht Volumes zugewiesen und nicht qtrees zugewiesen sind, wird das interne Volume durch Chargeback-Berichte angezeigt.
+** Die Entscheidung, ob die Kostenzuordnung nach Volume, qtree oder internem Volume angezeigt werden soll, wird für jedes interne Volume getroffen. Somit ist es möglich, dass verschiedene interne Volumes im selben Storage Pool die Chargeback auf verschiedenen Ebenen zur Verfügung stehen.
+
+
+
+
+Kapazitätfakten werden nach einem Standard-Zeitintervall gelöscht. Weitere Informationen finden Sie unter Data Warehouse-Prozesse.
+
+Berichte, die das Chargeback-Datenmodell verwenden, können unter Umständen unterschiedliche Werte als Berichte mit dem Speicherkapazitätsdatenmodell anzeigen.
+
+* Bei Storage Arrays, die keine NetApp Storage-Systeme sind, bleiben die Daten beider Datenmodelle gleich.
+* Bei Storage-Systemen von NetApp und Celerra verwendet das Chargeback-Datenmodell eine einzelne Schicht (von Volumes, internen Volumes oder qtrees), um die Gebühren zu senken. Das Storage-Kapazitätsdatenmodell nutzt dagegen mehrere Schichten (von Volumes und internen Volumes), um ihre Gebühren zu sichern.
+
+
+
+
+=== Bestandsdatenmodell
+
+Mit Hilfe von Antworten auf Fragen zu Bestandsressourcen, einschließlich Hosts, Speichersystemen, Switches, Festplatten, Tapes Qtrees, Quotas, Virtual Machines und Server sowie generische Geräte. Das Bestandsdatenmodell enthält mehrere Unterverzeichnis, mit denen Sie Informationen zu Replikationen, FC-Pfaden, iSCSI-Pfaden, NFS-Pfaden und Verstößen anzeigen können. Das Bestandsdatenmodell enthält keine historischen Daten. Fragen, die Sie mit diesen Daten beantworten können
+
+* Welche Assets habe ich und wo sind sie?
+* Wer nutzt die Ressourcen?
+* Welche Gerätetypen habe ich und welche Komponenten sind diese Geräte?
+* Wie viele Hosts je Betriebssystem habe ich und wie viele Ports sind auf diesen Hosts vorhanden?
+* Welche Storage-Arrays pro Anbieter gibt es in den einzelnen Datacentern?
+* Über wie viele Switches je Anbieter verfügt ich in jedem Datacenter?
+* Wie viele Ports sind nicht lizenziert?
+* Welche Anbieter-Tapes verwenden wir und wie viele Ports sind auf jedem Tape vorhanden? Re alle generischen Geräte, die identifiziert wurden, bevor wir mit der Arbeit an Berichten beginnen?
+* Welche Pfade sind zwischen den Hosts und Storage Volumes oder Tapes?
+* Welche Pfade gibt es zwischen generischen Geräten und Speicher-Volumes oder Bändern?
+* Wie viele Verstöße gegen die einzelnen Typen gibt es pro Datacenter?
+* Was sind die Quell- und Ziel-Volumes für jedes replizierte Volume?
+* Erhalte ich Firmware-Inkompatibilitäten oder falsche Portgeschwindigkeiten zwischen Fibre Channel Host HBAs und Switches?
+
+
+
+
+=== Performance-Datenmodell
+
+Antworten auf Fragen zur Performance von Volumes, Applikations-Volumes, internen Volumes, Switches, Applikationen VMs, VMDKs, ESX und VM, Hosts und Applikations-Nodes. Mit diesem Datenmodell können Sie Berichte erstellen, die verschiedene Arten von Fragen zum Performance-Management beantworten:
+
+* Auf welche Volumes oder internen Volumes wurde in einem bestimmten Zeitraum nicht zugegriffen?
+* Können wir mögliche Fehlkonfigurationen beim Storage für eine (nicht verwendete) Applikation ermitteln?
+* Wie sieht das Zugriffsverhalten einer Applikation insgesamt aus?
+* Werden für eine bestimmte Applikation entsprechend Tiered Volumes zugewiesen?
+* Könnten wir für eine Applikation, die derzeit läuft, einen günstigeren Storage nutzen, ohne die Applikations-Performance zu beeinträchtigen?
+* Welche Applikationen bieten mehr Zugriffe auf den derzeit konfigurierten Storage?
+
+
+Wenn Sie die Switch-Leistungstabellen verwenden, können Sie folgende Informationen abrufen:
+
+* Ist mein Host-Verkehr durch verbundene Ports ausgeglichen?
+* Welche Switches oder Ports weisen eine hohe Anzahl an Fehlern auf?
+* Welche Switches werden am häufigsten an der Port-Performance verwendet?
+* Welche nicht ausgelasteten Switches basieren auf der Port-Performance?
+* Welcher Durchsatz beim Trending des Hosts basiert auf der Port-Performance?
+* Wie hoch ist die Performance-Auslastung der letzten X Tage für einen angegebenen Host, ein Storage-System, ein Tape oder Switch?
+* Welche Geräte erzeugen Datenverkehr auf einem bestimmten Switch (z. B. welche Geräte sind für den Einsatz eines stark genutzten Switches verantwortlich)?
+* Wie hoch ist der Durchsatz für einen bestimmten Geschäftsbereich in unserer Umgebung?
+
+
+Wenn Sie die Tabellen zur Festplatten-Performance verwenden, erhalten Sie folgende Informationen:
+
+* Wie ist der Durchsatz für einen angegebenen Storage-Pool auf Basis von Festplatten-Performance-Daten?
+* Was ist der am höchsten genutzte Storage-Pool?
+* Wie hoch ist die durchschnittliche Festplattenauslastung für einen bestimmten Storage?
+* Was ist der Trend zur Nutzung eines Storage-Systems oder eines Storage-Pools basierend auf den Festplatten-Performance-Daten?
+* Wie sieht der Trend zur Festplattennutzung für einen bestimmten Storage Pool aus?
+
+
+Wenn Sie VM- und VMDK-Performance-Tabellen verwenden, erhalten Sie folgende Informationen:
+
+* Arbeitet meine virtuelle Umgebung mit optimaler Performance?
+* Welche VMDKs stellen die höchsten Workloads dar?
+* Wie kann ich die von VMDs gemeldete Performance bei verschiedenen Datastores nutzen, um Entscheidungen zum Re-Tiering zu treffen.
+
+
+Das Performance-Datenmodell enthält Informationen, mit denen Sie die Angemessenheit von Tiers, Storage-Fehlkonfigurationen für Applikationen und die letzten Zugriffszeiten von Volumes und internen Volumes ermitteln können. Dieses Datenmodell bietet Daten wie Reaktionszeiten, IOPS, Durchsatz, Anzahl der ausstehenden Schreibvorgänge und den Status des Datenzugriffs.
+
+
+
+=== Storage-Effizienz-Datenmodell
+
+Nachverfolgung des Storage-Effizienz-Ergebnisses und des Potenzials im Laufe der Zeit Dieses Datenmodell speichert Messungen nicht nur der bereitgestellten Kapazität, sondern auch der genutzten oder verbrauchten Menge (der physischen Messung). Wenn beispielsweise Thin Provisioning aktiviert ist, gibt Cloud Insights an, wie viel Kapazität das Gerät benötigt. Mithilfe dieses Modells lässt sich außerdem die Effizienz bei aktivierter Deduplizierung bestimmen. Sie können verschiedene Fragen mithilfe des Storage-Effizienz-Data Marts beantworten:
+
+* Wie hoch sind unsere Storage-Effizienzeinsparungen als Ergebnis der Implementierung von Thin Provisioning und Deduplizierungstechnologien?
+* Wie hoch sind die Storage-Einsparungen in den gesamten Datacentern?
+* Wann müssen wir, basierend auf Trends bei früheren Kapazitäten, zusätzlichen Storage erwerben?
+* Was würde der Kapazitätsgewinn bedeuten, wenn wir Technologien wie Thin Provisioning und Deduplizierung aktivieren würden?
+* Sind Sie hinsichtlich der Storage-Kapazität aktuell in Gefahr?
+
+
+
+
+=== Daten-Modell-Fakt- und Bemaßungstabellen
+
+Jedes Datenmodell enthält Fakt- und Bemaßungstabellen.
+
+* Fact-Tabellen: Enthalten Daten, die gemessen werden, z. B. Menge, Rohkapazität und nutzbare Kapazität. Fremdschlüssel in Bemaßungstabellen enthalten.
+* Bemaßungstabellen: Enthalten beschreibende Informationen zu Fakten, beispielsweise Datacenter und Geschäftseinheiten. Eine Dimension ist eine Struktur, die häufig aus Hierarchien besteht, die Daten kategorisiert. Maßattribute helfen, die Maßwerte zu beschreiben.
+
+
+Mithilfe verschiedener oder mehrerer Bemaßungsattribute (siehe Spalten in den Berichten) erstellen Sie Berichte, die für jede im Datenmodell beschriebene Dimension auf Daten zugreifen.
+
+
+
+=== Farben, die in Datenmodellelementen verwendet werden
+
+Farben auf Datenmodellelementen haben unterschiedliche Indikationen.
+
+* Gelbe Werte: Stellen Messungen dar.
+* Nicht-gelbe Werte: Repräsentieren Attribute. Diese Werte aggregieren nicht.
+
+
+
+
+=== Verwenden mehrerer Datenmodelle in einem Bericht
+
+Normalerweise verwenden Sie ein Datenmodell pro Bericht. Sie können jedoch einen Bericht schreiben, in dem Daten aus mehreren Datenmodellen kombiniert werden.
+
+Um einen Bericht zu schreiben, der Daten aus mehreren Datenmodellen zusammenfasst, wählen Sie eines der Datenmodelle aus, die als Basis verwendet werden sollen, und schreiben Sie dann SQL-Abfragen, um auf die Daten der zusätzlichen Datentabellen zuzugreifen. Sie können die SQL-Join-Funktion verwenden, um die Daten aus den verschiedenen Abfragen in einer einzigen Abfrage zu kombinieren, mit der Sie den Bericht schreiben können.
+
+Beispielsweise möchten Sie die aktuelle Kapazität für jedes Storage Array bereitstellen und benutzerdefinierte Anmerkungen zu den Arrays erfassen. Sie können den Bericht mithilfe des Datenmodells für die Storage-Kapazität erstellen. Sie können die Elemente aus den Tabellen „Aktuelle Kapazität und Dimension“ verwenden und eine separate SQL-Abfrage hinzufügen, um auf die Annotationsinformationen im Bestandsdatenmodell zuzugreifen. Abschließend können Sie die Daten kombinieren, indem Sie die Bestandsspeicherdaten mit der Tabelle Speicherdimension verknüpfen, indem Sie den Speichernamen und die Kriterien für den Beitritt verwenden.
