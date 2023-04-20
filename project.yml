@@ -8,6 +8,7 @@ settings:
   prod:
     pdf_enabled: false
     harmony_enabled: false
+    hide_language_selector: true
   langs: de-de,us-en,ja-jp,ko-kr,zh-cn,zh-tw,es-es,fr-fr
 sidebar:
   entries:
