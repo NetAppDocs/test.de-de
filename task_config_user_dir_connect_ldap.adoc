@@ -125,7 +125,7 @@ Sie können LDAP-Benutzerberechtigungen und Attributdefinitionen mithilfe der fo
  ldapsearch -D "uid=john ,cn=users,cn=accounts,dc=dorp,dc=company,dc=com" -W -x -LLL -o ldif-wrap=no -b "cn=accounts,dc=dorp,dc=company,dc=com" -H ldap://vmwipaapp08.dorp.company.com
 * Verwenden Sie den LDAP Explorer, um in einer LDAP-Datenbank zu navigieren, Objekteigenschaften und -Attribute anzuzeigen, Berechtigungen anzuzeigen, das Schema eines Objekts anzuzeigen und komplexe Suchen auszuführen, die Sie speichern und erneut ausführen können.
 +
-** Installieren Sie den LDAP Explorer (http://ldaptool.sourceforge.net/)[] Oder Java LDAP Explorer (http://jxplorer.org/)[] Auf jedem Windows-Rechner, der eine Verbindung zum LDAP-Server herstellen kann.
+** Installieren Sie den LDAP Explorer  Oder Java LDAP Explorer  Auf jedem Windows-Rechner, der eine Verbindung zum LDAP-Server herstellen kann.
 ** Stellen Sie eine Verbindung mit dem LDAP-Server unter Verwendung des Benutzernamens/Kennworts des LDAP-Verzeichnisservers her.
 
 
