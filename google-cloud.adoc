@@ -1,0 +1,22 @@
+---
+sidebar: sidebar2 
+permalink: google-cloud.html 
+keywords:  
+summary: Die folgenden Leitfäden helfen Ihnen bei den ersten Schritten mit Cloud Volumes ONTAP in der Google Cloud und stellen einen spezifischen Anwendungsfall dar. 
+---
+= Cloud Volumes ONTAP für Google Cloud
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Die folgenden Leitfäden helfen Ihnen bei den ersten Schritten mit Cloud Volumes ONTAP in der Google Cloud und stellen einen spezifischen Anwendungsfall dar.
+
+* link:media/google-cloud-deployment.pdf["Erste Schritte mit Cloud Volumes ONTAP in der Google Cloud: Das Setup – so funktioniert's"^]
+* link:media/google-cloud-disaster-recovery.pdf["Replizieren von ONTAP On-Premises-Daten in NetApp Cloud Volumes ONTAP für Disaster Recovery"^]
+* link:media/google-cloud-flexcache.pdf["So implementieren Sie NetApp FlexCache mit Cloud Volumes ONTAP auf Google Cloud"^]
+

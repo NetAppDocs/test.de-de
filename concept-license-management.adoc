@@ -1,0 +1,82 @@
+---
+sidebar: sidebar 
+permalink: concept-license-management.html 
+keywords: byol, bring your own license, expiration, warning, node-based byol, node license, capacity 
+summary: Für jedes Cloud Volumes ONTAP System mit einem Node-basierten BYOL muss eine Systemlizenz mit einem aktiven Abonnement installiert werden. BlueXP vereinfacht den Prozess durch die Verwaltung von Lizenzen für Sie und durch das Anzeigen einer Warnung vor deren Ablauf. 
+---
+= Lizenzmanagement für Node-basiertes BYOL
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Für jedes Cloud Volumes ONTAP System mit einem Node-basierten BYOL muss eine Systemlizenz mit einem aktiven Abonnement installiert werden. BlueXP vereinfacht den Prozess durch die Verwaltung von Lizenzen für Sie und durch das Anzeigen einer Warnung vor deren Ablauf.
+
+
+TIP: Eine Node-basierte Lizenz ist das BYOL-Modell der vorherigen Generation für Cloud Volumes ONTAP. Eine Node-basierte Lizenz ist nur für Lizenzerneuerungen verfügbar.
+
+link:concept-licensing.html["Erfahren Sie mehr über Cloud Volumes ONTAP Lizenzoptionen"].
+
+link:https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-manage-node-licenses.html["Erfahren Sie mehr über das Management Node-basierter Lizenzen"^].
+
+
+
+== Byol-Systemlizenzen
+
+Eine Node-basierte Lizenz bietet bis zu 368 tib Kapazität für ein einzelnes Node- oder HA-Paar.
+
+Sie können mehrere Lizenzen für ein Cloud Volumes ONTAP BYOL-System erwerben, um mehr als 368 tib Kapazität zuzuweisen. Beispielsweise können Sie zwei Lizenzen erwerben, um Cloud Volumes ONTAP bis zu 736 tib Kapazität zuzuweisen. Alternativ können Sie vier Lizenzen erwerben, um bis zu 1.4 PiB zu erhalten.
+
+Die Anzahl der Lizenzen, die Sie für ein Single Node-System oder ein HA-Paar erwerben können, ist unbegrenzt.
+
+Beachten Sie, dass die Festplattenbeschränkungen verhindern können, dass Sie durch die Verwendung von Festplatten allein das Kapazitätslimit nicht erreichen. Sie können die Festplattengrenze um überschreiten link:concept-data-tiering.html["tiering inaktiver Daten in Objektspeicher"]. Weitere Informationen zu Festplattenlimits finden Sie unter https://docs.netapp.com/us-en/cloud-volumes-ontap-relnotes/["Speichergrenzwerte in den Versionshinweisen zu Cloud Volumes ONTAP"^].
+
+
+
+== Lizenzmanagement für ein neues System
+
+Wenn Sie ein Node-basiertes BYOL-System erstellen, werden Sie von BlueXP zur Seriennummer Ihrer Lizenz und zum NetApp Support Site Konto aufgefordert. BlueXP nutzt das Konto, um die Lizenzdatei von NetApp herunterzuladen und auf dem Cloud Volumes ONTAP System zu installieren.
+
+https://docs.netapp.com/us-en/bluexp-setup-admin/task-adding-nss-accounts.html["Erfahren Sie, wie Sie BlueXP um NetApp Support Site Konten erweitern"^].
+
+Wenn BlueXP über die sichere Internetverbindung nicht auf die Lizenzdatei zugreifen kann, können Sie dies auch tun link:task-manage-node-licenses.html["Holen Sie sich die Datei selbst ein und laden Sie die Datei anschließend manuell auf BlueXP hoch"].
+
+
+
+== Ablauf der Lizenz
+
+BlueXP zeigt eine Warnung an, die 30 Tage vor Ablauf einer knotenbasierten Lizenz und erneut nach Ablauf der Lizenz erfolgt. Das folgende Bild zeigt eine 30-tägige Warnung zum Ablauf, die in der Benutzeroberfläche angezeigt wird:
+
+image:screenshot_warning.gif["Screenshot: Zeigt eine Cloud Volumes ONTAP Arbeitsumgebung mit einem Warnsymbol. Das Symbol zeigt an, dass eine Aktion erforderlich ist."]
+
+Sie können die Arbeitsumgebung auswählen, in der die Nachricht angezeigt werden soll.
+
+BlueXP enthält eine Warnung zum Ablauf der Lizenz im Cloud Volumes ONTAP-Bericht, die Ihnen per E-Mail zugesandt wurde, falls Sie als Kontoadministrator berechtigt sind und Sie die Option aktiviert haben:
+
+image:screenshot_cvo_report.gif["Ein Screenshot des Benutzerprofilfelds, in dem das Kontrollkästchen zum Aktivieren des Cloud Volumes ONTAP-Berichts per E-Mail angezeigt wird"]
+
+Der E-Mail-Bericht enthält die Warnmeldung zum Ablauf der Lizenz alle zwei Wochen.
+
+Wenn Sie die Lizenz nicht rechtzeitig verlängern, wird das Cloud Volumes ONTAP System heruntergefahren. Wenn Sie ihn neu starten, fährt er sich wieder herunter.
+
+
+
+== Lizenzerneuerung
+
+Wenn Sie ein Node-basiertes BYOL-Abonnement verlängern, indem Sie sich an einen NetApp Vertreter wenden, erhält BlueXP automatisch die neue Lizenz von NetApp und installiert sie auf dem Cloud Volumes ONTAP System.
+
+Wenn BlueXP über die sichere Internetverbindung nicht auf die Lizenzdatei zugreifen kann, können Sie dies auch tun link:task-manage-node-licenses.html["Holen Sie sich die Datei selbst ein und laden Sie die Datei anschließend manuell auf BlueXP hoch"].
+
+
+
+== Lizenzübertragung auf ein neues System
+
+Eine Node-basierte BYOL-Lizenz ist auf Cloud Volumes ONTAP Systeme übertragbar, wenn Sie ein vorhandenes System löschen und dann mit derselben Lizenz ein neues erstellen.
+
+So können Sie beispielsweise ein vorhandenes Lizenzsystem löschen und die Lizenz anschließend mit einem neuen BYOL-System in einem anderen VPC/vnet- oder Cloud-Provider verwenden. Beachten Sie, dass nur _Cloud-unabhängige_ Seriennummern bei jedem Cloud-Provider funktionieren. Die cloudunabhängigen Seriennummern beginnen mit dem Präfix _908xxxx_.
+
+Es ist wichtig zu beachten, dass Ihre BYOL-Lizenz an Ihr Unternehmen und einen spezifischen Satz von NetApp Support Site Zugangsdaten gebunden ist.

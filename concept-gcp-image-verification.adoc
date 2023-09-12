@@ -1,0 +1,20 @@
+---
+sidebar: sidebar 
+permalink: concept-gcp-image-verification.html 
+keywords: Google Cloud, image, VHD, image signature file, 
+summary: Überprüfen Sie die Signaturdateien von Google Cloud-Bilddateien. 
+---
+= Google Cloud Bild Verifizierung Überblick
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Die Google Cloud Image-Verifizierung erfüllt erweiterte NetApp Sicherheitsanforderungen. Es wurden Änderungen am Skript vorgenommen, das die Bilder generiert, um das Bild unterwegs mit privaten Schlüsseln zu signieren, die speziell für diese Aufgabe generiert wurden. Sie können die Integrität des GCP-Images mit dem signierten Digest und öffentlichen Zertifikat für Google Cloud überprüfen, das über heruntergeladen werden kann https://mysupport.netapp.com/site/products/all/details/cloud-volumes-ontap/downloads-tab["NSS"^] Für eine bestimmte Version.
+
+
+NOTE: Die Google Cloud-Image-Verifizierung wird auf der Cloud Volumes ONTAP Softwareversion 9.13.0 oder höher unterstützt.

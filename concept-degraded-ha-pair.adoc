@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: concept-degraded-ha-pair.html 
+keywords: storage takeover, storage giveback, degraded, degraded status, degraded state, ha pair, ha takeover, takeover, giveback 
+summary: Wenn ein Node in einem HA-Paar nicht verfügbar ist, stellt der andere Node Daten für seinen Partner bereit, um einen unterbrechungsfreien Daten-Service zu bieten. Dies wird als Storage-Takeover bezeichnet. Bis der Rückübertragung im Storage-System abgeschlossen ist, sind verschiedene Vorgänge nicht verfügbar. 
+---
+= Aktionen während der Übernahme nicht verfügbar
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Wenn ein Node in einem HA-Paar nicht verfügbar ist, stellt der andere Node Daten für seinen Partner bereit, um einen unterbrechungsfreien Daten-Service zu bieten. Dies wird als _Storage Takeover_ bezeichnet. Bis der Rückübertragung im Storage-System abgeschlossen ist, sind verschiedene Vorgänge nicht verfügbar.
+
+
+TIP: Wenn ein Node in einem HA-Paar nicht verfügbar ist, lautet der Status der Arbeitsumgebung in BlueXP _degraded_.
+
+Die folgenden Aktionen sind bei der Übernahme des BlueXP-Storage nicht verfügbar:
+
+* Support-Registrierung
+* Lizenzänderungen
+* Änderungen am Instanz- oder VM-Typ
+* Die Schreibgeschwindigkeit ändert sich
+* CIFS Einrichtung
+* Ändern des Speicherorts von Konfigurations-Backups
+* Einstellen des Cluster-Passworts
+* Managen von Festplatten und Aggregaten (erweiterte Zuweisung)
+
+
+Diese Aktionen sind wieder verfügbar, nachdem das Storage-Giveback abgeschlossen ist und der Status der Arbeitsumgebung sich wieder auf „Normal“ ändert.

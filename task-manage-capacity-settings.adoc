@@ -1,0 +1,54 @@
+---
+sidebar: sidebar 
+permalink: task-manage-capacity-settings.html 
+keywords: aggregates, delete aggregates, add disks, view aggregates 
+summary: Managen Sie Aggregate selbst, indem Sie Festplatten hinzufügen, Informationen über die Aggregate anzeigen und sie löschen. 
+---
+= Kapazitätseinstellungen auf einem Konnektor verwalten
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Jeder Connector hat Einstellungen, die bestimmen, wie er die Aggregatskapazität für Cloud Volumes ONTAP verwaltet.
+
+Diese Einstellungen betreffen alle Cloud Volumes ONTAP-Systeme, die von einem Connector verwaltet werden. Wenn Sie einen anderen Konnektor haben, kann er anders konfiguriert werden.
+
+.Erforderliche Berechtigungen
+Kontoadministratorrechte sind erforderlich, um Verbindungseinstellungen zu ändern.
+
+.Schritte
+. Klicken Sie oben rechts in der BlueXP-Konsole auf das Symbol Einstellungen und wählen Sie *Verbindungseinstellungen*.
++
+image::screenshot_settings_connector_button.png[Schaltfläche „Screenshot-Einstellungen“]
+
+. Ändern Sie unter *Capacity* eine der folgenden Einstellungen:
++
+Kapazitätsmanagement -Modus:: Legen Sie fest, ob BlueXP Sie über Entscheidungen zur Storage-Kapazität benachrichtigt oder ob BlueXP die Kapazitätsanforderungen automatisch managt.
++
+--
+link:concept-storage-management.html#capacity-management["Erfahren Sie, wie der Capacity Management-Modus funktioniert"].
+
+--
+Schwellenwert Für Aggregatkapazität – Verhältnis Für Freien Speicherplatz:: Löst eine Benachrichtigung aus, wenn das Verhältnis des freien Speicherplatzes auf einem Aggregat unter den angegebenen Schwellenwert fällt.
++
+--
+Das Verhältnis des freien Speicherplatzes berechnet sich wie folgt:
+
+(Gesamtkapazität – genutzte Gesamtkapazität im Aggregat) / Gesamtkapazität des Aggregats
+
+--
+Aggregierte Kapazitätsschwellenwerte – Verhältnis des freien Speicherplatzes für Daten-Tiering:: Definiert, wie viel freier Speicherplatz auf der Performance-Tier (Festplatten) benötigt wird, wenn Daten-Tiering auf eine Kapazitäts-Tier (Objekt-Storage) erfolgt.
++
+--
+Das Verhältnis ist für Disaster-Recovery-Szenarien von großer Bedeutung. Wenn Daten von der Kapazitäts-Tier gelesen werden, verschiebt Cloud Volumes ONTAP Daten in die Performance-Tier, um bessere Performance zu bieten. Wenn nicht genügend Speicherplatz vorhanden ist, dann kann Cloud Volumes ONTAP die Daten nicht verschieben.
+
+--
+
+
+. Klicken Sie Auf *Speichern*.
+

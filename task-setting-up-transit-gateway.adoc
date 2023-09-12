@@ -1,0 +1,93 @@
+---
+sidebar: sidebar 
+permalink: task-setting-up-transit-gateway.html 
+keywords: transit gateway, aws, amazon web services, transit gateway, floating ip, client access, nas, outside, vpc, virtual private cloud, route table 
+summary: Einrichten eines AWS-Transit-Gateways für den NAS-Client-Zugriff auf unverankerte IP-Adressen von außerhalb der VPC, in dem sich die Cloud Volumes ONTAP befinden. Dies ist vorteilhaft, da bei Ausfällen automatisch Floating IPs zwischen Nodes migriert werden. 
+---
+= Einrichten eines AWS-Transit-Gateways für HA-Paare in mehreren Verfügbarkeitszonen
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Einrichten eines AWS Transit-Gateways für den Zugriff auf HA-Paare link:reference-networking-aws.html#requirements-for-ha-pairs-in-multiple-azs["Floating-IP-Adressen"] Von außerhalb der VPC, wo das HA-Paar residiert.
+
+Wenn eine Cloud Volumes ONTAP-HA-Konfiguration über mehrere AWS-Verfügbarkeitszonen verteilt ist, sind unverankerte IP-Adressen für den NAS-Datenzugriff über die VPC erforderlich. Diese fließenden IP-Adressen können bei Ausfällen zwischen Nodes migriert werden, sind aber außerhalb der VPC nicht nativ zugänglich. Separate private IP-Adressen ermöglichen den Datenzugriff von außerhalb der VPC, bieten jedoch kein automatisches Failover.
+
+Floating IP-Adressen sind außerdem für die Cluster-Managementoberfläche und die optionale SVM Management LIF erforderlich.
+
+Wenn Sie ein AWS-Transit-Gateway einrichten, ermöglichen Sie den Zugriff auf die unverankerten IP-Adressen von außerhalb der VPC, wo sich das HA-Paar befindet. Das bedeutet, dass NAS-Clients und NetApp Managementtools außerhalb der VPC auf die fließenden IPs zugreifen können.
+
+Das Beispiel zeigt zwei VPCs, die über ein Transit-Gateway verbunden sind. Ein HA-System befindet sich in einer VPC, während ein Client im anderen befindet. Sie können dann mithilfe der fließenden IP-Adresse ein NAS-Volume auf den Client mounten.
+
+image:diagram_transit_gateway.png["Ein Diagramm, das eine HA-Konfiguration in einer VPC zeigt, bei der die Floating-IPs über Enis geleitet werden, ein Client in einem anderen VPC, mit fließenden IPs über das Transit-Gateway und ein Transit-Gateway. Die fließenden IPs werden an die Routing-Tabelle VPC1 weitergeleitet."]
+
+Die folgenden Schritte veranschaulichen die Einrichtung einer ähnlichen Konfiguration.
+
+.Schritte
+. https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html["Erstellen Sie ein Transit-Gateway, und verbinden Sie die VPCs mit dem Gateway"^].
+. Weisen Sie die VPCs der Routing-Gateway-Routingtabelle zu.
++
+.. Klicken Sie im Dienst * VPC* auf *Transit Gateway Route Tables*.
+.. Wählen Sie die Routentabelle aus.
+.. Klicken Sie auf *Verknüpfungen* und wählen Sie dann *Verknüpfung erstellen* aus.
+.. Wählen Sie die Anhänge (die VPCs) aus, die Sie verknüpfen möchten, und klicken Sie dann auf *Verknüpfung erstellen*.
+
+
+. Erstellen Sie Routen in der Routing-Tabelle des Transit-Gateways durch Angabe der Floating-IP-Adressen des HA-Paars.
++
+Die unverankerten IP-Adressen finden Sie auf der Seite Informationen zur Arbeitsumgebung in BlueXP. Hier ein Beispiel:
+
++
+image:screenshot_floating_ips.gif["Ein Screenshot von BlueXP zeigt die fließenden IP-Adressen für die Cluster-Managementoberfläche, zwei NFS- und CIFS-Datenschnittstellen und die SVM Managementoberfläche."]
+
++
+Das folgende Beispielbild zeigt die Routingtabelle für das Transit Gateway. Er umfasst Routen zu den CIDR-Blöcken der zwei VPCs und vier von Cloud Volumes ONTAP verwendete Floating IP-Adressen.
+
++
+image:screenshot_transit_gateway1.png["Ein Screenshot der AWS Konsole, in dem die Routing-Tabelle für das Transit-Gateway angezeigt wird. Er umfasst Routen zu den CIDR-Blöcken der zwei VPCs und vier von Cloud Volumes ONTAP verwendete Floating IP-Adressen."]
+
+. Ändern Sie die Routingtabelle von VPCs, die auf die fließenden IP-Adressen zugreifen müssen.
++
+.. Fügen Sie den unverankerten IP-Adressen Routeneinträge hinzu.
+.. Fügen Sie einen Routeneintrag zum CIDR-Block des VPC hinzu, wo das HA-Paar residiert.
++
+Das folgende Beispielbild zeigt die Routingtabelle für VPC 2, die auch Routen zu VPC 1 und die fließenden IP-Adressen umfasst.
+
++
+image:screenshot_transit_gateway2.png["Ein Screenshot der AWS Konsole, der die Routing-Tabelle für VPC 2 zeigt, einschließlich Routen zu VPC 1 und den fließenden IP-Adressen."]
+
+
+
+. Ändern Sie die Routing-Tabelle für die VPC des HA-Paars, indem Sie der VPC eine Route hinzufügen, die Zugriff auf die fließenden IP-Adressen benötigt.
++
+Dieser Schritt ist wichtig, da er die Weiterleitung zwischen den VPCs abgeschlossen hat.
+
++
+Das folgende Beispielbild zeigt die Routing-Tabelle für VPC 1. Sie umfasst eine Route zu den unverankerten IP-Adressen und zu VPC 2, wo sich der Client befindet. BlueXP hat beim Einsatz des HA-Paars automatisch die unverankerten IPs zur Routingtabelle hinzugefügt.
+
++
+image:screenshot_transit_gateway3.png["Ein Screenshot der AWS Konsole, in dem die Routing-Tabelle für VPC 1 angezeigt wird. Sie umfasst eine Route zu den unverankerten IP-Adressen und zu VPC 2, wo sich der Client befindet."]
+
+. Volumes werden mithilfe der Floating IP-Adresse an Clients gemountet.
++
+Die richtige IP-Adresse finden Sie in BlueXP über die Option *Mount Command* im Bereich Volumes verwalten in BlueXP.
+
++
+image::screenshot_mount_option.png[400]
+
+. Wenn Sie ein NFS-Volume mounten, konfigurieren Sie die Exportrichtlinie entsprechend dem Subnetz der Client-VPC.
++
+link:task-manage-volumes.html["Erfahren Sie, wie Sie ein Volume bearbeiten"].
+
+
+
+*Verwandte Links*
+
+* link:concept-ha.html["Hochverfügbarkeitspaare in AWS"]
+* link:reference-networking-aws.html["Netzwerkanforderungen für Cloud Volumes ONTAP in AWS"]
+

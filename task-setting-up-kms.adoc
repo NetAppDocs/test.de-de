@@ -1,0 +1,113 @@
+---
+sidebar: sidebar 
+permalink: task-setting-up-kms.html 
+keywords: encryption, kms, key management service, cmk, customer master key, master key, key, permissions 
+summary: Wenn Sie Amazon Verschlüsselung mit Cloud Volumes ONTAP verwenden möchten, müssen Sie den AWS Verschlüsselungsmanagement-Service einrichten. 
+---
+= Einrichten des AWS KMS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Wenn Sie die Amazon Verschlüsselung mit Cloud Volumes ONTAP verwenden möchten, müssen Sie den AWS KMS (Key Management Service) einrichten.
+
+.Schritte
+. Stellen Sie sicher, dass ein aktiver Kundenstammschlüssel (CMK) vorhanden ist.
++
+Bei CMK kann es sich um ein von AWS gemanagtes CMK oder um ein vom Kunden gemanagtes CMK handeln. Sie kann sich im selben AWS Konto wie BlueXP und Cloud Volumes ONTAP oder in einem anderen AWS Konto befinden.
+
++
+https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#master_keys["AWS Dokumentation: Customer Master Keys (CMKs)"^]
+
+. Ändern Sie die Schlüsselrichtlinie für jedes CMK, indem Sie die IAM-Rolle hinzufügen, die BlueXP Berechtigungen als _Key-Benutzer_ bereitstellt.
++
+Wenn Sie die IAM-Rolle als Schlüsselbenutzer hinzufügen, erhalten Sie BlueXP Berechtigungen zur Verwendung des CMK mit Cloud Volumes ONTAP.
+
++
+https://docs.aws.amazon.com/kms/latest/developerguide/editing-keys.html["AWS Dokumentation: Schlüssel bearbeiten"^]
+
+. Wenn sich das CMK in einem anderen AWS Konto befindet, führen Sie folgende Schritte aus:
++
+.. Wechseln Sie von dem Konto, in dem sich der CMK befindet, zur KMS-Konsole.
+.. Wählen Sie die Taste.
+.. Kopieren Sie im Fenster *Allgemeine Konfiguration* den ARN des Schlüssels.
++
+Wenn Sie das Cloud Volumes ONTAP-System erstellen, müssen Sie BlueXP das ARN zur Verfügung stellen.
+
+.. Fügen Sie im Bereich *andere AWS-Konten* das AWS-Konto hinzu, das BlueXP mit Berechtigungen versorgt.
++
+In den meisten Fällen ist dies das Konto, in dem sich BlueXP befindet. Wenn BlueXP nicht in AWS installiert wurde, wäre es das Konto, für das Sie AWS-Zugriffsschlüssel für BlueXP zur Verfügung gestellt haben.
+
++
+image:screenshot_cmk_add_accounts.gif["In diesem Screenshot wird die Schaltfläche „Weitere AWS-Konten hinzufügen“ von der AWS KMS-Konsole aus angezeigt."]
+
++
+image:screenshot_cmk_add_accounts_dialog.gif["Dieser Screenshot zeigt das Dialogfeld „andere AWS-Konten“ über die AWS KMS-Konsole."]
+
+.. Wechseln Sie nun zu dem AWS Konto, das BlueXP mit Berechtigungen versorgt, und öffnen Sie die IAM-Konsole.
+.. Erstellen Sie eine IAM-Richtlinie, die die unten aufgeführten Berechtigungen enthält.
+.. Hängen Sie die Richtlinie an die IAM-Rolle oder den IAM-Benutzer an, der Berechtigungen für BlueXP bereitstellt.
++
+Die folgende Richtlinie enthält die Berechtigungen, die BlueXP zur Verwendung des CMK über das externe AWS-Konto benötigt. Denken Sie daran, die Region und die Account-ID in den Abschnitten „Ressource“ zu ändern.
+
++
+[source, json]
+----
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowUseOfTheKey",
+            "Effect": "Allow",
+            "Action": [
+                "kms:Encrypt",
+                "kms:Decrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:DescribeKey"
+            ],
+            "Resource": [
+                "arn:aws:kms:us-east-1:externalaccountid:key/externalkeyid"
+            ]
+        },
+        {
+            "Sid": "AllowAttachmentOfPersistentResources",
+            "Effect": "Allow",
+            "Action": [
+                "kms:CreateGrant",
+                "kms:ListGrants",
+                "kms:RevokeGrant"
+            ],
+            "Resource": [
+                "arn:aws:kms:us-east-1:externalaccountid:key/externalaccountid"
+            ],
+            "Condition": {
+                "Bool": {
+                    "kms:GrantIsForAWSResource": true
+                }
+            }
+        }
+    ]
+}
+----
++
+Weitere Details zu diesem Prozess finden Sie unter https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html["AWS Dokumentation: Benutzer in anderen Konten können einen KMS-Schlüssel verwenden"^].
+
+
+
+. Wenn Sie ein vom Kunden verwaltetes CMK verwenden, ändern Sie die Schlüsselrichtlinie für das CMK, indem Sie die Cloud Volumes ONTAP IAM-Rolle als _Key User_ hinzufügen.
++
+Dieser Schritt ist erforderlich, wenn Sie Daten-Tiering auf Cloud Volumes ONTAP aktiviert und die im S3-Bucket gespeicherten Daten verschlüsseln möchten.
+
++
+Sie müssen diesen Schritt durchführen _nach_ Sie implementieren Cloud Volumes ONTAP, da die IAM-Rolle beim Erstellen einer Arbeitsumgebung erstellt wird. (Natürlich haben Sie die Möglichkeit, eine vorhandene Cloud Volumes ONTAP IAM-Rolle zu verwenden, sodass Sie diesen Schritt zuvor ausführen können.)
+
++
+https://docs.aws.amazon.com/kms/latest/developerguide/editing-keys.html["AWS Dokumentation: Schlüssel bearbeiten"^]
+
+

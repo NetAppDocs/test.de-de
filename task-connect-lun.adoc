@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: task-connect-lun.html 
+keywords: lun, connect lun, iscsi lun, target iqn, iqn 
+summary: Wenn Sie ein iSCSI-Volume erstellen, erstellt BlueXP automatisch eine LUN für Sie. Wir haben es einfach gemacht, indem wir nur eine LUN pro Volumen erstellen, so gibt es keine Verwaltung beteiligt. Verwenden Sie nach dem Erstellen des Volumes den IQN, um von den Hosts eine Verbindung zur LUN herzustellen. 
+---
+= Verbinden Sie eine LUN mit einem Host
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Wenn Sie ein iSCSI-Volume erstellen, erstellt BlueXP automatisch eine LUN für Sie. Wir haben es einfach gemacht, indem wir nur eine LUN pro Volumen erstellen, so gibt es keine Verwaltung beteiligt. Verwenden Sie nach dem Erstellen des Volumes den IQN, um von den Hosts eine Verbindung zur LUN herzustellen.
+
+Beachten Sie Folgendes:
+
+* Das automatische Kapazitätsmanagement von BlueXP gilt nicht für LUNs. Wenn BlueXP eine LUN erstellt, wird die Autogrow Funktion deaktiviert.
+* Sie können weitere LUNs aus System Manager oder der CLI erstellen.
+
+
+.Schritte
+. Wählen Sie im linken Navigationsmenü die Option *Speicherung > Leinwand*.
+. Doppelklicken Sie auf der Leinwand-Seite auf die Cloud Volumes ONTAP-Arbeitsumgebung, auf der Sie Volumes verwalten möchten.
+. Klicken Sie in der Arbeitsumgebung auf die Registerkarte *Volumes*.
+. Navigieren Sie auf der Registerkarte Volumes zum gewünschten Volume-Titel, und klicken Sie dann auf *Volume verwalten*, um auf das rechte Bedienfeld Volumes verwalten zuzugreifen.
+. Klicken Sie auf *Target IQN*.
+. Klicken Sie auf *Kopieren*, um den IQN-Namen zu kopieren.
+. Richten Sie eine iSCSI-Verbindung vom Host zur LUN ein.
++
+** http://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-iscsi-rhel-cg/GUID-15E8C226-BED5-46D0-BAED-379EA4311340.html["ONTAP 9 iSCSI Express-Konfiguration für Red hat Enterprise Linux: Starten der iSCSI-Sitzungen mit dem Ziel"^]
+** http://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-iscsi-cpg/GUID-857453EC-90E9-4AB6-B543-83827CF374BF.html["ONTAP 9 iSCSI Express-Konfiguration für Windows: Starten von iSCSI-Sitzungen mit dem Ziel"^]
+** https://docs.netapp.com/us-en/ontap-sanhost/["ONTAP SAN-Host-Konfiguration"^]
+
+
+
