@@ -1,0 +1,54 @@
+---
+sidebar: sidebar 
+permalink: concept-client-protocols.html 
+keywords: client protocols, client version, smb version, nfs version, protocol versions, s3, smb, nfs, iscsi, cifs 
+summary: Cloud Volumes ONTAP unterstützt die Client-Protokolle iSCSI, NFS, SMB, NVMe-TCP und S3. 
+---
+= Client-Protokolle
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Cloud Volumes ONTAP unterstützt die Client-Protokolle iSCSI, NFS, SMB, NVMe-TCP und S3.
+
+
+
+== ISCSI
+
+ISCSI ist ein Blockprotokoll, das in standardmäßigen Ethernet-Netzwerken ausgeführt werden kann. Die meisten Client-Betriebssysteme bieten einen Software-Initiator, der über einen Standard-Ethernet-Port ausgeführt wird.
+
+
+
+== NFS
+
+NFS ist das herkömmliche File-Zugriffsprotokoll für UNIX- und LINUX-Systeme. Clients können über die Protokolle NFSv3, NFSv4 und NFSv4.1 auf Dateien in ONTAP Volumes zugreifen. Sie können den Dateizugriff mithilfe von UNIX-Berechtigungen, NTFS-Berechtigungen oder einer Kombination beider Berechtigungen steuern.
+
+Clients können sowohl über NFS- als auch SMB-Protokolle auf dieselben Dateien zugreifen.
+
+
+
+== SMB
+
+SMB ist das herkömmliche File-Zugriffsprotokoll für Windows-Systeme. Die Clients können über die Protokolle SMB 2.0, SMB 2.1, SMB 3.0 und SMB 3.1.1 auf Dateien in ONTAP Volumes zugreifen. Wie bei NFS werden auch hier verschiedene Berechtigungsstile unterstützt.
+
+
+
+== S3
+
+Cloud Volumes ONTAP unterstützt S3 als Option für horizontal skalierbaren Storage. Über das S3-Protokoll können Sie den S3-Client-Zugriff auf Objekte konfigurieren, die in einem Bucket in einer Storage-VM (SVM) enthalten sind.
+
+link:https://docs.netapp.com/us-en/ontap/s3-multiprotocol/index.html#how-s3-multiprotocol-works["Funktionsweise von S3-Multi-Protokoll"^].
+link:https://docs.netapp.com/us-en/ontap/object-storage-management/index.html["Lesen Sie, wie Sie S3-Objekt-Storage-Services in ONTAP konfigurieren und managen"^].
+
+
+
+== NVMe-TCP
+
+NVMe-TCP wird für Cloud-Provider unterstützt, wenn Sie Cloud Volumes ONTAP Version 9.12.1 oder höher verwenden. BlueXP bietet keine Managementfunktionen für NVMe-TCP.
+
+Weitere Informationen zum Konfigurieren von NVMe über ONTAP finden Sie unter https://docs.netapp.com/us-en/ontap/san-admin/configure-svm-nvme-task.html["Konfigurieren Sie eine Storage-VM für NVMe"^].

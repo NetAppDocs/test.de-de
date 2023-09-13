@@ -1,0 +1,345 @@
+---
+sidebar: sidebar 
+permalink: task-tiering.html 
+keywords: tier, tiering, cold data, hot data, storage tiering, data tiering, fabricpool, fabric pool, s3 endpoint, endpoint, connection, performance tier, capacity tier, object store, blob tiering, container, inactive, tiering requirements 
+summary: Sie können die Storage-Kosten für Cloud Volumes ONTAP senken, indem Sie eine SSD- oder HDD-Performance-Tier für häufig abgerufene Daten mit einem Objekt-Storage-Kapazitäts-Tier für inaktive Daten kombinieren. Data Tiering wird durch FabricPool Technologie unterstützt. 
+---
+= Tiering inaktiver Daten in kostengünstigen Objektspeicher
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Sie können die Storage-Kosten für Cloud Volumes ONTAP senken, indem Sie eine SSD- oder HDD-Performance-Tier für häufig abgerufene Daten mit einem Objekt-Storage-Kapazitäts-Tier für inaktive Daten kombinieren. Data Tiering wird durch FabricPool Technologie unterstützt. Eine allgemeine Übersicht finden Sie unter link:concept-data-tiering.html["Data Tiering - Übersicht"].
+
+Um Daten-Tiering einzurichten, müssen Sie die folgenden Schritte ausführen:
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"] Wählen Sie eine unterstützte Konfiguration aus
+[role="quick-margin-para"]
+Die meisten Konfigurationen werden unterstützt. Wenn Sie ein Cloud Volumes ONTAP System mit der aktuellsten Version haben, sollten Sie gut zu gehen. link:task-tiering.html#configurations-that-support-data-tiering["Weitere Informationen ."].
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"] Stellen Sie die Konnektivität zwischen Cloud Volumes ONTAP und Objekt-Storage sicher
+[role="quick-margin-list"]
+ifdef::aws[]
+
+* Für AWS ist ein VPC Endpunkt zu S3 erforderlich. <<Anforderungen für das Tiering selten genutzter Daten in AWS S3,Weitere Informationen .>>.
+
+
+endif::aws[]
+
+ifdef::azure[]
+
+* Bei Azure müssen Sie nichts Unternehmen, solange BlueXP über die erforderlichen Berechtigungen verfügt. <<Tiering selten genutzter Daten auf Azure Blob Storage,Weitere Informationen .>>.
+
+
+endif::azure[]
+
+ifdef::gcp[]
+
+* Für Google Cloud müssen Sie das Subnetz für privaten Google Access konfigurieren und ein Servicekonto einrichten. <<Anforderungen für das Tiering selten genutzter Daten in einen Google Cloud Storage Bucket,Weitere Informationen .>>.
+
+
+endif::gcp[]
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drittens"] Stellen Sie sicher, dass Sie über ein Aggregat mit aktiviertem Tiering verfügen
+[role="quick-margin-para"]
+Daten-Tiering muss auf einem Aggregat aktiviert sein, um Daten-Tiering auf einem Volume zu ermöglichen. Die Anforderungen für neue Volumes und vorhandene Volumes sollten Sie kennen. <<Gewährleistung, dass das Tiering auf Aggregaten aktiviert ist,Weitere Informationen .>>.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"] Wählen Sie eine Tiering-Richtlinie beim Erstellen, Ändern oder Replizieren eines Volume
+[role="quick-margin-para"]
+BlueXP fordert Sie auf, beim Erstellen, Ändern oder Replizieren eines Volumes eine Tiering-Richtlinie auszuwählen.
+
+[role="quick-margin-list"]
+* link:task-tiering.html#tiering-data-from-read-write-volumes["Tiering von Daten auf Lese-/Schreib-Volumes"]
+* link:task-tiering.html#tiering-data-from-data-protection-volumes["Tiering von Daten auf Data-Protection-Volumes"]
+
+
+[NOTE]
+.Was und#8217;s sind nicht für das Daten-Tiering erforderlich?
+====
+* Für die Aktivierung von Daten-Tiering müssen Sie keine Funktionslizenz installieren.
+* Sie müssen keinen Objektspeicher für die Kapazitäts-Tier erstellen. BlueXP ist das für Sie.
+* Sie müssen das Daten-Tiering auf Systemebene nicht aktivieren.
++
+BlueXP erstellt bei der Systemerstellung einen Objektspeicher für „kalte“ Daten. <<Aktivieren des Daten-Tiering nach der Implementierung der Anforderungen,Solange es keine Verbindungs- oder Berechtigungsprobleme gibt>>. Danach müssen Sie nur noch Daten-Tiering auf den Volumes aktivieren (und in einigen Fällen, <<Gewährleistung, dass das Tiering auf Aggregaten aktiviert ist,Auf Aggregaten>>).
+
+
+
+====
+
+
+== Konfigurationen, die Daten-Tiering unterstützen
+
+Sie können das Daten-Tiering unter Verwendung spezifischer Konfigurationen und Funktionen aktivieren.
+
+ifdef::aws[]
+
+
+
+=== Unterstützung in AWS
+
+* Daten-Tiering wird in AWS ab Cloud Volumes ONTAP 9.2 unterstützt.
+* Beim Performance-Tier können es sich um allgemeine SSDs (gp3 oder gp2) oder bereitgestellte IOPS-SSDs (io1) handelt.
++
+
+NOTE: Bei der Verwendung von durchsatzoptimierten HDDs (st1) wird kein Tiering von Daten zu Objekt-Storage empfohlen.
+
+
+
+endif::aws[]
+
+ifdef::azure[]
+
+
+
+=== Unterstützung in Azure
+
+* Daten-Tiering wird in Azure wie folgt unterstützt:
++
+** Version 9.4 in mit Single Node-Systemen
+** Version 9.6 in mit HA-Paaren
+
+
+* Es kann sich bei dem Performance-Tier um von Premium-SSDs gemanagte Festplatten, von Standard-SSDs gemanagte Festplatten oder Standard-HDDs geben.
+
+
+endif::azure[]
+
+ifdef::gcp[]
+
+
+
+=== Support in Google Cloud
+
+* Daten-Tiering wird in Google Cloud ab Cloud Volumes ONTAP 9.6 unterstützt.
+* Beim Performance-Tier können es sich entweder um persistente SSD-Festplatten, ausgewogene persistente Festplatten oder um Standard-persistente Festplatten handeln.
+
+
+endif::gcp[]
+
+
+
+=== Interoperabilität von Funktionen
+
+* Daten-Tiering wird durch Verschlüsselungstechnologien unterstützt.
+* Thin Provisioning muss auf Volumes aktiviert sein.
+
+
+
+
+== Anforderungen
+
+Je nach Cloud-Provider müssen bestimmte Verbindungen und Berechtigungen eingerichtet werden, damit Cloud Volumes ONTAP selten genutzte Daten in den Objekt-Storage verschieben kann.
+
+ifdef::aws[]
+
+
+
+=== Anforderungen für das Tiering selten genutzter Daten in AWS S3
+
+Stellen Sie sicher, dass Cloud Volumes ONTAP eine Verbindung zu S3 hat. Die beste Möglichkeit, diese Verbindung bereitzustellen, besteht darin, einen VPC-Endpunkt für den S3-Dienst zu erstellen. Anweisungen hierzu finden Sie unter https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpce-gateway.html#create-gateway-endpoint["AWS Dokumentation: Erstellen eines Gateway-Endpunkts"^].
+
+Wenn Sie den VPC-Endpunkt erstellen, wählen Sie die Region, den VPC und die Routing-Tabelle aus, die der Cloud Volumes ONTAP Instanz entspricht. Sie müssen auch die Sicherheitsgruppe ändern, um eine ausgehende HTTPS-Regel hinzuzufügen, die Datenverkehr zum S3-Endpunkt ermöglicht. Andernfalls kann Cloud Volumes ONTAP keine Verbindung zum S3-Service herstellen.
+
+Informationen zu Problemen finden Sie unter https://aws.amazon.com/premiumsupport/knowledge-center/connect-s3-vpc-endpoint/["AWS Support Knowledge Center: Warum kann ich mich nicht über einen Gateway VPC Endpunkt mit einem S3-Bucket verbinden?"^].
+
+endif::aws[]
+
+ifdef::azure[]
+
+
+
+=== Tiering selten genutzter Daten auf Azure Blob Storage
+
+Sie müssen keine Verbindung zwischen der Performance- und der Kapazitäts-Tier einrichten, solange BlueXP die erforderlichen Berechtigungen hat. BlueXP ermöglicht Ihnen einen vnet-Service-Endpunkt, wenn die benutzerdefinierte Rolle für den Connector über folgende Berechtigungen verfügt:
+
+[source, json]
+----
+"Microsoft.Network/virtualNetworks/subnets/write",
+"Microsoft.Network/routeTables/join/action",
+----
+Die Berechtigungen sind standardmäßig in die benutzerdefinierte Rolle enthalten. https://docs.netapp.com/us-en/bluexp-setup-admin/reference-permissions-azure.html["Zeigen Sie die Azure-Berechtigung für den Connector an"^]
+
+endif::azure[]
+
+ifdef::gcp[]
+
+
+
+=== Anforderungen für das Tiering selten genutzter Daten in einen Google Cloud Storage Bucket
+
+* Das Subnetz, in dem Cloud Volumes ONTAP residiert, muss für privaten Google-Zugriff konfiguriert werden. Anweisungen finden Sie unter https://cloud.google.com/vpc/docs/configure-private-google-access["Google Cloud Documentation: Configuring Private Google Access"^].
+* Ein Servicekonto muss mit Cloud Volumes ONTAP verbunden sein.
++
+link:task-creating-gcp-service-account.html["Erfahren Sie, wie Sie dieses Servicekonto einrichten"].
+
++
+Sie werden aufgefordert, dieses Dienstkonto auszuwählen, wenn Sie eine Cloud Volumes ONTAP-Arbeitsumgebung erstellen.
+
++
+Wenn Sie während der Implementierung kein Servicekonto auswählen, müssen Sie Cloud Volumes ONTAP herunterfahren, zur Google Cloud Konsole wechseln und dann das Service-Konto an die Cloud Volumes ONTAP Instanzen anhängen. Sie können dann das Daten-Tiering aktivieren, wie im nächsten Abschnitt beschrieben.
+
+* Um den Bucket mit vom Kunden gemanagten Schlüsseln zu verschlüsseln, kann der Google Cloud Storage-Bucket den Schlüssel verwenden.
++
+link:task-setting-up-gcp-encryption.html["Verwenden Sie die vom Kunden gemanagten Schlüssel mit Cloud Volumes ONTAP"].
+
+
+
+endif::gcp[]
+
+
+
+=== Aktivieren des Daten-Tiering nach der Implementierung der Anforderungen
+
+BlueXP erstellt bei der Erstellung des Systems einen Objektspeicher für kalte Daten, solange keine Verbindungs- oder Berechtigungsprobleme auftreten. Wenn Sie die oben aufgeführten Anforderungen erst nach dem Erstellen des Systems implementiert haben, müssen Sie Tiering manuell über die API oder den System Manager aktivieren, der den Objektspeicher erstellt.
+
+
+NOTE: Tiering über die BlueXP Benutzeroberfläche wird in einer zukünftigen Cloud Volumes ONTAP Version möglich sein.
+
+
+
+== Gewährleistung, dass das Tiering auf Aggregaten aktiviert ist
+
+Daten-Tiering muss auf einem Aggregat aktiviert sein, um Daten-Tiering auf einem Volume zu ermöglichen. Die Anforderungen für neue Volumes und vorhandene Volumes sollten Sie kennen.
+
+* *Neue Volumen*
++
+Wenn Sie Daten-Tiering auf einem neuen Volume aktivieren, müssen Sie sich keine Sorgen machen, dass Sie Daten-Tiering auf einem Aggregat aktivieren können. BlueXP erzeugt das Volume auf einem vorhandenen Aggregat mit aktiviertem Tiering oder erzeugt ein neues Aggregat für das Volume, wenn es noch kein Daten-Tiering-fähiges Aggregat gibt.
+
+* *Vorhandene Bände*
++
+Wenn Sie Daten-Tiering auf einem vorhandenen Volume aktivieren möchten, müssen Sie sicherstellen, dass das Daten-Tiering auf dem zugrunde liegenden Aggregat aktiviert ist. Wenn das Daten-Tiering auf dem vorhandenen Aggregat nicht aktiviert ist, müssen Sie mit System Manager ein vorhandenes Aggregat an den Objektspeicher anhängen.
+
+
+
+.Schritte zur Bestätigung, ob Tiering auf einem Aggregat aktiviert ist
+. Öffnen Sie die Arbeitsumgebung in BlueXP.
+. Klicken Sie auf die Registerkarte Aggregate.
+. Navigieren Sie zu der gewünschten Kachel und überprüfen Sie, ob das Tiering auf dem Aggregat aktiviert oder deaktiviert ist.
++
+image:screenshot_aggregate_tiering_enabled.png["Ein Screenshot mit Informationen zu einem Aggregat in BlueXP, das den Tiering-Status enthält."]
+
+
+
+.Schritte zur Aktivierung des Tiering auf einem Aggregat
+. Klicken Sie im System Manager auf *Storage > Tiers*.
+. Klicken Sie auf das Aktionsmenü für das Aggregat und wählen Sie *Cloud Tiers anhängen*.
+. Wählen Sie den anzuhänden Cloud Tier aus und klicken Sie auf *Speichern*.
+
+
+.Was kommt als Nächstes?
+Sie können jetzt Daten-Tiering auf neuen und vorhandenen Volumes aktivieren, wie im nächsten Abschnitt erläutert.
+
+
+
+== Tiering von Daten aus Volumes mit Lese- und Schreibvorgängen
+
+Cloud Volumes ONTAP kann inaktive Daten auf Volumes mit Lese- und Schreibvorgängen auf kostengünstigen Objekt-Storage verschieben und so den Performance-Tier für häufig abgerufene Daten freisetzen.
+
+.Schritte
+. Erstellen Sie auf der Registerkarte Volumes in der Arbeitsumgebung ein neues Volume oder ändern Sie die Ebene eines vorhandenen Volumes:
++
+[cols="30,70"]
+|===
+| Aufgabe | Aktion 
+
+
+| Erstellen Sie ein neues Volume | Klicken Sie Auf *Neues Volume Hinzufügen*. 
+
+
+| Ändern Sie ein vorhandenes Volume | Wählen Sie die gewünschte Volume-Kachel aus, klicken Sie auf *Volume verwalten*, um auf das rechte Panel Volumes verwalten zuzugreifen, und klicken Sie dann im rechten Bereich auf *Erweiterte Aktionen* und *Tiering-Policy ändern*. 
+|===
+. Wählen Sie eine Tiering-Richtlinie aus.
++
+Eine Beschreibung dieser Richtlinien finden Sie unter link:concept-data-tiering.html["Data Tiering - Übersicht"].
+
++
+*Beispiel*
+
++
+image:screenshot_volumes_change_tiering_policy.png["Screenshot, der die verfügbaren Optionen zum Ändern der Tiering-Richtlinie für ein Volume zeigt"]
+
++
+BlueXP erstellt ein neues Aggregat für das Volume, wenn es bereits ein Data Tiering-fähiges Aggregat gibt.
+
+
+
+
+
+== Tiering von Daten aus Datensicherungs-Volumes
+
+Cloud Volumes ONTAP kann Daten von einem Daten-Protection-Volume auf eine Kapazitäts-Tier einstufen. Wenn Sie das Ziel-Volume aktivieren, werden die Daten beim Lesen schrittweise auf die Performance-Ebene verschoben.
+
+.Schritte
+. Wählen Sie im linken Navigationsmenü die Option *Speicherung > Leinwand*.
+. Wählen Sie auf der Seite Arbeitsfläche die Arbeitsumgebung aus, die das Quellvolumen enthält, und ziehen Sie es dann in die Arbeitsumgebung, in die Sie das Volumen replizieren möchten.
+. Folgen Sie den Anweisungen, bis Sie die Seite Tiering aufrufen und Data Tiering für Objektspeicher aktivieren.
++
+*Beispiel*
+
++
+image:screenshot_replication_tiering.gif["Screenshot, der die S3-Tiering-Option beim Replizieren eines Volumes zeigt."]
+
++
+Unterstützung bei der Datenreplizierung finden Sie unter https://docs.netapp.com/us-en/bluexp-replication/task-replicating-data.html["Replizierung von Daten in die und aus der Cloud"^].
+
+
+
+
+
+== Änderung der Storage-Klasse für Tiered Daten
+
+Nachdem Sie Cloud Volumes ONTAP implementiert haben, können Sie Ihre Storage-Kosten senken, indem Sie die Storage-Klasse für inaktive Daten ändern, auf die seit 30 Tagen nicht mehr zugegriffen wurde. Die Zugriffskosten sind höher, wenn der Zugriff auf die Daten erfolgt. Berücksichtigen Sie diese also vor einem Wechsel der Storage-Klasse.
+
+Die Storage-Klasse für Tiered Daten beträgt im gesamten System – nicht ​It pro Volume.
+
+Informationen zu unterstützten Speicherklassen finden Sie unter link:concept-data-tiering.html["Data Tiering - Übersicht"].
+
+.Schritte
+. Klicken Sie in der Arbeitsumgebung auf das Menüsymbol und dann auf *Speicherklassen* oder *Blob Storage Tiering*.
+. Wählen Sie eine Speicherklasse aus und klicken Sie dann auf *Speichern*.
+
+
+
+
+== Ändern des freien Speicherplatzverhältnisses für das Daten-Tiering
+
+Das Verhältnis von freiem Speicherplatz für Daten-Tiering bestimmt, wie viel freier Speicherplatz auf Cloud Volumes ONTAP SSDs/HDDs erforderlich ist, wenn Daten-Tiering zu Objekt-Storage erfolgt. Die Standardeinstellung ist 10 % freier Speicherplatz, Sie können die Einstellung jedoch entsprechend Ihren Anforderungen anpassen.
+
+So können Sie beispielsweise weniger als 10 % freien Speicherplatz auswählen, um sicherzustellen, dass Sie die erworbene Kapazität nutzen. BlueXP kann dann zusätzliche Festplatten für Sie erwerben, wenn zusätzliche Kapazität benötigt wird (bis zur Obergrenze des Festplattenaggregats).
+
+
+CAUTION: Wenn nicht genügend Speicherplatz zur Verfügung steht, können die Daten mit Cloud Volumes ONTAP nicht verschoben werden. Möglicherweise kommt es zu Performance-Einbußen. Jede Änderung sollte mit Vorsicht vorgenommen werden. Wenn Sie sich nicht sicher sind, wenden Sie sich an den NetApp Support.
+
+Das Verhältnis ist wichtig für Disaster-Recovery-Szenarien, da die Daten vom Objektspeicher gelesen werden, verschiebt Cloud Volumes ONTAP die Daten auf SSDs/HDDs, um eine bessere Performance zu bieten. Wenn nicht genügend Speicherplatz vorhanden ist, dann kann Cloud Volumes ONTAP die Daten nicht verschieben. Wenn Sie das Verhältnis ändern, können Sie Ihre geschäftlichen Anforderungen erfüllen.
+
+.Schritte
+. Klicken Sie oben rechts in der BlueXP-Konsole auf das Symbol *Einstellungen* und wählen Sie *Verbindungseinstellungen*.
++
+image:screenshot_settings_icon.png["Ein Screenshot, in dem das Symbol Einstellungen oben rechts in der BlueXP-Konsole angezeigt wird."]
+
+. Klicken Sie unter *Kapazität* auf *Kapazitätsschwellenwerte für Aggregat - kostenloses Platzverhältnis für Daten-Tiering*.
+. Ändern Sie das Verhältnis des freien Speicherplatzes entsprechend Ihren Anforderungen und klicken Sie auf *Speichern*.
+
+
+
+
+== Ändern des Kühlzeitraums für die automatische Tiering-Richtlinie
+
+Wenn Sie das Daten-Tiering auf einem Cloud Volumes ONTAP Volume mithilfe der Tiering-Richtlinie „_Auto_“ aktiviert haben, können Sie den standardmäßigen Kühlzeitraum je nach Ihren Geschäftsanforderungen anpassen. Diese Aktion wird nur über die API und CLI unterstützt.
+
+Der Kühlzeitraum ist die Anzahl der Tage, die Benutzerdaten in einem Volume inaktiv bleiben müssen, bevor sie als „kalt“ eingestuft und in einen Objekt-Storage verschoben werden.
+
+Der standardmäßige Kühlzeitraum für die Auto-Tiering-Richtlinie beträgt 31 Tage. Sie können den Kühlzeitraum wie folgt ändern:
+
+* 9.8 oder höher: 2 Tage bis 183 Tage
+* 9.7 oder früher: 2 Tage bis 63 Tage
+
+
+.Schritt
+. Verwenden Sie den Parameter _minimumCoolingDays_ mit Ihrer API-Anforderung, wenn Sie ein Volume erstellen oder ein vorhandenes Volume ändern.
+

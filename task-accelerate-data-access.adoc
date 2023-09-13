@@ -1,0 +1,31 @@
+---
+sidebar: sidebar 
+permalink: task-accelerate-data-access.html 
+keywords: flexcache, flexcache volumes, create a flexcache volume, provision flexcache, create flexcache volume 
+summary: Ein FlexCache Volume ist ein Storage Volume, das NFS-gelesene Daten aus einem Ursprungs- oder Quell-Volume zwischenspeichert. Nachfolgende Lesezugriffe auf die zwischengespeicherten Daten führen zu einem schnelleren Zugriff auf diese Daten. 
+---
+= Beschleunigter Datenzugriff mit FlexCache Volumes
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Ein FlexCache Volume ist ein Storage-Volume, das SMB- und NFS-Lesedaten aus einem Ursprungs-Volume (oder Quell-Volume) zwischenspeichert. Nachfolgende Lesezugriffe auf die zwischengespeicherten Daten führen zu einem schnelleren Zugriff auf diese Daten.
+
+FlexCache Volumes beschleunigen den Zugriff auf Daten oder verlagern den Datenverkehr von Volumes, auf die stark zugegriffen wird. FlexCache Volumes tragen zu einer besseren Performance bei, insbesondere wenn Clients wiederholt auf dieselben Daten zugreifen müssen, da die Daten direkt ohne Zugriff auf das Ursprungs-Volume bereitgestellt werden können. FlexCache Volumes eignen sich gut für leseintensive System-Workloads.
+
+BlueXP ermöglicht das Management von FlexCache Volumes mit dem link:https://docs.netapp.com/us-en/bluexp-volume-caching/index.html["BlueXP Volume-Caching"^] Service:
+
+Zudem können Sie mit der ONTAP CLI oder mit ONTAP System Manager FlexCache Volumes erstellen und managen:
+
+* http://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-fc-mgmt/home.html["FlexCache Volumes für schnelleren Datenzugriff – Power Guide"^]
+* http://docs.netapp.com/ontap-9/topic/com.netapp.doc.onc-sm-help-960/GUID-07F4C213-076D-4FE8-A8E3-410F49498D49.html["FlexCache Volumes werden in System Manager erstellt"^]
+
+
+BlueXP generiert eine FlexCache Lizenz für alle neuen Cloud Volumes ONTAP Systeme. Die Lizenz umfasst ein Nutzungslimit von 500 gib.
+
+video::PBNPVRUeT1o[youtube,width=848,height=480]

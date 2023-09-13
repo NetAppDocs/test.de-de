@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: task-google-key-manager.html 
+keywords: google cloud, encryption, NVE, NetApp volume encryption, KMIP, GCP, GCP KMS, key manager service, encryption 
+summary: Nutzen Sie den Key Management Service von Google für Ihren Drittanbieter-Key Management Service. 
+---
+= Verwalten Sie Schlüssel mit Google Cloud Key Management Service
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Verwenden Sie können link:https://cloud.google.com/kms/docs["Der Verschlüsselungsmanagement-Service (Cloud KMS) der Google Cloud-Plattform"^] Zum Schutz Ihrer ONTAP Verschlüsselungen in einer vom Google Cloud-Plattform bereitgestellten Applikation.
+
+Das Verschlüsselungsmanagement mit Cloud KMS kann über die CLI oder die ONTAP REST-API aktiviert werden.
+
+Bei der Verwendung von Cloud KMS ist zu beachten, dass standardmäßig die LIF einer Daten-SVM verwendet wird, um mit dem Endpunkt des Cloud-Schlüsselmanagements zu kommunizieren. Zur Kommunikation mit den Authentifizierungsservices des Cloud-Providers wird ein Node-Managementnetzwerk verwendet (oauth2.googleapis.com). Wenn das Cluster-Netzwerk nicht korrekt konfiguriert ist, nutzt das Cluster den Verschlüsselungsmanagementservice nicht ordnungsgemäß.
+
+.Bevor Sie beginnen
+* Cloud Volumes ONTAP muss Version 9.10.1 oder höher ausführen
+* Volume Encryption (VE)-Lizenz installiert
+* Mandantenfähige MTEKM-Lizenz (Encryption Key Management) ist ab Cloud Volumes ONTAP 9.12.1 GA installiert.
+* Sie müssen ein Cluster- oder SVM-Administrator sein
+* Ein aktives Google Cloud Platform Abonnement
+
+
+.Einschränkungen
+* Cloud KMS kann nur auf einer Daten-SVM konfiguriert werden
+
+
+
+
+== Konfiguration
+
+.Google Cloud
+. In Ihrer Google Cloud-Umgebung link:https://cloud.google.com/kms/docs/creating-keys["Erstellen Sie einen symmetrischen GCP-Schlüsselring und -Schlüssel"^].
+. Erstellen Sie eine benutzerdefinierte Rolle für Ihr Cloud Volumes ONTAP-Servicekonto.
++
+[listing]
+----
+gcloud iam roles create kmsCustomRole
+    --project=<project_id>
+    --title=<kms_custom_role_name>
+    --description=<custom_role_description>
+    --permissions=cloudkms.cryptoKeyVersions.get,cloudkms.cryptoKeyVersions.list,cloudkms.cryptoKeyVersions.useToDecrypt,cloudkms.cryptoKeyVersions.useToEncrypt,cloudkms.cryptoKeys.get,cloudkms.keyRings.get,cloudkms.locations.get,cloudkms.locations.list,resourcemanager.projects.get
+    --stage=GA
+----
+. Weisen Sie den Cloud-KMS-Schlüssel und das Cloud Volumes ONTAP-Servicekonto die benutzerdefinierte Rolle zu:
+`gcloud kms keys add-iam-policy-binding _key_name_ --keyring _key_ring_name_ --location _key_location_ --member serviceAccount:_service_account_Name_ --role projects/_customer_project_id_/roles/kmsCustomRole`
+. Service-Konto-JSON-Schlüssel herunterladen:
+`gcloud iam service-accounts keys create key-file --iam-account=_sa-name_@_project-id_.iam.gserviceaccount.com`
+
+
+.Cloud Volumes ONTAP
+. Stellen Sie eine Verbindung zur Cluster-Management-LIF mit dem bevorzugten SSH-Client her.
+. Wechseln zur erweiterten Berechtigungsebene:
+`set -privilege advanced`
+. DNS für die Daten-SVM erstellen.
+`dns create -domains c._<project>_.internal -name-servers _server_address_ -vserver _SVM_name_`
+. CMEK-Eintrag erstellen:
+`security key-manager external gcp enable -vserver _SVM_name_ -project-id _project_ -key-ring-name _key_ring_name_ -key-ring-location _key_ring_location_ -key-name _key_name_`
+. Geben Sie bei der entsprechenden Aufforderung den JSON-Schlüssel Ihres GCP-Kontos ein.
+. Bestätigen Sie, dass der aktivierte Prozess erfolgreich war:
+`security key-manager external gcp check -vserver _svm_name_`
+. OPTIONAL: Erstellen Sie ein Volume zum Testen der Verschlüsselung `vol create _volume_name_ -aggregate _aggregate_ -vserver _vserver_name_ -size 10G`
+
+
+
+
+== Fehlerbehebung
+
+Wenn Sie Fehler beheben müssen, können Sie die RAW REST API-Logs in den letzten beiden Schritten oben:
+
+. `set d`
+. `systemshell -node _node_ -command tail -f /mroot/etc/log/mlog/kmip2_client.log`
+

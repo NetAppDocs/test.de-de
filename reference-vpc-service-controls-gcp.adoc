@@ -1,0 +1,124 @@
+---
+sidebar: sidebar 
+permalink: reference-vpc-service-controls-gcp.html 
+keywords: vpc, service controls, vpc-sc, google, psc, private service connect 
+summary: Wenn Sie sich für die Sperrung Ihrer Google-Umgebung durch VPC-Servicekontrollen entscheiden, sollten Sie verstehen, wie BlueXP und Cloud Volumes ONTAP mit den Google-APIs interagieren sowie wie Sie Ihren Service-Parameter für die Bereitstellung von BlueXP und Cloud Volumes ONTAP konfigurieren. 
+---
+= Planung von VPC-Service-Kontrollen in GCP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Wenn Sie sich für die Sperrung Ihrer Google Cloud-Umgebung mit VPC-Servicekontrollen entscheiden, sollten Sie verstehen, wie BlueXP und Cloud Volumes ONTAP mit den Google Cloud-APIs interagieren. Außerdem sollten Sie erfahren, wie Sie Ihre Service-Umgebung für die Bereitstellung von BlueXP und Cloud Volumes ONTAP konfigurieren.
+
+Mit den VPC-Service-Kontrollen können Sie den Zugriff auf von Google gemanagte Services außerhalb einer vertrauenswürdigen Umgebung steuern, den Datenzugriff von nicht vertrauenswürdigen Standorten aus blockieren und die Risiken bei nicht autorisierten Datentransfers minimieren. https://cloud.google.com/vpc-service-controls/docs["Erfahren Sie mehr über Google Cloud VPC Service Controls"^].
+
+
+
+== Kommunikation von NetApp Services mit VPC Service Controls
+
+BlueXP kommuniziert direkt mit den Google Cloud APIs. Dies wird entweder von einer externen IP-Adresse außerhalb von Google Cloud (z. B. von api.services.cloud.netapp.com) oder innerhalb von Google Cloud von einer dem BlueXP Connector zugewiesenen internen Adresse ausgelöst.
+
+Abhängig vom Bereitstellungsstil des Connectors müssen möglicherweise bestimmte Ausnahmen für Ihren Service-Umfang gemacht werden.
+
+
+
+== Bilder
+
+Sowohl Cloud Volumes ONTAP als auch BlueXP verwenden Images eines Projekts in GCP, das von NetApp gemanagt wird. Dies kann sich auf die Bereitstellung von BlueXP Connector und Cloud Volumes ONTAP auswirken, wenn Ihr Unternehmen über eine Richtlinie verfügt, die die Verwendung von Bildern blockiert, die nicht im Unternehmen gehostet werden.
+
+Sie können einen Connector manuell mit Hilfe der manuellen Installationsmethode bereitstellen, aber Cloud Volumes ONTAP muss auch Bilder aus dem NetApp Projekt abrufen. Zur Bereitstellung eines Connectors und Cloud Volumes ONTAP müssen Sie eine Liste mit zulässigen Inhalten bereitstellen.
+
+
+
+=== Bereitstellen eines Connectors
+
+Der Benutzer, der einen Connector implementiert, muss in der Lage sein, auf ein Image verweisen, das im ProjectID _netapp-CloudManager_ und der Projektnummer _14190056516_ gehostet wird.
+
+
+
+=== Implementierung von Cloud Volumes ONTAP
+
+* Das BlueXP-Servicekonto muss ein im ProjectID _netapp-CloudManager_ gehostetes Image und die Projektnummer _14190056516_ aus dem Serviceprojekt referenzieren.
+* Das Servicekonto für den Google APIs Service Agent muss auf ein Image verweisen, das im ProjectID _netapp-CloudManager_ und die Projektnummer _14190056516_ aus dem Serviceprojekt gehostet wird.
+
+
+Im Folgenden sind Beispiele für Regeln aufgeführt, die für das Abrufen dieser Images an VPC-Service-Kontrollen nötig sind.
+
+
+
+== VPC-Service steuert Perimeterrichtlinien
+
+Richtlinien erlauben Ausnahmen von den VPC Service Controls-Regelsätzen. Weitere Informationen über Richtlinien finden Sie auf der https://cloud.google.com/vpc-service-controls/docs/ingress-egress-rules#policy-model["Dokumentation der GCP VPC Service Controls Policy"^].
+
+Um die Richtlinien festzulegen, die für BlueXP erforderlich sind, navigieren Sie zu Ihrem VPC Service Controls Perimeter in Ihrem Unternehmen und fügen Sie die folgenden Richtlinien hinzu. Die Felder sollten mit den Optionen übereinstimmen, die auf der Seite „VPC Service Controls Policy“ angegeben sind. Beachten Sie auch, dass *alle* Regeln erforderlich sind und die *ODER* Parameter im Regelsatz verwendet werden sollen.
+
+
+
+=== Ingress-Regeln
+
+....
+From:
+	Identities:
+		[User Email Address]
+	Source > All sources allowed
+To:
+	Projects =
+		[Service Project]
+	Services =
+		Service name: iam.googleapis.com
+		  Service methods: All actions
+		Service name: compute.googleapis.com
+		  Service methods:All actions
+....
+ODER
+
+....
+From:
+	Identities:
+		[User Email Address]
+	Source > All sources allowed
+To:
+	Projects =
+		[Host Project]
+	Services =
+		Service name: compute.googleapis.com
+		  Service methods: All actions
+....
+ODER
+
+....
+From:
+	Identities:
+		[Service Project Number]@cloudservices.gserviceaccount.com
+	Source > All sources allowed
+To:
+	Projects =
+		[Service Project]
+		[Host Project]
+	Services =
+		Service name: compute.googleapis.com
+		Service methods: All actions
+....
+
+
+=== Für ausgehenden Datenverkehr
+
+....
+From:
+	Identities:
+		[Service Project Number]@cloudservices.gserviceaccount.com
+To:
+	Projects =
+		14190056516
+	Service =
+		Service name: compute.googleapis.com
+		Service methods: All actions
+....
+
+TIP: Die oben beschriebene Projektnummer gilt als das Projekt _netapp-CloudManager_, das von NetApp zur Speicherung von Bildern für den Connector und für Cloud Volumes ONTAP verwendet wird.

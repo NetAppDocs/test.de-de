@@ -1,0 +1,146 @@
+---
+sidebar: sidebar 
+permalink: concept-storage-management.html 
+keywords: provisioning, capacity management, storage provisioning, manual, automatic, advanced allocation, aggregates, thin provisioning, free space, mode, BlueXP, cloud manager 
+summary: BlueXP ermöglicht vereinfachtes und erweitertes Management von Cloud Volumes ONTAP Storage. 
+---
+= Storage-Management
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+BlueXP ermöglicht vereinfachtes und erweitertes Management von Cloud Volumes ONTAP Storage.
+
+
+CAUTION: Alle Festplatten und Aggregate müssen direkt aus BlueXP erstellt und gelöscht werden. Sie sollten diese Aktionen nicht über ein anderes Management-Tool ausführen. Dies kann sich auf die Systemstabilität auswirken, die Fähigkeit zum Hinzufügen von Festplatten in der Zukunft beeinträchtigen und möglicherweise Kosten für redundante Cloud-Provider verursachen.
+
+
+
+== Storage-Bereitstellung
+
+BlueXP vereinfacht die Storage-Bereitstellung für Cloud Volumes ONTAP durch den Kauf von Festplatten und das Management von Aggregaten für Sie. Sie müssen einfach Volumes erstellen. Sie können bei Bedarf eine erweiterte Zuweisungsoption verwenden, um Aggregate selbst bereitzustellen.
+
+
+
+=== Vereinfachte Bereitstellung
+
+Aggregate stellen Cloud-Storage für Volumes bereit. BlueXP erstellt Aggregate für Sie beim Starten einer Instanz sowie bei der Bereitstellung zusätzlicher Volumes.
+
+Wenn Sie ein Volume erstellen, führt BlueXP eine von drei Dingen aus:
+
+* Das Volume wird auf einem vorhandenen Aggregat platziert, das über ausreichend freien Speicherplatz verfügt.
+* Das Volume wird auf einem vorhandenen Aggregat platziert, indem mehr Festplatten für dieses Aggregat erworben werden.
+
+
+ifdef::aws[]
+
++
+Im Falle eines Aggregats in AWS, das Elastic Volumes unterstützt, vergrößert BlueXP auch die Festplatten einer RAID-Gruppe. link:concept-aws-elastic-volumes.html["Erfahren Sie mehr über den Support für Elastic Volumes"].
+
+endif::aws[]
+
+* Es kauft Festplatten für ein neues Aggregat und platziert das Volume auf diesem Aggregat.
+
+
+BlueXP bestimmt, wo ein neues Volume platziert werden soll, indem es sich auf mehrere Faktoren ausschaut: Die maximale Größe eines Aggregats, ob Thin Provisioning aktiviert ist und die freien Speicherplatzschwellenwerte für Aggregate.
+
+
+TIP: Der Kontoadministrator kann die Schwellenwerte für freien Speicherplatz auf der Seite *Einstellungen* ändern.
+
+ifdef::aws[]
+
+
+
+==== Auswahl der Festplattengröße für Aggregate in AWS
+
+Wenn BlueXP neue Aggregate für Cloud Volumes ONTAP in AWS erstellt, erhöht es nach und nach die Festplattengröße in einem Aggregat, da die Anzahl der Aggregate im System zunimmt. BlueXP stellt dies sicher, dass Sie die maximale Kapazität des Systems nutzen können, bevor es die maximale Anzahl von Datenfestplatten erreicht, die von AWS zulässig sind.
+
+BlueXP kann beispielsweise die folgenden Festplattengrößen wählen:
+
+[cols="3*"]
+|===
+| Aggregatnummer | Festplattengröße | Max. Gesamtkapazität 
+
+
+| 1 | 500 gib | 3 tib 
+
+
+| 4 | 1 tib | 6 tib 
+
+
+| 6 | 2 tib | 12 tib 
+|===
+
+NOTE: Dieses Verhalten gilt nicht für Aggregate, die die Amazon EBS Elastic Volumes Funktion unterstützen. Aggregate mit aktivierten elastischen Volumes bestehen aus einer oder zwei RAID-Gruppen. Jede RAID-Gruppe verfügt über vier identische Festplatten mit derselben Kapazität. link:concept-aws-elastic-volumes.html["Erfahren Sie mehr über den Support für Elastic Volumes"].
+
+Sie können die Festplattengröße selbst mithilfe der erweiterten Zuweisungsoption auswählen.
+
+endif::aws[]
+
+
+
+=== Erweiterte Zuweisung
+
+Statt BlueXP Aggregate für Sie verwalten zu lassen, können Sie es selbst erledigen. link:task-create-aggregates.html["Auf der Seite *Erweiterte Zuweisung*"], Sie können neue Aggregate erstellen, die eine bestimmte Anzahl an Festplatten enthalten, einem vorhandenen Aggregat Festplatten hinzufügen und Volumes in bestimmten Aggregaten erstellen.
+
+
+
+== Kapazitätsmanagement
+
+Der Account Admin kann auswählen, ob BlueXP Sie über Entscheidungen zur Storage-Kapazität benachrichtigt oder ob BlueXP die Kapazitätsanforderungen automatisch managt.
+
+Dieses Verhalten wird durch den _Capacity Management Mode_ auf einem Connector bestimmt. Der Capacity Management-Modus betrifft alle von diesem Connector verwalteten Cloud Volumes ONTAP-Systeme. Wenn Sie einen anderen Konnektor haben, kann er anders konfiguriert werden.
+
+
+
+=== Automatisches Kapazitätsmanagement
+
+Der Kapazitätsmanagement-Modus ist standardmäßig auf automatisch eingestellt. In diesem Modus kauft BlueXP automatisch neue Festplatten für Cloud Volumes ONTAP-Instanzen, wenn mehr Kapazität benötigt wird, löscht nicht verwendete Festplatten-Sammlungen (Aggregate), verschiebt Volumes zwischen Aggregaten bei Bedarf und versucht, Festplatten nicht ordnungsgemäß zurückzusetzen.
+
+Die folgenden Beispiele veranschaulichen die Funktionsweise dieses Modus:
+
+* Wenn ein Aggregat die Kapazitätsgrenze erreicht und mehr Festplatten zur Verfügung stehen, kauft BlueXP automatisch neue Festplatten für das Aggregat, sodass die Volumen weiter wachsen können.
++
+BlueXP überprüft das Verhältnis von freiem Speicherplatz alle 15 Minuten, um festzustellen, ob zusätzliche Festplatten gekauft werden müssen.
+
+
+
+ifdef::aws[]
+
++
+Im Falle eines Aggregats in AWS, das Elastic Volumes unterstützt, vergrößert BlueXP auch die Festplatten einer RAID-Gruppe. link:concept-aws-elastic-volumes.html["Erfahren Sie mehr über den Support für Elastic Volumes"].
+
+endif::aws[]
+
+* Wenn ein Aggregat den Kapazitätsschwellenwert erreicht und keine zusätzlichen Festplatten unterstützt, verschiebt BlueXP automatisch ein Volume von diesem Aggregat zu einem Aggregat mit verfügbarer Kapazität oder zu einem neuen Aggregat.
++
+Wenn BlueXP ein neues Aggregat für das Volume erstellt, wählt es eine Festplattengröße aus, die der Größe des Volumes entspricht.
+
++
+Beachten Sie, dass jetzt freier Speicherplatz auf dem ursprünglichen Aggregat verfügbar ist. Vorhandene Volumes oder neue Volumes können diesen Speicherplatz nutzen. Der Speicherplatz kann in diesem Szenario nicht an die Vorteile der Cloud zurückgegeben werden.
+
+* Wenn ein Aggregat mehr als 12 Stunden lang keine Volumes enthält, löscht es BlueXP.
+
+
+
+
+==== Verwaltung von LUNs mit automatischem Kapazitätsmanagement
+
+Das automatische Kapazitätsmanagement von BlueXP gilt nicht für LUNs. Wenn BlueXP eine LUN erstellt, wird die Autogrow Funktion deaktiviert.
+
+
+
+=== Manuelles Kapazitätsmanagement
+
+Wenn der Kontoadministrator den Kapazitätsverwaltungsmodus auf manuell setzt, zeigt BlueXP Meldungen zu Maßnahmen erforderlich an, wenn Kapazitätsentscheidungen getroffen werden müssen. Die gleichen Beispiele, die im automatischen Modus beschrieben werden, gelten für den manuellen Modus, aber Sie müssen die Aktionen akzeptieren.
+
+
+
+=== Weitere Informationen .
+
+link:task-manage-capacity-settings.html["Erfahren Sie, wie Sie den Modus für das Kapazitätsmanagement ändern"].

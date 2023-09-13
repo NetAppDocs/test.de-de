@@ -1,0 +1,55 @@
+---
+sidebar: sidebar 
+permalink: task-change-ec2-instance.html 
+keywords: ec2 instance type, change ec2 instance type, change instance type, modify instance type, modify ec2 instance, amazon ec2 
+summary: Beim Start von Cloud Volumes ONTAP in AWS können Sie zwischen verschiedenen Instanzen oder Typen wählen. Sie können den Instanztyp jederzeit ändern, wenn Sie feststellen, dass er für Ihre Anforderungen unterdimensioniert oder überdimensioniert ist. 
+---
+= Ändern des EC2 Instanztyps für Cloud Volumes ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Beim Start von Cloud Volumes ONTAP in AWS können Sie zwischen verschiedenen Instanzen oder Typen wählen. Sie können den Instanztyp jederzeit ändern, wenn Sie feststellen, dass er für Ihre Anforderungen unterdimensioniert oder überdimensioniert ist.
+
+.Über diese Aufgabe
+* Automatisches Giveback muss auf einem Cloud Volumes ONTAP HA-Paar aktiviert sein (dies ist die Standardeinstellung). Wenn nicht, schlägt der Vorgang fehl.
++
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-hacg/GUID-3F50DE15-0D01-49A5-BEFD-D529713EC1FA.html["ONTAP 9 Dokumentation: Befehle zur Konfiguration von automatischem Giveback"^]
+
+* Eine Änderung des Instanztyps kann sich auf die AWS Servicegebühren auswirken.
+* Der Vorgang startet Cloud Volumes ONTAP neu.
++
+Bei Systemen mit einem Node wird die I/O unterbrochen.
+
++
+Bei HA-Paaren ist die Änderung unterbrechungsfrei. Ha-Paare stellen weiterhin Daten bereit.
+
++
+
+TIP: BlueXP ändert den Knoten nacheinander ordnungsgemäß, indem es Takeover und Warten auf Giveback initiiert. Das QA-Team von NetApp testete während dieses Prozesses sowohl das Schreiben als auch das Lesen der Dateien und sah keine Probleme auf Kundenseite. Wenn sich die Verbindungen änderten, wurden Wiederholungen auf I/O-Ebene gesehen, aber die Applikationsebene übergab diese kurze „Re-Wire“ der NFS/CIFS-Verbindungen.
+
+
+
+.Referenz
+Eine Liste der unterstützten Instanztypen in AWS finden Sie unter link:https://docs.netapp.com/us-en/cloud-volumes-ontap-relnotes/reference-configs-aws.html#supported-ec2-compute["Unterstützte EC2 Instanzen"^].
+
+.Schritte
+. Wählen Sie auf der Seite Arbeitsfläche die Arbeitsumgebung aus.
+. Klicken Sie auf der Registerkarte Übersicht auf das Bedienfeld Funktionen und dann auf das Bleistiftsymbol neben *Instanztyp*.
++
+image::screenshot_features_instance_type.png[400]
+
++
+.. Wenn Sie eine Node-basierte PAYGO-Lizenz verwenden, können Sie optional einen anderen Lizenz- und Instanztyp auswählen, indem Sie auf das Bleistiftsymbol neben *Lizenztyp* klicken.
+
+
+. Wählen Sie einen Instanztyp, aktivieren Sie das Kontrollkästchen, um zu bestätigen, dass Sie die Auswirkungen der Änderung verstehen, und klicken Sie dann auf *Ändern*.
+
+
+.Ergebnis
+Cloud Volumes ONTAP wird mit der neuen Konfiguration neu gestartet.

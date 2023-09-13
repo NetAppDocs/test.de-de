@@ -1,0 +1,56 @@
+---
+sidebar: sidebar 
+permalink: task-connecting-to-otc.html 
+keywords: connecting, cli, command, command line, connect, shell, interface 
+summary: Die Cloud Volumes ONTAP CLI ermöglicht die Ausführung aller administrativen Befehle. Sie eignet sich für erweiterte Aufgaben oder bei komfortableren Verwendung der CLI. Sie können über SSH eine Verbindung zur CLI herstellen. 
+---
+= Verwalten Sie Cloud Volumes ONTAP über die CLI
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Die Cloud Volumes ONTAP CLI ermöglicht die Ausführung aller administrativen Befehle. Sie eignet sich für erweiterte Aufgaben oder bei komfortableren Verwendung der CLI. Sie können über Secure Shell (SSH) eine Verbindung zur CLI herstellen.
+
+.Bevor Sie beginnen
+Der Host, von dem aus Sie SSH für die Verbindung zu Cloud Volumes ONTAP verwenden, muss über eine Netzwerkverbindung zu Cloud Volumes ONTAP verfügen. Beispielsweise müssen Sie SSH von einem Jump-Host in Ihrem Cloud-Provider-Netzwerk aus starten.
+
+ifdef::aws[]
+
+
+NOTE: Wenn Cloud Volumes ONTAP HA in mehreren AZS implementiert wird, verwenden sie eine Floating-IP-Adresse für die Cluster-Management-Schnittstelle, was bedeutet, dass externes Routing nicht verfügbar ist. Sie müssen eine Verbindung von einem Host herstellen, der Teil derselben Routingdomäne ist.
+
+endif::aws[]
+
+.Schritte
+. Geben Sie in BlueXP die IP-Adresse der Cluster-Managementoberfläche an:
++
+.. Wählen Sie im linken Navigationsmenü die Option *Speicherung > Leinwand*.
+.. Wählen Sie auf der Seite Arbeitsfläche das Cloud Volumes ONTAP-System aus.
+.. Kopieren Sie die IP-Adresse der Clusterverwaltung, die im rechten Fensterbereich angezeigt wird.
+
+
+. Verwenden Sie SSH, um über das Administratorkonto eine Verbindung zur IP-Adresse der Cluster-Managementschnittstelle herzustellen.
++
+*Beispiel*
+
++
+Das folgende Bild zeigt ein Beispiel mit PuTTY:
+
++
+image:screenshot_cli2.gif["Screenshot: Zeigt das Ziel admin@192.168.11.5 an Port 22."]
+
+. Geben Sie an der Anmeldeaufforderung das Kennwort für das Administratorkonto ein.
++
+*Beispiel*
+
++
+....
+Password: ********
+COT2::>
+....
+
