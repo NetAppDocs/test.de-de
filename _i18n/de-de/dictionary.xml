@@ -643,7 +643,6 @@
   <block id="5e167ef814cd8fe02fd01be002ffa235" category="list-text"><block ref="5e167ef814cd8fe02fd01be002ffa235" category="inline-link-macro-rx"></block></block>
   <block id="2f2289dc4d144dd69a1fd73eaab183e0" category="summary">Einige Cloud Volumes ONTAP Konfigurationen umfassen lokalen NVMe-Storage, den Cloud Volumes ONTAP als Flash Cache nutzt, um die Performance zu steigern.</block>
   <block id="5fbc523d8d2ad241522a15100f23bef2" category="doc">Flash Cache</block>
-  <block id="712cc6bb6749aa390ea026f9c60a15ec" category="paragraph">Einige Cloud Volumes ONTAP Konfigurationen umfassen lokalen NVMe-Storage, den Cloud Volumes ONTAP für bessere Performance als _Flash Cache_ verwendet.</block>
   <block id="675d38d552c49bbf67606b2c5f1d5bed" category="section-title">Was ist Flash Cache?</block>
   <block id="3a36e6b466e0265c25d241c486f64e02" category="paragraph">Flash Cache beschleunigt den Zugriff auf Daten durch intelligente Cache-Speicherung von kürzlich gelesenen Anwenderdaten und NetApp Metadaten in Echtzeit. Es bringt Vorteile bei Random Read-intensiven Workloads, einschließlich Datenbanken, E-Mail und File Services.</block>
   <block id="1f0b82560627b660c6c6958a1df834b8" category="section-title">Unterstützte Konfigurationen</block>
@@ -5155,4 +5154,5 @@ Im Falle eines Aggregats in AWS, das Elastic Volumes unterstützt, vergrößert 
   <block id="522cbb900314aeb84eb5a961c5f94672" category="section-title">Unterstützung für Fileservices von Cloud-Providern</block>
   <block id="f6185bb12f5e53c800be8cda7fbca65b" category="paragraph">Technischen Support zu Fileservices von Cloud-Providern, zu seiner Infrastruktur oder zu beliebigen Lösungen, die den Service verwenden, finden Sie im Abschnitt „Hilfe erhalten“ in der BlueXP Dokumentation zu diesem Produkt.</block>
   <block id="3880ae5df9fdc4d0fc4a6d00a2239530" category="paragraph">Wenn Sie technischen Support für BlueXP und seine Storage-Lösungen und -Services erhalten möchten, nutzen Sie die unten beschriebenen Support-Optionen.</block>
+  <block id="85a772bebde3e95966723beb7a641685" category="paragraph">Einige Cloud Volumes ONTAP Konfigurationen umfassen lokalen NVMe-Storage, den Cloud Volumes ONTAP für bessere Performance als _Flash Cache_ verwendet. Zeile für Token-Update-Test wird hinzugefügt.</block>
 </blocks>
