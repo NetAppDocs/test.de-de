@@ -4617,7 +4617,6 @@ Im Falle eines Aggregats in AWS, das Elastic Volumes unterstützt, vergrößert 
   <block id="3f0a47d5e00d1740ceca3815cf7bf9b4" category="section-title">Einrichten von Data Tiering</block>
   <block id="ac50ed5a6f154224bf044f6797accc8c" category="paragraph">Anweisungen und eine Liste der unterstützten Konfigurationen finden Sie unter <block ref="4fbc08218411ffa53189962e6368b39b" category="inline-link-macro-rx"></block>.</block>
   <block id="3ddffa447216115135ad7b5a7bdd106d" category="doc">Weitere Informationen zu Cloud Volumes ONTAP</block>
-  <block id="f703efebd5f1fe499787635d16bb070c" category="paragraph">Cloud Volumes ONTAP ist eine rein softwarebasierte Storage Appliance, auf der ONTAP Datenmanagement-Software in der Cloud ausgeführt wird. Das System bietet Storage der Enterprise-Klasse mit den folgenden wichtigen Funktionen:</block>
   <block id="af20abc7154e9ee224c54b48b6ec7d63" category="list-text">Storage-Effizienz</block>
   <block id="18b6826f1d119f55347e1db9badac2c3" category="paragraph">Nutzen Sie integrierte Datendeduplizierung, Datenkomprimierung, Thin Provisioning und Klonen und minimieren Sie so die Storage-Kosten.</block>
   <block id="05807e454c19f244770adae059b3c330" category="list-text">Hochverfügbarkeit</block>
@@ -5155,4 +5154,5 @@ Im Falle eines Aggregats in AWS, das Elastic Volumes unterstützt, vergrößert 
   <block id="f6185bb12f5e53c800be8cda7fbca65b" category="paragraph">Technischen Support zu Fileservices von Cloud-Providern, zu seiner Infrastruktur oder zu beliebigen Lösungen, die den Service verwenden, finden Sie im Abschnitt „Hilfe erhalten“ in der BlueXP Dokumentation zu diesem Produkt.</block>
   <block id="3880ae5df9fdc4d0fc4a6d00a2239530" category="paragraph">Wenn Sie technischen Support für BlueXP und seine Storage-Lösungen und -Services erhalten möchten, nutzen Sie die unten beschriebenen Support-Optionen.</block>
   <block id="85a772bebde3e95966723beb7a641685" category="paragraph">Einige Cloud Volumes ONTAP Konfigurationen umfassen lokalen NVMe-Storage, den Cloud Volumes ONTAP für bessere Performance als _Flash Cache_ verwendet. Zeile für Token-Update-Test wird hinzugefügt.</block>
+  <block id="831f5238637d5e95172a19700b3d60d2" category="paragraph">Cloud Volumes ONTAP ist eine rein softwarebasierte Storage Appliance, auf der ONTAP Datenmanagement-Software in der Cloud ausgeführt wird. Sie bietet Storage der Enterprise-Klasse mit folgenden wichtigen Funktionen:</block>
 </blocks>
