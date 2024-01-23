@@ -42,3 +42,45 @@ link:concept-client-protocols.html["Weitere Informationen zur Cloud Volumes ONTA
 BlueXP bietet keine Unterstützung für die Einrichtung oder Orchestrierung von Disaster Recovery für Storage VMs (SVM). Sie müssen System Manager oder die CLI verwenden.
 
 link:task-manage-svm-dr.html["Erfahren Sie mehr über SVM Disaster Recovery"].
+
+
+
+== Testen des AsciiDoc-Zeichenaustauschs und der intrinsischen Attribute
+
+End-to-End-Tests durch Lokalisierung und Veröffentlichung aller Sprachen.
+
+.Sternchen
+{Sternchen}
+Text{Sternchen}
+Text {Sternchen}
+Text {Sternchen} Text
+
+.Doppelpunkt
+{Zwei Doppelpunkte}
+Text{zwei Doppelpunkte}
+Text {zwei Doppelpunkte}
+Text {zwei Doppelpunkte} Text
+
+.Vertikaler Balken
+{vbar}
+Text{vbar}
+Text {vbar}
+Text {vbar} Text
+
+.Plus
+{Plus}
+Text{plus}
+Text {plus}
+Text {plus} Text
+
+.Eckige Klammern
+{Startsb} und {endsb}
+Text{startsb} und Text{endsb}
+Text {startsb} und Text {endsb}
+Text {startsb} und Text {endsb} Text
+
+.Unzerbrechlich
+Vor{nbsp}nach
+
+.Leerraum ohne Breite
+Vor{zwsp}nach

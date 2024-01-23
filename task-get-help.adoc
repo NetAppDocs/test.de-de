@@ -44,10 +44,6 @@ Suchen Sie in der BlueXP Knowledge Base nach hilfreichen Artikeln zur Fehlerbehe
 +
 Treten Sie der BlueXP Community bei, um laufende Diskussionen zu verfolgen oder neue zu erstellen.
 
-* Mailto:ng-cloudmanager-feedback@netapp.com[Feedback email]
-+
-Wir wissen Ihre Vorschläge zu schätzen. Senden Sie uns Ihr Feedback, um BlueXP zu verbessern.
-
 
 
 
