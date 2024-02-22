@@ -1,0 +1,3270 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head class="at-element-marker">
+  <title>Management vorhandener Volumes | NetApp Documentation</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta http-equiv="language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Management vorhandener Volumes | NetApp Documentation" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.netapp.com/de-de/test/task-manage-volumes.html" />
+	<meta property="og:description" content="Mit BlueXP können Sie Volumes und CIFS-Server verwalten. Außerdem werden Sie aufgefordert, Volumes zu verschieben, um Kapazitätsprobleme zu vermeiden." />
+  <meta property="og:image" content="https://docs.netapp.com/de-de/test/images/logo-tophat-social.png" />
+  <meta property="og:image:alt" content="NetApp Logo" />
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="encoding" content="utf-8">
+  <meta http-equiv="nss-type" content="Product Documentation"/>
+  <meta http-equiv="nss-subtype" content="User Guide"/><meta name="description" content="Mit BlueXP können Sie Volumes und CIFS-Server verwalten. Außerdem werden Sie aufgefordert, Volumes zu verschieben, um Kapazitätsprobleme zu vermeiden.">
+  <meta name="keywords" content=" volumes, managing, cloning, editing, CIFS server, edit, flexclone, snapshot copy, restore, mount, delete, cifs setup, DNS, active directory, AD, domain, NetBIOS, identify, move, capacity, action required, clone, snapshot copies, restoring, vol move, volume move, move a volume, volume move slow, volume move performance"><!-- Icons -->
+  <link rel="icon" href="/de-de/test/images/favicon.ico" type="image/x-icon">
+
+  <!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="NetApp Documentation" href="/de-de/test/feed.xml"><!-- CSS Definitions: NetApp CSS should be defined after generic css -->
+
+
+  <!-- Combined CSS -->
+  <link rel="stylesheet" type="text/css" href="/de-de/test/css/ie-netappdocs.css">
+
+  
+  <link rel="stylesheet" href="/de-de/test/css/ie-landing-page.css" type="text/css">
+  <link rel="stylesheet" href="/de-de/test/css/ie-tabbed-blocks.css" type="text/css">
+  <!-- Canonical url -->
+  <link rel="canonical" href="https://docs.netapp.com/de-de/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="x-default" href="https://docs.netapp.com/us-en/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="de" href="https://docs.netapp.com/de-de/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="en" href="https://docs.netapp.com/us-en/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="ja" href="https://docs.netapp.com/ja-jp/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="ko" href="https://docs.netapp.com/ko-kr/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://docs.netapp.com/zh-cn/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://docs.netapp.com/zh-tw/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="es" href="https://docs.netapp.com/es-es/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="fr" href="https://docs.netapp.com/fr-fr/test/task-manage-volumes.html" />
+  <link rel="alternate" hreflang="it" href="https://docs.netapp.com/it-it/test/task-manage-volumes.html" />
+  <!-- Top level site integrations -->
+<script type="text/javascript" src="https://cdn.cookielaw.org/consent/72570c5c-fe30-465f-b0e0-b77f7fb4ae34/OtAutoBlock.js"></script>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-document-language="true" data-domain-script="72570c5c-fe30-465f-b0e0-b77f7fb4ae34"></script>
+    <script type="text/javascript">function OptanonWrapper() { }</script>
+    <script type="text/plain" class="optanon-category-C0002" src="https://assets.adobedtm.com/60287eadf1ee/c284da483c83/launch-e9ff3acac59f.min.js"></script>
+    <script class="optanon-category-C0001">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.setAttributeNode(d.createAttribute('data-ot-ignore'));j.setAttribute('class','optanon-category-C0001');j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+'';f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MD73T9M');</script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      const MASTHEAD_OFFSET = 65;
+      const SECTIONS = $("main h2, main h3");
+      // PAGE NAV - Init
+      if (SECTIONS.length == 0) {
+        // remove if there is no elements
+        /*
+        $("#ie-right-navbar").remove();
+        $("#ie-right-navbar-collapse").remove();
+        */
+      } else {
+        $(".page-nav-title").css('display', 'block');
+        for (var i = 0; i < SECTIONS.length; i++) {
+          var sectionId = $(SECTIONS[i]).attr('id');
+          var sectionName = $(SECTIONS[i]).text();
+          var subClass = $(SECTIONS[i]).is("h3") ? ' page-nav__sublink' : '';
+          $("#page-menu").append('<li class="page-nav-item"><a href="#' + sectionId + '" class="page-nav__link' + subClass + '">' + sectionName + '</a></li>');
+        }
+      }
+    });
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+  <!-- Used for Product Family Page Sidebar Visibility --><!-- Used to import Promise for IE. Required for SearchKit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script><script src='/de-de/test/js/na-search.js'></script><script src='/de-de/test/js/ie-clouddocs.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script>
+    /*
+      $(document).ready(function() {
+          $("#tg-sb-link").click(function() {
+              $("#tg-sb-sidebar").toggle();
+              $("#tg-sb-content").toggleClass('col-md-9');
+              $("#tg-sb-content").toggleClass('col-md-12');
+              $("#tg-sb-icon").toggleClass('fa-toggle-on');
+              $("#tg-sb-icon").toggleClass('fa-toggle-off');
+          });
+      });
+      */
+  </script>
+  <script src='/de-de/test/js/custom-dropdown.js'></script>
+  <script src='/de-de/test/js/FileSaver.min.js'></script>
+  <script src='/de-de/test/js/jszip-utils.min.js'></script>
+  <script src='/de-de/test/js/jszip.min.js'></script><script src='/de-de/test/js/ie-pdf-ux.js'></script></head>
+
+
+  <body class role="document" data-flavor="aws">
+    <div class="skip-to-main">
+      <a href="#main" >Skip to main content</a>
+    </div><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MD73T9M"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="page" class="">
+      <div id="ie-phone-menu" class=""></div>
+      <div id="ie-content-wrap" class="">
+        <nav id="ie-new-header">
+    <ul>
+        <li id="ie-phone-menu-button">
+            <a href="#">
+                <image id="" src="/de-de/test/images/hamburger.svg" alt="menu" />
+            </a>
+        </li>
+
+        <li>
+            <a href="https://www.netapp.com/de/index.aspx">
+                <image id="ie-header-logo" src="/de-de/test/images/netapp_logo.svg" alt="netapp" />
+            </a>
+        </li>
+        <li id="ie-header-docs">
+            <a href="https://www.netapp.com/de/support-and-training/documentation/">Dokumente</a>
+        </li>
+
+        <!-- Empty container to push header left with or without lang selector -->
+        <li id="empty-container" style="margin-left: auto">
+        </li>
+        <!-- Start Language Selector --><li id="ie-language-dropdown">
+            <div id="language-dropdown" class="custom-dropdown custom-dropdown-lang">
+                <div class="custom-dropdown-select custom-dropdown-select-lang">
+                    <img src="/de-de/test/images/language_white_24dp.svg" class="n-globe__icon" />
+                    <span class="lang-name">Deutsch</span>
+                    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown header invisible" />
+                    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup header" />
+                    </button>
+                </div>
+
+                <ul class="custom-dropdown-menu"><li>
+                        <a href="https://docs.netapp.com/de-de/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">Deutsch</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/us-en/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">English</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/ja-jp/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">日本語</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/ko-kr/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">한국어</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/zh-cn/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">简体中文</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/zh-tw/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">繁體中文</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/es-es/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">Español</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/fr-fr/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">Français</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/it-it/test/task-manage-volumes.html"
+                            target="_self"><span translate="no" class="notranslate">Italiano</span></a>
+                    </li></ul>
+            </div>
+            </li>
+        <!-- End Language Selector -->
+
+
+        <li id="ie-allnetapp">
+            <div id="allnetapp-dropdown" class="custom-dropdown custom-dropdown-allnetapp">
+                <div class="custom-dropdown-select custom-dropdown-select-allnetapp">
+                    <img src="/de-de/test/images/apps_white_24dp.svg" alt="" class="allnetapp-icon" />
+                    <span class="allnetapp-name">NetApp Komplettlösung</span>
+                    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown header invisible" />
+                    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup header" />
+                    </button>
+                </div>
+
+                <ul class="custom-dropdown-menu allnetapp-dropdown">
+                    <li>
+                        <a href="https://bluexp.netapp.com/de/"
+                            target="_self"><span translate="no" class="notranslate">BlueXP</span></a>
+                    </li>
+                    <li>
+                        <a href="https://mysupport.netapp.com/site/"
+                            target="_self"><span translate="no" class="notranslate">Support</span></a>
+                    </li>
+                    <li>
+                        <a href="https://kb.netapp.com/"
+                            target="_self"><span translate="no" class="notranslate">Knowledge Base</span></a>
+                    </li>
+                    <li>
+                        <a href="https://www.netapp.com/de/support-and-training/netapp-learning-services/"
+                            target="_self"><span translate="no" class="notranslate">Training</span></a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+
+    </ul>
+</nav>
+
+        <main id="n-main-content" class="n-main-content">
+          <!-- Start Documentation Content -->
+<div class="ie-main">
+
+<div id="ie-new-sidebar-collapse" style="display: none">
+    <img id="sidebar-expand" class="ie-searchbox-icon" src="/de-de/test/images/double_arrow.svg" alt="" />
+</div>
+<div id="ie-new-sidebar">
+    <div id="ie-product-identity-lockup">
+        <div id="sidebar-collapse" class="">
+            <img src="/de-de/test/images/double_arrow.svg" alt="" />
+        </div>
+        <div id="ie-breadcrumb" class="">
+  <ul class="ie-breadcrumb">
+    <li class="">
+      <a href="https://docs.netapp.com">Gesamte Dokumentation</a>
+    </li>
+    
+    
+    <li class="">
+      <a href="https://docs.netapp.com/us-en/cloud/">Cloud-Dokumentation</a>
+    </li>
+    
+
+    
+    <li class="">
+      <a href="https://docs.netapp.com/de-de/bluexp-family/">
+        BlueXP
+      </a>
+    </li>
+    
+  </ul>
+  
+  <div class="ie-product-name" >
+    <!--<a href="/de-de/test/">-->
+      Cloud Volumes ONTAP
+    <!--</a>-->
+  </div>
+</div>
+
+            
+<div id="ie-selectors"><div id="version-dropdown-new" class="custom-dropdown" >
+  <div class="custom-dropdown-select unselected" title=" 9.13.1">
+    <label>Version</label>
+    <span translate="no" class="notranslate">9.13.1</span>
+    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown version invisible" />
+    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup version" />
+  </div>
+
+  <ul class="custom-dropdown-menu"><li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.13.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9130-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.13.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9121-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.12.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9120-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.12.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9111-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.11.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9110-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.11.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9101-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.10.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9100-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.10.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-991-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.9.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-990-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.9.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-98-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.8</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-97-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.7</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-96-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.6</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-95-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.5</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-94-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.4</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-93-relnotes/task-manage-volumes.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.3</span></span>
+      </a>
+                     
+    </li>
+    
+  </ul>
+</div>
+<div id="flavor-dropdown" class="custom-dropdown" data-url="/de-de/test/task-manage-volumes.html">
+  
+  
+  <div class="custom-dropdown-select selected" title="AWS">
+    <label>Cloud-Provider</label>
+    <div>AWS</div>  
+    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown flavor invisible" />
+    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup flavor" />
+    <!--<img src="/de-de/test/images/dismiss.svg" class="custom-icon selected" id="remove-flavor" alt="" />-->
+  </div>
+  
+
+  <ul class="custom-dropdown-menu">
+    
+    
+    <li data-value="aws" data-url="/de-de/test/aws/task-manage-volumes.html">Amazon Web Services
+    </li>
+    
+    
+    
+    <li data-value="gcp" data-url="/de-de/test/gcp/task-manage-volumes.html">Google Cloud
+    </li>
+    
+    
+    
+    <li data-value="azure" data-url="/de-de/test/azure/task-manage-volumes.html">Microsoft Azure
+    </li>
+    
+    
+    <li data-url="/de-de/test/task-manage-volumes.html">Alle Cloud-Provider</li>
+  </ul>
+</div>
+</div>
+        
+        
+
+<div id="ie-searchbox" class="ie-searchbox-sidebar ">
+    <img class="ie-searchbox-icon" src="/de-de/test/images/loupe.svg" alt=""/>
+    <div id="react-search" 
+        data-search-html="/de-de/test/aws/search.html" 
+        data-type="widget"
+        data-placeholder="Dokumentation durchsuchen"
+        data-no-results-found="Keine Ergebnisse gefunden für {query}"
+        data-did-you-mean="Suchen Sie nach {suggestion}."
+        data-no-results-found-did-you-mean="Es wurden keine Ergebnisse für {query} gefunden. Meinten Sie {suggestion}?"
+        data-results-found="{hitCount} Ergebnisse gefunden"
+        data-error-message="Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+        data-error-reset="Suche zurücksetzen"
+        data-sk-es-pf-indexes="" 
+        data-flavor="aws">
+    </div>
+</div>
+        
+    </div>
+    <div id="ie-new-toc"><script>
+  let sidebarAccordion = true;
+
+  /* specific css rules for Mac */
+  if(navigator.platform.match('Mac') !== null) {
+    document.body.setAttribute('class', 'OSX');
+  }
+
+</script>
+
+<div id="ie-sidebar-container">
+  <ul id="ie-sidebar-list" ><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Cloud Volumes ONTAP Dokumentation"
+      data-li-level="1#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/index.html" 
+    ><a class="ie-sidebar-menuitem-1 " href="/de-de/test/aws/index.html">
+        Cloud Volumes ONTAP Dokumentation
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Versionshinweise"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Versionshinweise</div>-->
+         Versionshinweise
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Was ist neu"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/whats-new.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/whats-new.html">
+        Was ist neu
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Bekannte Einschränkungen"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/reference-limitations.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/reference-limitations.html">
+        Bekannte Einschränkungen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Versionshinweise zu Cloud Volumes ONTAP"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/whats-new-ontap.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/whats-new-ontap.html">
+        Versionshinweise zu Cloud Volumes ONTAP
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Los geht's"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Los geht's</div>-->
+         Los geht's
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Weitere Informationen zu Cloud Volumes ONTAP"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-overview-cvo.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/concept-overview-cvo.html">
+        Weitere Informationen zu Cloud Volumes ONTAP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Unterstützte Versionen für neue Bereitstellungen"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/reference-versions.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/reference-versions.html">
+        Unterstützte Versionen für neue Bereitstellungen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erste Schritte in Amazon Web Services"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Erste Schritte in Amazon Web Services</div>-->
+         Erste Schritte in Amazon Web Services
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Schnellstart"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-getting-started-aws.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-getting-started-aws.html">
+        Schnellstart
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Planen Sie Ihre Konfiguration"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-planning-your-config.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-planning-your-config.html">
+        Planen Sie Ihre Konfiguration
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Richten Sie Ihr Netzwerk ein"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Richten Sie Ihr Netzwerk ein</div>-->
+         Richten Sie Ihr Netzwerk ein
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Netzwerkanforderungen"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/reference-networking-aws.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/reference-networking-aws.html">
+        Netzwerkanforderungen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AWS Transit Gateway einrichten"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-setting-up-transit-gateway.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/task-setting-up-transit-gateway.html">
+        AWS Transit Gateway einrichten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Implementieren Sie ein HA-Paar in einem gemeinsamen Subnetz"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-deploy-aws-shared-vpc.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/task-deploy-aws-shared-vpc.html">
+        Implementieren Sie ein HA-Paar in einem gemeinsamen Subnetz
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Sicherheitsgruppenregeln für AWS"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/reference-security-groups.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/reference-security-groups.html">
+        Sicherheitsgruppenregeln für AWS
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AWS KMS einrichten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-setting-up-kms.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-setting-up-kms.html">
+        AWS KMS einrichten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Einrichten von IAM-Rollen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-set-up-iam-roles.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-set-up-iam-roles.html">
+        Einrichten von IAM-Rollen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Lizenzierung einrichten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-set-up-licensing-aws.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-set-up-licensing-aws.html">
+        Lizenzierung einrichten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Starten Sie Cloud Volumes ONTAP in AWS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-deploying-otc-aws.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-deploying-otc-aws.html">
+        Starten Sie Cloud Volumes ONTAP in AWS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erste Schritte in AWS C2S"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-getting-started-aws-c2s.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-getting-started-aws-c2s.html">
+        Erste Schritte in AWS C2S
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verwenden Sie Cloud Volumes ONTAP"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Verwenden Sie Cloud Volumes ONTAP</div>-->
+         Verwenden Sie Cloud Volumes ONTAP
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Lizenzmanagement"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Lizenzmanagement</div>-->
+         Lizenzmanagement
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management kapazitätsbasierter Lizenzen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-manage-capacity-licenses.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-manage-capacity-licenses.html">
+        Management kapazitätsbasierter Lizenzen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Keystone Abonnements Managen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-manage-keystone.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-manage-keystone.html">
+        Keystone Abonnements Managen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management knotenbasierter Lizenzen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-manage-node-licenses.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-manage-node-licenses.html">
+        Management knotenbasierter Lizenzen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Volume- und LUN-Administration"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Volume- und LUN-Administration</div>-->
+         Volume- und LUN-Administration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Volumes erstellen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-create-volumes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-create-volumes.html">
+        Volumes erstellen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management vorhandener Volumes"
+      data-li-level="3#" 
+      class="  ie-sidebar-selected    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-manage-volumes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-manage-volumes.html">
+        Management vorhandener Volumes
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Tiering inaktiver Daten in Objektspeicher"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-tiering.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-tiering.html">
+        Tiering inaktiver Daten in Objektspeicher
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verbinden Sie eine LUN mit einem Host"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-connect-lun.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-connect-lun.html">
+        Verbinden Sie eine LUN mit einem Host
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Beschleunigter Datenzugriff mit FlexCache"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-accelerate-data-access.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-accelerate-data-access.html">
+        Beschleunigter Datenzugriff mit FlexCache
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Aggregatadministration"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Aggregatadministration</div>-->
+         Aggregatadministration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erstellen von Aggregaten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-create-aggregates.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-create-aggregates.html">
+        Erstellen von Aggregaten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management vorhandener Aggregate"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-manage-aggregates.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-manage-aggregates.html">
+        Management vorhandener Aggregate
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Managen von Kapazitätseinstellungen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-manage-capacity-settings.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-manage-capacity-settings.html">
+        Managen von Kapazitätseinstellungen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Storage VM-Administration"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Storage VM-Administration</div>-->
+         Storage VM-Administration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Arbeiten Sie mit Storage VMs in BlueXP"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-managing-svms.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-managing-svms.html">
+        Arbeiten Sie mit Storage VMs in BlueXP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erstellung von Storage VMs in AWS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-managing-svms-aws.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-managing-svms-aws.html">
+        Erstellung von Storage VMs in AWS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Disaster Recovery für SVMs einrichten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-manage-svm-dr.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-manage-svm-dr.html">
+        Disaster Recovery für SVMs einrichten
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Sicherheit und Datenverschlüsselung"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Sicherheit und Datenverschlüsselung</div>-->
+         Sicherheit und Datenverschlüsselung
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verschlüsselung von Volumes mit NetApp Verschlüsselung"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-encrypting-volumes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-encrypting-volumes.html">
+        Verschlüsselung von Volumes mit NetApp Verschlüsselung
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Schlüsselmanagement mit AWS Key Management Service"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-aws-key-management.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-aws-key-management.html">
+        Schlüsselmanagement mit AWS Key Management Service
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ransomware-Schutz verbessern"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-protecting-ransomware.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-protecting-ransomware.html">
+        Ransomware-Schutz verbessern
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Systemadministration"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Systemadministration</div>-->
+         Systemadministration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Upgrade von Cloud Volumes ONTAP"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-updating-ontap-cloud.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-updating-ontap-cloud.html">
+        Upgrade von Cloud Volumes ONTAP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="„Pay-as-you-go“-Systeme registrieren"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-registering.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-registering.html">
+        „Pay-as-you-go“-Systeme registrieren
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Stoppen und starten Sie ein System"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-managing-state.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-managing-state.html">
+        Stoppen und starten Sie ein System
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Systemzeit synchronisieren"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-sync-time.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-sync-time.html">
+        Systemzeit synchronisieren
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ändern Sie die Schreibgeschwindigkeit des Systems"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-modify-write-speed.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-modify-write-speed.html">
+        Ändern Sie die Schreibgeschwindigkeit des Systems
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ändern Sie das Systemkennwort"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-change-password.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-change-password.html">
+        Ändern Sie das Systemkennwort
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Hinzufügen, Entfernen oder Löschen von Systemen"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Hinzufügen, Entfernen oder Löschen von Systemen</div>-->
+         Hinzufügen, Entfernen oder Löschen von Systemen
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Fügen Sie ein vorhandenes System hinzu"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-adding-systems.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/task-adding-systems.html">
+        Fügen Sie ein vorhandenes System hinzu
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Entfernen Sie eine Arbeitsumgebung"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-removing.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/task-removing.html">
+        Entfernen Sie eine Arbeitsumgebung
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Löschen Sie ein System"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-deleting-working-env.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/task-deleting-working-env.html">
+        Löschen Sie ein System
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AWS Administration"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> AWS Administration</div>-->
+         AWS Administration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="EC2 Instanztyp ändern"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-change-ec2-instance.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/task-change-ec2-instance.html">
+        EC2 Instanztyp ändern
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ändern Sie die Routingtabellen für HA-Paare"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-change-route-tables.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/task-change-route-tables.html">
+        Ändern Sie die Routingtabellen für HA-Paare
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Konfigurieren Sie die Erstellung von Platzierungsgruppen"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="task-configure-placement-group-failure-aws.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/aws/task-configure-placement-group-failure-aws.html">
+        Konfigurieren Sie die Erstellung von Platzierungsgruppen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Administration über System Manager"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-administer-advanced-view.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-administer-advanced-view.html">
+        Administration über System Manager
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Administration aus der CLI"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-connecting-to-otc.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-connecting-to-otc.html">
+        Administration aus der CLI
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Systemzustand und Ereignisse"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Systemzustand und Ereignisse</div>-->
+         Systemzustand und Ereignisse
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AutoSupport-Einrichtung überprüfen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-verify-autosupport.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-verify-autosupport.html">
+        AutoSupport-Einrichtung überprüfen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="EMS konfigurieren"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-configure-ems.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/task-configure-ems.html">
+        EMS konfigurieren
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Konzepte"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Konzepte</div>-->
+         Konzepte
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Lizenzierung"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-licensing.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/concept-licensing.html">
+        Lizenzierung
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Storage"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Storage</div>-->
+         Storage
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Client-Protokolle"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-client-protocols.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-client-protocols.html">
+        Client-Protokolle
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Festplatten und Aggregate"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-storage.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-storage.html">
+        Festplatten und Aggregate
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Elastische Volumes in AWS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-aws-elastic-volumes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-aws-elastic-volumes.html">
+        Elastische Volumes in AWS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Daten-Tiering"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-data-tiering.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-data-tiering.html">
+        Daten-Tiering
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Storage-Management"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-storage-management.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-storage-management.html">
+        Storage-Management
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Schreibgeschwindigkeit"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-write-speed.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-write-speed.html">
+        Schreibgeschwindigkeit
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Flash Cache"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-flash-cache.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-flash-cache.html">
+        Flash Cache
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="WORM-Storage"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-worm.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-worm.html">
+        WORM-Storage
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Hochverfügbarkeitspaare"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Hochverfügbarkeitspaare</div>-->
+         Hochverfügbarkeitspaare
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="HA-Paare in AWS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-ha.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-ha.html">
+        HA-Paare in AWS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Maßnahmen während der Storage-Übernahme"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-degraded-ha-pair.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/aws/concept-degraded-ha-pair.html">
+        Maßnahmen während der Storage-Übernahme
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Sicherheit"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-security.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/concept-security.html">
+        Sicherheit
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Leistung"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-performance.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/concept-performance.html">
+        Leistung
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management des Node-basierten BYOL"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-license-management.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/concept-license-management.html">
+        Management des Node-basierten BYOL
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AutoSupport und Active IQ Digital Advisor"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/concept-active-iq.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/concept-active-iq.html">
+        AutoSupport und Active IQ Digital Advisor
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Standardkonfigurationen"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/reference-default-configs.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/reference-default-configs.html">
+        Standardkonfigurationen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Wissen und Support"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Wissen und Support</div>-->
+         Wissen und Support
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Für den Support anmelden"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-support-registration.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/task-support-registration.html">
+        Für den Support anmelden
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Holen Sie sich Hilfe"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/task-get-help.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/aws/task-get-help.html">
+        Holen Sie sich Hilfe
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Rechtliche Hinweise"
+      data-li-level="1#" 
+      class="   "
+      dale-page-url="/task-manage-volumes.html" 
+      dale-entry-url="/legal-notices.html" 
+    ><a class="ie-sidebar-menuitem-1 " href="/de-de/test/aws/legal-notices.html">
+        Rechtliche Hinweise
+      </a></li></ul>
+</div>
+<script>
+
+  $(".ie-sidebar-button").click(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    expandedLI = $('li.ie-sidebar-expand')
+
+    const li = $(this).closest("li");
+
+    const parentsLI = $(li).parents('li');
+
+    expandedLI.map(element => {
+      if (sidebarAccordion && !li.hasClass('ie-sidebar-expand') && jQuery.inArray(expandedLI[element], parentsLI) == -1) {
+        $(expandedLI[element]).toggleClass('ie-sidebar-expand');
+        $(expandedLI[element]).children("ul").animate({ height: 'toggle' }, 400, function () {
+          $(li).children("ul").toggleClass('ie-sidebar-open');
+
+        })
+      }
+
+    })
+
+    $(li).toggleClass('ie-sidebar-expand');
+    $(li).children("ul").animate({ height: 'toggle' }, 400, function () {
+      $(li).children("ul").toggleClass('ie-sidebar-open');
+    })
+  });
+
+
+  
+    $("li.ie-sidebar-selected").parents('ul').toggleClass("ie-sidebar-open");
+    $("li.ie-sidebar-selected").toggleClass("ie-sidebar-expand")
+    $("ul.ie-sidebar-open").parent().toggleClass("ie-sidebar-expand");
+    $("li.ie-sidebar-selected").children('ul').toggleClass("ie-sidebar-open")
+  
+  
+</script>
+    </div>
+</div>
+<script>
+
+    
+    let sidebarScrollTopPosition = 0;
+    $("#ie-new-toc").on("scroll", function () {
+        if (sidebarScrollTopPosition == 0) {
+            $.cookie("sidebarScroll", $("#ie-new-toc").scrollTop(), {
+                path: "/de-de/test"
+            });
+        }
+
+        if ($("#ie-new-toc").scrollTop() > 0) {
+            $('#ie-product-identity-lockup').addClass('ie-addShadow');
+        } else {
+            $('#ie-product-identity-lockup').removeClass('ie-addShadow');
+        }
+    });
+
+    $(function () {
+        if ($.cookie("sidebarScroll")) {
+            $("#ie-new-toc").scrollTop($.cookie("sidebarScroll"));
+        }
+    });
+
+    function setSidebarBottom() {
+        const footerGap = PXinViewport($(".n-footer"));
+        document.getElementById("ie-new-sidebar").style.bottom = Math.max(0, footerGap) + "px";
+    }
+
+    window.onscroll = () => {
+        setSidebarBottom();
+    };
+
+    $("#sidebar-collapse").click(function (e) {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        e.preventDefault();
+        const width = $(".ie-content-pane").width();
+        const marginLeft = parseInt($(".ie-content-pane").css('marginLeft'));
+
+        if ($.cookie("sidebarScroll")) {
+            sidebarScrollTopPosition = $.cookie("sidebarScroll");
+        }
+
+        $("#ie-new-sidebar").animate({ width: 'toggle' }, 350, function () {
+            $("#ie-new-sidebar-collapse").show();
+            $("#ie-new-sidebar").removeClass("open")
+            $("#ie-new-sidebar").addClass("close")
+            $("#ie-new-sidebar").removeAttr("style")
+        });
+        $(".ie-content-pane").animate({ width: (width + sidebarWidth), marginLeft: (marginLeft - sidebarWidth) }, 350, function () {
+            resizeContent()
+        })
+
+    });
+    $("#sidebar-expand").click(function (e) {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        e.preventDefault();
+        const width = $(".ie-content-pane").width();
+        const marginLeft = parseInt($(".ie-content-pane").css('marginLeft'));
+
+        $("#ie-new-sidebar").animate({ width: 'toggle' }, 250, function () {
+            $('#ie-new-sidebar').css('display', 'flex');
+            $("#ie-new-sidebar-collapse").hide();
+            $("#ie-new-sidebar").removeClass("close")
+            $("#ie-new-sidebar").addClass("open")
+            setSidebarBottom();
+
+            if (sidebarScrollTopPosition != 0) {
+                $.cookie("sidebarScroll", sidebarScrollTopPosition, {
+                    path: "/de-de/test"
+                })
+                $("#ie-new-toc").scrollTop(sidebarScrollTopPosition);
+                sidebarScrollTopPosition = 0;
+            }
+        });
+        $(".ie-content-pane").animate({ width: (width - sidebarWidth), 'marginLeft': (marginLeft + sidebarWidth) }, 250, function () {
+            resizeContent()
+        })
+    });
+    function resizeContent() {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        const rightNavbarVisible =  $("#ie-right-navbar").css('display') && $("#ie-right-navbar").css('display') != 'none';
+        const sidebarVisible = $("#ie-new-sidebar").css('display') != 'none';
+        const rightNavbarWidth = $("#ie-right-navbar").width();
+        const rightNavbarCollapseWidth = $("#ie-right-navbar-collapse").width();
+        const rightNavbarCollapseVisible = $("#ie-right-navbar-collapse").css('display') && $("#ie-right-navbar-collapse").css('display') != 'none';
+        
+        if (rightNavbarVisible && sidebarVisible) {
+            $(".ie-content-pane").width(`calc(100% - ${sidebarWidth + rightNavbarWidth}px)`)
+            $(".ie-content-pane").css('marginLeft', `${sidebarWidth}px`)
+        } else if (sidebarVisible) {
+            $(".ie-content-pane").css('marginLeft', `${sidebarWidth}px`)
+            if (rightNavbarCollapseVisible) {
+                $(".ie-content-pane").width(`calc(100% - ${sidebarWidth + rightNavbarCollapseWidth}px)`)
+            } else {
+                $(".ie-content-pane").width(`calc(100% - ${$("#ie-new-sidebar").width()}px)`)
+            }
+
+        } else if (rightNavbarVisible) {
+            $(".ie-content-pane").css('marginLeft', `${$("#ie-new-sidebar-collapse").width()}px`)
+            $(".ie-content-pane").width(`calc(100% - ${rightNavbarWidth}px)`)
+        } else {
+            $(".ie-content-pane").css('marginLeft', `${$("#ie-new-sidebar-collapse").width()}px`)
+            if (rightNavbarCollapseVisible) {
+                $(".ie-content-pane").width(`calc(100% - ${rightNavbarCollapseWidth}px)`);
+            } else {
+                $(".ie-content-pane").width(`calc(100% - ${$("#ie-new-sidebar-collapse").width()}px) `);
+            }
+            
+        }
+    }
+    $(window).on("resize load", function () {
+        setSidebarBottom();
+        resizeContent()
+    });
+
+
+</script>
+
+<div class="ie-content-pane ie-component-detail-content ie-component-detail-content--show-code">
+    <!-- Begin of page container --><article class="page-content" id="main">
+      <!-- include utility.html -->
+      <div class="ie-info-disclaimer">
+    <span>
+      <div class="ie-info-disclaimer-container">
+        <div class="ie-info-disclaimer-icon">
+          <img src="/de-de/test/images/notification-icons.svg" class="luci-icon" alt="" />
+        </div>
+        <div class="ie-info-disclaimer-content">
+          <span> Die deutsche Sprachversion wurde als Serviceleistung für Sie durch maschinelle Übersetzung erstellt. Bei eventuellen Unstimmigkeiten hat die englische Sprachversion Vorrang. </span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </span>
+  </div><div class="ie-component-detail-heading-wrap">
+  <h1 class="ie-component-detail-heading">Management vorhandener Volumes</h1>
+</div>
+
+<div id="ie-byline">
+  
+<div class="page-details">
+    
+        
+            <time datetime="2023-09-13 15:07:22 +0000">09/13/2023</time>
+        
+    
+    
+        <span>Beitragende
+        </span>
+    
+    
+</div>
+<div class="page-controls">
+    <div id="contribute-dropdown" class="custom-dropdown custom-dropdown-contrib" >
+        <div class="custom-dropdown-select custom-dropdown-select-contrib">
+        <span class="contrib-name"><img src="/de-de/test/images/discuss-sm.svg" alt="" class="github-icon" />Änderungen vorschlagen</span>
+        <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown invisible" />
+        <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup" />
+        </div>
+        <ul class="custom-dropdown-menu suggested-changes-dropdown"><li>
+                <a target="_blank" href="https://github.com/NetAppDocs/test.de-de/issues/new?template=new-from-page.yml&page-url=https://docs.netapp.com/de-de/test/task-manage-volumes.html&page-title=Management vorhandener Volumes" class="page-nav-contribute-link" role="button">Dokumentationsänderungen anfordern</a>
+            </li><li> 
+                <a target="_blank" href="https://github.com/NetAppDocs/test/blob/main/task-manage-volumes.adoc" class="page-nav-contribute-link" role="button">Diese Seite bearbeiten</a>
+            </li><li><a target="_blank" href="https://docs.netapp.com/us-en/contribute/" class="page-nav-contribute-link"  >So können Sie beitragen</a></li>
+        </ul>
+    </div>
+    <div id="pdf-control-container">
+        <div class="n-pdf-header">
+            <a id="toggleButtonPdf" class="n-pdf-button" type="button">
+                <img class="adobe-icon" src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>PDFs<img src="/de-de/test/images/dropdown-arrow.svg" class="custom-icon" alt="" />
+            </a>
+        </div>
+        <div class="n-pdf-body-container">
+            <ul id="toggleContainerPdf" class="n-pdf-body" style="display:none;"><li class="pdf-ux-container">
+                    
+                    
+                    
+                    <a target="_blank" class="pdf-download-link" href="/de-de/test/pdfs/aws/fullsite-sidebar/Cloud_Volumes_ONTAP_Dokumentation.pdf" >
+                    <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>PDF dieser Dokumentationssite</a>
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Versionshinweise.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Versionshinweise
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Los_geht_s.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Los geht's
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Erste_Schritte_in_Amazon_Web_Services.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Erste Schritte in Amazon Web Services
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Richten_Sie_Ihr_Netzwerk_ein.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Richten Sie Ihr Netzwerk ein
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Erste_Schritte_in_Microsoft_Azure.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Erste Schritte in Microsoft Azure
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Erste_Schritte_in_Google_Cloud.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Erste Schritte in Google Cloud
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Bildüberprüfung_Der_Google_Cloud_Platform.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Bildüberprüfung Der Google Cloud Platform
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Überprüfung_der_Bildsignatur.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Überprüfung der Bildsignatur
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Verwenden_Sie_Cloud_Volumes_ONTAP.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Verwenden Sie Cloud Volumes ONTAP
+          </a>
+          
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Lizenzmanagement.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Lizenzmanagement
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Volume__und_LUN_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Volume- und LUN-Administration
+          </a>
+          
+
+
+    <ul class="subfolders" id="pdf-remove" style="display:none;"><li class="active"></li></ul>
+  
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Aggregatadministration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Aggregatadministration
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Storage_VM_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Storage VM-Administration
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Sicherheit_und_Datenverschlüsselung.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Sicherheit und Datenverschlüsselung
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Systemadministration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Systemadministration
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Hinzufügen__Entfernen_oder_Löschen_von_Systemen.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Hinzufügen, Entfernen oder Löschen von Systemen
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/AWS_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            AWS Administration
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Azure_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Azure-Administration
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Google_Cloud_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Google Cloud-Administration
+          </a>
+          
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Systemzustand_und_Ereignisse.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Systemzustand und Ereignisse
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Konzepte.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Konzepte
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Storage.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Storage
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Hochverfügbarkeitspaare.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Hochverfügbarkeitspaare
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/aws/sidebar/Wissen_und_Support.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Wissen und Support
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+</li></ul>
+            <div class="zip-pdf-link-container" style="display: none;">   
+                <a href="#" id="zipPdf">
+                <img src="/de-de/test/images/pdf-zip.png" alt="" width="16" height="16"/>
+                <pre>Sammlung separater PDF-Dokumente<span class="zip-size"></span></pre>
+                </a><div id="zip-link-popup" class="hide">
+    <div class="inner-modal">
+        <div class="downloading-progress">
+            <div class="spinner"></div>
+            <h1>Creating your file...</h1>
+            <div>This may take a few minutes. Thanks for your patience.</div>
+            <button class="cancel-download-btn" type="button">Cancel</button>
+        </div>
+        <div class="download-complete hide">
+            <div class="done-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+            </div>
+            <div>Your file is ready</div>
+            <button class="cancel-download-btn" type="button">OK</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".cancel-download-btn").click(function(){
+        $("#zip-link-popup").addClass("hide");
+        $("#zip-link-popup .downloading-progress").removeClass("hide");
+        $("#zip-link-popup .download-complete").addClass("hide");
+    });
+</script></div>
+        </div>
+    </div>        
+<script>
+$("#toggleContainerPdf li.active:last-child").parents('ul.subfolders').toggle('display');
+$("#toggleButtonPdf").on('click', function(e){ 
+    e.stopPropagation();
+    $("#toggleContainerPdf").toggle('display');
+    $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+});
+
+//hide is by clicking outside pdfcontainer
+$(document).on('click', function (e) {
+    if ($('#toggleContainerPdf').is(':visible') && !$('.n-pdf-body-container').is(e.target) && !$('.n-pdf-body-container').has(e.target).length)  {
+        
+        $("#toggleContainerPdf").toggle('display');
+        $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+        $("#toggleButtonPdf").removeClass("active");
+    }
+});
+</script>
+<script>
+    function getPdfLocation() {
+        const pdfLocation = window.scrollX + document.querySelector('#pdf-control-container').getBoundingClientRect().left
+        if (pdfLocation < 450) {
+            $(".n-pdf-body-container").addClass("block")
+        } else {
+            $(".n-pdf-body-container").removeClass("block")
+        }
+    
+    }
+    $( window ).on( "resize", function() {
+        getPdfLocation()
+} );
+</script>
+<script>
+    const pdfButtonWidth =  $(".n-pdf-header").width();
+    const pdfMenuWidth = $(".n-pdf-body-container").width();
+    $(".n-pdf-body-container").css('margin-left', `calc(${pdfButtonWidth - pdfMenuWidth}px)`);
+</script>
+</div>
+
+    
+
+</div>
+
+
+
+
+<div class="content-to-index">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>Mit BlueXP können Sie Volumes und CIFS-Server verwalten. Außerdem werden Sie aufgefordert, Volumes zu verschieben, um Kapazitätsprobleme zu vermeiden.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="volumes-managen">Volumes managen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sie können Volumes an neue Storage-Anforderungen anpassen. Sie können Volumes anzeigen, bearbeiten, klonen, wiederherstellen und löschen.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Schritte</div>
+<ol class="arabic">
+<li>
+<p>Wählen Sie im linken Navigationsmenü die Option <strong>Speicherung &gt; Leinwand</strong>.</p>
+</li>
+<li>
+<p>Doppelklicken Sie auf der Leinwand-Seite auf die Cloud Volumes ONTAP-Arbeitsumgebung, auf der Sie Volumes verwalten möchten.</p>
+</li>
+<li>
+<p>Klicken Sie in der Arbeitsumgebung auf die Registerkarte <strong>Volumes</strong>.</p>
+<div class="paragraph">
+<p><span class="image"><img src="./media/screenshot_manage_vol_button.png" alt="Ein Screenshot der Schaltfläche Volume verwalten unter der Registerkarte Volumes."></span></p>
+</div>
+</li>
+<li>
+<p>Navigieren Sie auf der Registerkarte Volumes zum gewünschten Volume-Titel, und klicken Sie dann auf <strong>Volume verwalten</strong>, um auf das rechte Bedienfeld Volumes verwalten zuzugreifen.</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Aufgabe</th>
+<th class="tableblock halign-left valign-top">Aktion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Anzeigen von Informationen zu einem Volume</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Klicken Sie unter Volume Actions im Bereich Manage Volumes auf <strong>View Volume Details</strong>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rufen Sie den NFS-Mount-Befehl ab</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie unter Volume Actions im Fenster Manage Volumes auf <strong>Mount Command</strong>.</p>
+</li>
+<li>
+<p>Klicken Sie Auf <strong>Kopieren</strong>.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Klonen Sie ein Volume</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie unter Volume Actions im Bereich Manage Volumes auf <strong>Clone the Volume</strong>.</p>
+</li>
+<li>
+<p>Ändern Sie den Klonnamen nach Bedarf, und klicken Sie dann auf <strong>Clone</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Bei diesem Prozess wird ein FlexClone Volume erstellt. Ein FlexClone Volume ist eine beschreibbare Point-in-Time-Kopie, die platzsparend ist, da es einen geringen Speicherplatz für Metadaten verbraucht und dann nur noch zusätzlichen Speicherplatz verbraucht, wenn Daten geändert oder hinzugefügt werden.</p>
+</div>
+<div class="paragraph">
+<p>Weitere Informationen zu FlexClone Volumes finden Sie im <a href="http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-vsmg/home.html" target="_blank" rel="noopener">"ONTAP 9 Leitfaden für das Management von logischem Storage"</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bearbeiten von Volume-Tags (nur Datenträger mit Lese-/Schreibzugriff)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie unter Volume Actions im Bereich Manage Volumes auf <strong>Edit Volume Tags</strong>, um das Volume-Tag zu ändern, das dem ausgewählten Volume zugewiesen ist.</p>
+</li>
+<li>
+<p>Geben Sie den Schlüssel und den Wert für das Volume-Tag in die entsprechenden Felder ein.</p>
+</li>
+<li>
+<p>Um weitere Tags hinzuzufügen, klicken Sie auf <strong>Neues Tag hinzufügen</strong>.</p>
+</li>
+<li>
+<p>Klicken Sie Auf <strong>Speichern</strong>.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bearbeiten eines Volumes (nur Volumes mit Lese-/Schreibzugriff)</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie unter Volume Actions im Bereich Manage Volumes auf <strong>Edit Volume settings</strong></p>
+</li>
+<li>
+<p>Ändern Sie die Snapshot-Richtlinie des Volumes, die NFS-Protokollversion, die NFS-Zugriffssteuerungsliste (Exportrichtlinie) oder die Freigabeberechtigungen, und klicken Sie dann auf <strong>Apply</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+Wenn Sie benutzerdefinierte Snapshot-Richtlinien benötigen, können Sie diese mit System Manager erstellen.
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Löschen Sie ein Volume</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie unter Volume Actions im Bereich Manage Volumes auf <strong>Delete the Volume</strong>.</p>
+</li>
+<li>
+<p>Geben Sie im Fenster Volume löschen den Namen des Volumes ein, das Sie löschen möchten.</p>
+</li>
+<li>
+<p>Klicken Sie zur Bestätigung erneut auf <strong>Löschen</strong>.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erstellen Sie bei Bedarf eine Snapshot Kopie</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie im Bereich Volumes verwalten unter Schutzaktionen auf <strong>Snapshot-Kopie erstellen</strong>.</p>
+</li>
+<li>
+<p>Ändern Sie ggf. den Namen und klicken Sie dann auf <strong>Erstellen</strong>.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wiederherstellen von Daten aus einer Snapshot Kopie auf einem neuen Volume</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie im Bereich Volumes verwalten unter Schutzaktionen auf <strong>aus Snapshot-Kopie wiederherstellen</strong>.</p>
+</li>
+<li>
+<p>Wählen Sie eine Snapshot Kopie aus, geben Sie einen Namen für das neue Volume ein und klicken Sie dann auf <strong>Wiederherstellen</strong>.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ändern Sie den zugrunde liegenden Festplattentyp</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie unter Erweiterte Aktionen im Bereich Volumes verwalten auf <strong>Datenträgertyp ändern</strong>.</p>
+</li>
+<li>
+<p>Wählen Sie den Laufwerkstyp aus und klicken Sie dann auf <strong>Ändern</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+BlueXP verschiebt das Volume in ein vorhandenes Aggregat, das den ausgewählten Festplattentyp nutzt oder ein neues Aggregat für das Volume erstellt.
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ändern Sie die Tiering Policy</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie unter Erweiterte Aktionen im Bereich Volumes verwalten auf <strong>Tiering-Richtlinie ändern</strong>.</p>
+</li>
+<li>
+<p>Wählen Sie eine andere Richtlinie aus und klicken Sie auf <strong>Ändern</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+BlueXP verschiebt das Volume in ein vorhandenes Aggregat, das den ausgewählten Festplattentyp mit Tiering nutzt, oder erstellt ein neues Aggregat für das Volume.
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Löschen Sie ein Volume</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Wählen Sie ein Volume aus, und klicken Sie dann auf <strong>Löschen</strong>.</p>
+</li>
+<li>
+<p>Geben Sie den Namen des Volumes in das Dialogfeld ein.</p>
+</li>
+<li>
+<p>Klicken Sie zur Bestätigung erneut auf <strong>Löschen</strong>.</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="die-größe-eines-volumes-ändern">Die Größe eines Volumes ändern</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Standardmäßig wird ein Volume automatisch auf eine Maximalgröße erweitert, wenn es sich um keinen Speicherplatz handelt. Der Standardwert ist 1,000. Mit dieser Einstellung kann das Volume auf das 11-fache seiner Größe erweitert werden. Dieser Wert kann in den Einstellungen eines Connectors konfiguriert werden.</p>
+</div>
+<div class="paragraph">
+<p>Wenn Sie die Größe Ihres Volumens ändern müssen, können Sie es durch <a href="https://docs.netapp.com/ontap-9/topic/com.netapp.doc.onc-sm-help-960/GUID-C04C2C72-FF1F-4240-A22D-BE20BB74A116.html" target="_blank" rel="noopener">"ONTAP System Manager"</a>. Berücksichtigen Sie unbedingt die Kapazitätsgrenzen Ihres Systems, wenn Sie die Größe der Volumes ändern. Wechseln Sie zum <a href="https://docs.netapp.com/us-en/cloud-volumes-ontap-relnotes/index.html" target="_blank" rel="noopener">"Versionshinweise zu Cloud Volumes ONTAP"</a> Entnehmen.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ändern-sie-den-cifs-server">Ändern Sie den CIFS-Server</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wenn Sie Ihre DNS-Server oder Active Directory-Domain ändern, müssen Sie den CIFS-Server in Cloud Volumes ONTAP ändern, damit er weiterhin Storage für Clients bereitstellen kann.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Schritte</div>
+<ol class="arabic">
+<li>
+<p>Klicken Sie in der Arbeitsumgebung auf der Registerkarte Übersicht auf die Registerkarte Funktion im rechten Fensterbereich.</p>
+</li>
+<li>
+<p>Klicken Sie im Feld CIFS-Setup auf das Symbol <strong>Bleistift</strong>, um das CIFS-Setup-Fenster anzuzeigen.</p>
+</li>
+<li>
+<p>Geben Sie die Einstellungen für den CIFS-Server an:</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 70%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Aufgabe</th>
+<th class="tableblock halign-left valign-top">Aktion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage VM (SVM) auswählen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Durch Auswahl der SVM (Storage Virtual Machine) des Cloud Volume ONTAP werden die konfigurierten CIFS-Informationen angezeigt.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Active Directory-Domäne, der Sie beitreten möchten</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der FQDN der Active Directory (AD)-Domain, der der CIFS-Server beitreten soll.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Anmeldeinformationen, die zur Aufnahme in die Domäne autorisiert sind</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Der Name und das Kennwort eines Windows-Kontos mit ausreichenden Berechtigungen zum Hinzufügen von Computern zur angegebenen Organisationseinheit (OU) innerhalb der AD-Domäne.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primäre und sekundäre DNS-IP-Adresse</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die IP-Adressen der DNS-Server, die die Namensauflösung für den CIFS-Server bereitstellen.<br>
+<br>
+Die aufgeführten DNS-Server müssen die Servicestandortdatensätze (SRV) enthalten, die zum Auffinden der Active Directory LDAP-Server und Domänencontroller für die Domain, der der CIFS-Server beitreten wird, erforderlich sind.<br>
+<br>
+<br>
+Ifdef::gcp[]<br>
+<br>
+<br>
+Wenn Sie Google Managed Active Directory konfigurieren, kann standardmäßig mit der IP-Adresse 169.254.169.254 auf AD zugegriffen werden.<br>
+<br>
+<br>
+Endif::gcp[]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DNS-Domäne</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Die DNS-Domain für die Cloud Volumes ONTAP Storage Virtual Machine (SVM). In den meisten Fällen entspricht die Domäne der AD-Domäne.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CIFS-Server-BIOS-Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ein CIFS-Servername, der in der AD-Domain eindeutig ist.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Organisationseinheit</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Die Organisationseinheit innerhalb der AD-Domain, die dem CIFS-Server zugeordnet werden soll. Der Standardwert lautet CN=Computers.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Um von AWS verwaltete Microsoft AD als AD-Server für Cloud Volumes ONTAP zu konfigurieren, geben Sie in diesem Feld <strong>OU=Computers,OU=corp</strong> ein.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Klicken Sie Auf <strong>Set</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Ergebnis</div>
+<p>Cloud Volumes ONTAP aktualisiert den CIFS-Server mit den Änderungen.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="verschieben-sie-ein-volume">Verschieben Sie ein Volume</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Verschieben Sie Volumes, um die Kapazitätsauslastung, die Performance zu verbessern und Service Level Agreements zu erfüllen.</p>
+</div>
+<div class="paragraph">
+<p>Sie können ein Volume in System Manager verschieben, indem Sie ein Volume und das Zielaggregat auswählen, den Vorgang zur Volume-Verschiebung starten und optional den Auftrag zur Volume-Verschiebung überwachen. Bei Nutzung von System Manager wird die Verschiebung eines Volumes automatisch abgeschlossen.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Schritte</div>
+<ol class="arabic">
+<li>
+<p>Verwenden Sie System Manager oder die CLI, um die Volumes in das Aggregat zu verschieben.</p>
+<div class="paragraph">
+<p>In den meisten Fällen können Sie mit System Manager Volumes verschieben.</p>
+</div>
+<div class="paragraph">
+<p>Anweisungen hierzu finden Sie im <a href="http://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-vol-move/home.html" target="_blank" rel="noopener">"ONTAP 9 Volume Move Express Guide"</a>.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="verschieben-eines-volumes-wenn-bluexp-eine-meldung-aktion-erforderlich-anzeigt">Verschieben eines Volumes, wenn BlueXP eine Meldung Aktion erforderlich anzeigt</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In BlueXP wird möglicherweise eine Meldung „Aktion erforderlich“ angezeigt, die besagt, dass das Verschieben eines Volumes erforderlich ist, um Kapazitätsprobleme zu vermeiden, aber Sie müssen das Problem selbst beheben. In diesem Fall müssen Sie herausfinden, wie das Problem behoben werden kann, und dann ein oder mehrere Volumes verschieben.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/tip.svg" alt="Tipp">
+</td>
+<td class="content">
+BlueXP zeigt diese „Aktion erforderlich“-Meldungen an, wenn ein Aggregat 90 % der verwendeten Kapazität erreicht hat. Wenn Daten-Tiering aktiviert ist, werden die Meldungen angezeigt, wenn ein Aggregat eine zu 80 % genutzte Kapazität erreicht hat. Standardmäßig werden 10 % freier Speicherplatz für das Daten-Tiering reserviert. <a href="task-tiering.html#changing-the-free-space-ratio-for-data-tiering" target="_blank" rel="noopener">"Erfahren Sie mehr über das freie Speicherplatzverhältnis für Daten-Tiering"</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<div class="title">Schritte</div>
+<ol class="arabic">
+<li>
+<p><a href="#erkennen-der-behebung-von-kapazitätsproblemen">Erkennen der Behebung von Kapazitätsproblemen</a>.</p>
+</li>
+<li>
+<p>Verschieben Sie Volumes basierend auf Ihrer Analyse, um Kapazitätsprobleme zu vermeiden:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#Verschieben Sie Volumes in ein anderes System">um Kapazitätsprobleme zu vermeiden</a>.</p>
+</li>
+<li>
+<p><a href="#Verschieben Sie Volumes in ein anderes Aggregat">um Kapazitätsprobleme zu vermeiden</a>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="erkennen-der-behebung-von-kapazitätsproblemen">Erkennen der Behebung von Kapazitätsproblemen</h3>
+<div class="paragraph">
+<p>Wenn BlueXP keine Empfehlungen zum Verschieben eines Volumes zur Vermeidung von Kapazitätsproblemen bereitstellen kann, müssen Sie die Volumes identifizieren, die verschoben werden müssen und ob Sie sie zu einem anderen Aggregat auf demselben System oder einem anderen System verschieben möchten.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Schritte</div>
+<ol class="arabic">
+<li>
+<p>Zeigen Sie die erweiterten Informationen in der Meldung Aktion erforderlich an, um das Aggregat zu identifizieren, das seine Kapazitätsgrenze erreicht hat.</p>
+<div class="paragraph">
+<p>Die erweiterten Informationen sollten beispielsweise Folgendes enthalten: Aggregat aggr1 hat seine Kapazitätsgrenze erreicht.</p>
+</div>
+</li>
+<li>
+<p>Identifizieren Sie ein oder mehrere Volumes, die aus dem Aggregat verschoben werden sollen:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie in der Arbeitsumgebung auf die Registerkarte <strong>Aggregate</strong>.</p>
+</li>
+<li>
+<p>Navigieren Sie zur gewünschten Aggregat-Kachel, und klicken Sie dann auf <strong>&#8230;&#8203; (Ellipsensymbol) &gt; Aggregatdetails anzeigen</strong>.</p>
+</li>
+<li>
+<p>Überprüfen Sie auf der Registerkarte „Übersicht“ des Bildschirms „Aggregatdetails“ die Größe jedes Volumes, und wählen Sie ein oder mehrere Volumes aus dem Aggregat aus.</p>
+<div class="paragraph">
+<p>Sie sollten Volumes auswählen, die groß genug sind, um Speicherplatz im Aggregat freizugeben, damit Sie in Zukunft zusätzliche Kapazitätsprobleme vermeiden können.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./media/screenshot_aggr_volume_overview.png" alt="Screenshot Aggr Volume – Übersicht">
+</div>
+</div>
+</li>
+<li>
+<p>Wenn das System die Festplattengrenze nicht erreicht hat, sollten Sie die Volumes in ein vorhandenes Aggregat oder ein neues Aggregat auf demselben System verschieben.</p>
+<div class="paragraph">
+<p>Weitere Informationen finden Sie unter <a href="#move-volumes-aggregate-capacity">Verschieben Sie Volumes in ein anderes Aggregat, um Kapazitätsprobleme zu vermeiden</a>.</p>
+</div>
+</li>
+<li>
+<p>Wenn das System die Festplattengrenze erreicht hat, führen Sie einen der folgenden Schritte aus:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Löschen Sie nicht verwendete Volumes.</p>
+</li>
+<li>
+<p>Ordnen Sie Volumes neu an, um Speicherplatz auf einem Aggregat freizugeben.</p>
+<div class="paragraph">
+<p>Weitere Informationen finden Sie unter <a href="#move-volumes-aggregate-capacity">Verschieben Sie Volumes in ein anderes Aggregat, um Kapazitätsprobleme zu vermeiden</a>.</p>
+</div>
+</li>
+<li>
+<p>Verschieben Sie zwei oder mehr Volumes auf ein anderes System mit Speicherplatz.</p>
+<div class="paragraph">
+<p>Weitere Informationen finden Sie unter <a href="#move-volumes-aggregate-capacity">Verschieben Sie Volumes in ein anderes Aggregat, um Kapazitätsprobleme zu vermeiden</a>.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="verschieben-sie-volumes-in-ein-anderes-system-um-kapazitätsprobleme-zu-vermeiden">Verschieben Sie Volumes in ein anderes System, um Kapazitätsprobleme zu vermeiden</h3>
+<div class="paragraph">
+<p>Sie können ein oder mehrere Volumes in ein anderes Cloud Volumes ONTAP System verschieben, um Kapazitätsprobleme zu vermeiden. Dies kann erforderlich sein, wenn das System die Festplattengrenze erreicht hat.</p>
+</div>
+<div class="paragraph">
+<div class="title">Über diese Aufgabe</div>
+<p>Sie können die folgenden Schritte in dieser Aufgabe ausführen, um die folgende Meldung "Aktion erforderlich" zu korrigieren:</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Das Verschieben eines Volumes ist notwendig, um Kapazitätsprobleme zu vermeiden. BlueXP kann diese Aktion jedoch nicht für Sie ausführen, da das System die Festplattengrenze erreicht hat.</p>
+</div>
+</div>
+</div>
+<div class="olist arabic">
+<div class="title">Schritte</div>
+<ol class="arabic">
+<li>
+<p>Identifizieren Sie ein Cloud Volumes ONTAP System mit verfügbarer Kapazität, oder implementieren Sie ein neues System.</p>
+</li>
+<li>
+<p>Ziehen Sie die Quellarbeitsumgebung per Drag &amp; Drop in die Zielarbeitsumgebung, um eine einmalige Datenreplizierung des Volumes durchzuführen.</p>
+<div class="paragraph">
+<p>Weitere Informationen finden Sie unter <a href="https://docs.netapp.com/us-en/bluexp-replication/task-replicating-data.html" target="_blank" rel="noopener">"Replizierung von Daten zwischen Systemen"</a>.</p>
+</div>
+</li>
+<li>
+<p>Wechseln Sie zur Seite "Replication Status", und brechen Sie die SnapMirror Beziehung ab, um das replizierte Volume von einem Datensicherungsvolume in ein Lese-/Schreibvolume zu konvertieren.</p>
+<div class="paragraph">
+<p>Weitere Informationen finden Sie unter <a href="https://docs.netapp.com/us-en/bluexp-replication/task-replicating-data.html#managing-data-replication-schedules-and-relationships" target="_blank" rel="noopener">"Managen von Plänen und Beziehungen zur Datenreplizierung"</a>.</p>
+</div>
+</li>
+<li>
+<p>Konfigurieren Sie das Volume für den Datenzugriff.</p>
+<div class="paragraph">
+<p>Informationen über die Konfiguration eines Ziel-Volume für den Datenzugriff finden Sie unter <a href="http://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-sm-ic-fr/home.html" target="_blank" rel="noopener">"ONTAP 9 Express Guide für die Disaster Recovery von Volumes"</a>.</p>
+</div>
+</li>
+<li>
+<p>Löschen Sie das ursprüngliche Volume.</p>
+<div class="paragraph">
+<p>Weitere Informationen finden Sie unter <a href="task-manage-volumes.html#manage-volumes">"Volumes managen"</a>.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="verschieben-sie-volumes-in-ein-anderes-aggregat-um-kapazitätsprobleme-zu-vermeiden">Verschieben Sie Volumes in ein anderes Aggregat, um Kapazitätsprobleme zu vermeiden</h3>
+<div class="paragraph">
+<p>Sie können ein oder mehrere Volumes in ein anderes Aggregat verschieben, um Kapazitätsprobleme zu vermeiden.</p>
+</div>
+<div class="paragraph">
+<div class="title">Über diese Aufgabe</div>
+<p>Sie können die folgenden Schritte in dieser Aufgabe ausführen, um die folgende Meldung "Aktion erforderlich" zu korrigieren:</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>Das Verschieben von zwei oder mehr Volumes ist notwendig, um Kapazitätsprobleme zu vermeiden, BlueXP kann diese Aktion jedoch nicht für Sie durchführen.</p>
+</div>
+</div>
+</div>
+<div class="olist arabic">
+<div class="title">Schritte</div>
+<ol class="arabic">
+<li>
+<p>Überprüfen Sie, ob ein vorhandenes Aggregat über die verfügbare Kapazität für die Volumes verfügt, die Sie verschieben müssen:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Klicken Sie in der Arbeitsumgebung auf die Registerkarte <strong>Aggregate</strong>.</p>
+</li>
+<li>
+<p>Navigieren Sie zur gewünschten Aggregat-Kachel, und klicken Sie dann auf <strong>&#8230;&#8203; (Ellipsensymbol) &gt; Aggregatdetails anzeigen</strong>.</p>
+</li>
+<li>
+<p>Zeigen Sie unter der Kachel „Aggregat“ die verfügbare Kapazität an (bereitgestellte Größe minus genutzte Aggregatkapazität).</p>
+<div class="imageblock">
+<div class="content">
+<img src="./media/screenshot_aggr_capacity.png" alt="Screenshot Aggr Kapazität">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Fügen Sie bei Bedarf Festplatten zu einem vorhandenen Aggregat hinzu:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Wählen Sie das Aggregat aus und klicken Sie dann auf <strong>&#8230;&#8203; (Ellipsensymbol) &gt; Datenträger hinzufügen</strong>.</p>
+</li>
+<li>
+<p>Wählen Sie die Anzahl der hinzuzufügenden Festplatten aus, und klicken Sie dann auf <strong>Hinzufügen</strong>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Wenn keine Aggregate über verfügbare Kapazität verfügen, erstellen Sie ein neues Aggregat.</p>
+<div class="paragraph">
+<p>Weitere Informationen finden Sie unter <a href="task-create-aggregates.html" target="_blank" rel="noopener">"Aggregate werden erstellt"</a>.</p>
+</div>
+</li>
+<li>
+<p>Verwenden Sie System Manager oder die CLI, um die Volumes in das Aggregat zu verschieben.</p>
+</li>
+<li>
+<p>In den meisten Fällen können Sie mit System Manager Volumes verschieben.</p>
+<div class="paragraph">
+<p>Anweisungen hierzu finden Sie im <a href="http://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-vol-move/home.html" target="_blank" rel="noopener">"ONTAP 9 Volume Move Express Guide"</a>.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gründe-warum-eine-volume-verschiebung-langsam-durchführen-könnte">Gründe, warum eine Volume-Verschiebung langsam durchführen könnte</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Das Verschieben eines Volumes dauert möglicherweise länger, als erwartet wird, wenn eine der folgenden Bedingungen für Cloud Volumes ONTAP zutrifft:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Das Volume ist ein Klon.</p>
+</li>
+<li>
+<p>Das Volume ist ein übergeordnetes Objekt eines Klons.</p>
+</li>
+<li>
+<p>Das Quell- oder Zielaggregat verfügt über eine einzige durchsatzoptimierte Festplatte (st1).</p>
+</li>
+<li>
+<p>Eines der Aggregate verwendet ein älteres Benennungsschema für Objekte. Beide Aggregate müssen das gleiche Namenformat verwenden.</p>
+<div class="paragraph">
+<p>Ein älteres Benennungsschema wird verwendet, wenn das Daten-Tiering auf einem Aggregat in Version 9.4 oder früher aktiviert wurde.</p>
+</div>
+</li>
+<li>
+<p>Die Verschlüsselungseinstellungen stimmen nicht mit den Quell- und Zielaggregaten überein. Zudem wird ein Rekey ausgeführt.</p>
+</li>
+<li>
+<p>Die Option <em>-Tiering-Richtlinie</em> wurde bei der Verschiebung des Volumes angegeben, um die Tiering-Richtlinie zu ändern.</p>
+</li>
+<li>
+<p>Die Option <em>-Generate-Destination-key</em> wurde für die Verschiebung des Volumes angegeben.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="zeigen-sie-flexgroup-volumes-an">Zeigen Sie FlexGroup Volumes an</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>FlexGroup Volumes, die über CLI oder System Manager erstellt wurden, können direkt über die Registerkarte Volumes in BlueXP angezeigt werden. Wie bei FlexVol Volumes angegeben, bietet BlueXP über eine dedizierte Volume-Kachel detaillierte Informationen zu den erstellten FleGroup Volumes. Unter der Kachel „Volumes“ können Sie jede FlexGroup Volume-Gruppe über den Mauszeiger über das Symbol halten. Darüber hinaus können Sie FlexGroup-Volumes in der Listenansicht Volumes in der Spalte Volume-Stil identifizieren und sortieren.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./media/screenshot_show_flexgroup_vol.png" alt="Screenshot zeigt FlexGroup Vol">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+Derzeit können Sie vorhandene FlexGroup Volumes nur unter BlueXP anzeigen. Die Möglichkeit zum Erstellen von FlexGroup Volumes in BlueXP ist nicht verfügbar, aber für eine zukünftige Version geplant.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+    </article>
+    <!-- Page Container -->
+  </div>
+
+  
+  <!-- Start Page Toolbar -->
+<div id="ie-right-navbar-collapse" class="close">
+  <img id="navbar-expand" class="ie-searchbox-icon" src="/de-de/test/images/double_arrow.svg" alt="" />
+</div>
+<div id="ie-right-navbar" class="open">
+  <div id="right-navbar-collapse">
+    <img src="/de-de/test/images/double_arrow.svg" alt="" />
+  </div>
+  <div class="page-nav-container">
+    <nav class="page-nav-fixed">
+      <div class="page-nav-title">Auf dieser seite</div>
+      <div class="page-nav-links">
+        <ul class="page-nav-inner" id="page-menu"></ul>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+<script>
+  resizeContent();
+  function setRightBarHeight() {
+    var h = 0;
+
+    // header 1
+    h += PXinViewport($('.n-footer'));
+    h += PXinViewport($('#ie-new-header'));
+
+    if ($('#ie-right-navbar').length) {
+      $('#ie-right-navbar').css({ height: `calc(100vh - ${h}px)` });
+    }
+    if ($('.page-nav-links').length) {
+      h += 98;
+      $('.page-nav-links').css({ height: `calc(100vh - ${h}px)` });
+    }
+  }
+
+  $(document).ready(function () {
+    // PAGE NAV - Click
+    const MASTHEAD_OFFSET = 65;
+    const SECTIONS = $("main h2, main h3");
+    let calculateActiveSection = false;
+    setTimeout(() => {
+      calculateActiveSection = true;
+    }, 100)
+
+    $(".page-nav__link").click(function (event) {
+      calculateActiveSection = false;
+      $(".page-nav__link").removeClass('page-nav__link--active');
+      var target = $(event.target);
+      target.addClass('page-nav__link--active');
+      location.hash = event.target.hash;
+      setTimeout(() => {
+        calculateActiveSection = true;
+      }, 100)
+
+    });
+
+    // PAGE NAV - Scroll
+    $(window).on('resize scroll', function () {
+      if (calculateActiveSection) {
+        var activeSection = getActiveSection(SECTIONS, MASTHEAD_OFFSET);
+        if (activeSection) {
+          var activeHref = $(activeSection).attr('id');
+          $(".page-nav__link").removeClass('page-nav__link--active');
+          $("#page-menu a[href=#" + activeHref + "]").addClass('page-nav__link--active');
+          if (location.hash != "#" + activeHref) {
+            if (history.replaceState) {
+              history.replaceState(null, null, "#" + activeHref);
+            }
+          }
+        }
+      }
+    });
+
+    $(".n-pdf-button").click(function () {
+      $(this).toggleClass("active");
+    });
+
+    $.fn.isVisibleAndInViewport = function () {
+      var elementTop = $(this).offset().top;
+      var elementBottom = elementTop + $(this).outerHeight();
+
+      var viewportTop = $(window).scrollTop();
+      var viewportBottom = viewportTop + $(window).height();
+
+      return elementBottom > viewportTop && elementTop < viewportBottom && $(this).is(":visible");
+    };
+
+
+    $(window).on('resize scroll', function () {
+      setRightBarHeight();
+    });
+
+    $(window).trigger('resize');
+
+
+  });
+
+  $("#right-navbar-collapse").click(function (e) {
+    const rightNavbarWidth = $("#ie-right-navbar").width() - $("#ie-right-navbar-collapse").width();
+    e.preventDefault();
+    const width = $(".ie-content-pane").width();
+
+    $("#ie-right-navbar").animate({ width: 'toggle' }, 350, function () {
+      $("#ie-right-navbar-collapse").removeClass("close")
+      $("#ie-right-navbar-collapse").addClass("open")
+      $("#ie-right-navbar").removeClass("open")
+      $("#ie-right-navbar").addClass("close")
+    });
+    $(".ie-content-pane").animate({ width: (width + rightNavbarWidth) }, 350, function () {
+      resizeContent()
+      setSidebarBottom();
+    })
+
+  });
+  $("#navbar-expand").click(function (e) {
+    const rightNavbarWidth = $("#ie-right-navbar").width() - $("#ie-right-navbar-collapse").width();
+    e.preventDefault();
+    const width = $(".ie-content-pane").width();
+    $("#ie-right-navbar").animate({ width: 'toggle' }, 250, function () {
+      $("#ie-right-navbar-collapse").removeClass("open")
+      $("#ie-right-navbar-collapse").addClass("close")
+      $("#ie-right-navbar").removeClass("close")
+      $("#ie-right-navbar").addClass("open")
+      setRightBarHeight();
+      setSidebarBottom();
+    });
+    $(".ie-content-pane").animate({ width: (width - rightNavbarWidth) }, 250, function () {
+      resizeContent()
+    })
+  });
+
+  function navbarResize() {
+    const rightNavbarResized = $("#ie-right-navbar-collapse").hasClass('resized');
+    if (window.innerWidth < 1024) {
+      $("#ie-right-navbar").removeClass("open")
+      $("#ie-right-navbar").addClass("close")
+      $("#ie-right-navbar").removeAttr("style")
+      $("#ie-right-navbar-collapse").removeClass("close")
+      $("#ie-right-navbar-collapse").addClass("open")
+      $("#ie-right-navbar-collapse").addClass("resized")
+    } else {
+      if (rightNavbarResized) {
+        $('#ie-right-navbar').removeClass('close');
+        $('#ie-right-navbar').addClass('open');
+        $("#ie-right-navbar-collapse").removeClass("resized")
+        $("#ie-right-navbar-collapse").removeClass("open")
+        $("#ie-right-navbar-collapse").addClass("close")
+      }
+    }
+    resizeContent()
+  }
+  navbarResize();
+  $(window).on('resize load', function () {
+    navbarResize()
+  });
+
+  function getActiveSection(sections, offset) {
+    var scrollPosition = $(window).scrollTop() + offset + 5;
+    var activeSection;
+    for (var i = 0; i < sections.length; i++) {
+      var el = $(sections[i]);
+      var activePosition = el.offset().top;
+      if (activePosition > scrollPosition) {
+        break;
+      }
+
+      activeSection = sections[i];
+    }
+
+    return activeSection;
+  }
+
+  $("a[href*=#]:not([href=#])").click(function () {
+    setTimeout(() => {
+      $(window).trigger('scroll');
+    }, 105)
+  })
+
+  const hashOnLoad = location.href.split("#")[1];
+  setTimeout(function () {
+    if (hashOnLoad) {
+      $(".page-nav__link").removeClass('page-nav__link--active');
+      $("#page-menu a[href=#" + hashOnLoad + "]").addClass('page-nav__link--active');
+    }
+  }, 100)
+
+</script>
+
+
+  <div style="clear: both"></div><!-- Main needs to have height --></div>
+
+        </main>
+
+        <footer class="n-footer">
+  <div class="n-footer__bottom">
+    <div class="n-container">
+        <div class="n-footer__left">
+          <li class="n-footer__copyright-link">
+                    <a href="https://www.netapp.com/company/legal/copyright/">© 2024 NetApp, Inc.</a>
+          </li>
+        </div>
+        <div class="n-footer__center">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/terms-of-use/">Nutzungsbedingungen</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/privacy-policy/">Datenschutzrichtlinie</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/cookie-policy/">Richtlinie zu Cookies</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a class="ot-sdk-show-settings">Cookie-Einstellungen</a>
+            </li>
+          </ul>
+       </div>
+        <div class="n-footer__right">
+              <li class="n-footer__copyright-link">
+                <a target="_self" href="javascript:netapp_mailto()">Feedback zu dieser Seite senden</a>
+              </li>
+        </div>
+     </div>
+  </div>
+</footer>
+
+      </div><!-- Elasticsearch JS -->
+      <script type="text/javascript" src='/de-de/test/js/bundle.js'></script>
+
+      <!-- Syntax Highlighting -->
+      <script type="text/javascript" src='/de-de/test/js/prism.js'></script>
+      <script type="text/javascript" src='/de-de/test/js/prism-curl.js'></script>
+    </div>
+    <script>
+      document.body.offsetWidth=1903;
+      cookieLaw = {}
+      cookieLaw.euCountry = "US";
+      cookieLaw.invoke = function(){return false;}
+    </script>
+    <script src='/de-de/test/js/ie-tabbed-blocks.js'></script>
+    <script src='/de-de/test/js/ie-sidebar.js'></script>
+  </body>
+
+</html>

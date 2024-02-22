@@ -1,0 +1,3273 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head class="at-element-marker">
+  <title>Hochverfügbarkeitspaare in AWS | NetApp Documentation</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+  <meta http-equiv="language" content="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Hochverfügbarkeitspaare in AWS | NetApp Documentation" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://docs.netapp.com/de-de/test/concept-ha.html" />
+	<meta property="og:description" content="Eine Cloud Volumes ONTAP Hochverfügbarkeitskonfiguration (HA) bietet unterbrechungsfreien Betrieb und Fehlertoleranz. In AWS werden die Daten zwischen den be..." />
+  <meta property="og:image" content="https://docs.netapp.com/de-de/test/images/logo-tophat-social.png" />
+  <meta property="og:image:alt" content="NetApp Logo" />
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="encoding" content="utf-8">
+  <meta http-equiv="nss-type" content="Product Documentation"/>
+  <meta http-equiv="nss-subtype" content="User Guide"/><meta name="description" content="Eine Cloud Volumes ONTAP Hochverfügbarkeitskonfiguration (HA) bietet unterbrechungsfreien Betrieb und Fehlertoleranz. In AWS werden die Daten zwischen den be...">
+  <meta name="keywords" content=" high availability, HA, mediator, concepts, understanding, overview, availability zones, AZs, takeover, giveback, rpo, rto, floating ip, nondisruptive, ha pairs, node, nodes, synchronous, resync, recovery point objective, recovery time objective, nas, nfs, cifs, floating ip address, route tables, iscsi, mpio, alua, failover, mount, remount, failure, data access, access, ip address, performance"><!-- Icons -->
+  <link rel="icon" href="/de-de/test/images/favicon.ico" type="image/x-icon">
+
+  <!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="NetApp Documentation" href="/de-de/test/feed.xml"><!-- CSS Definitions: NetApp CSS should be defined after generic css -->
+
+
+  <!-- Combined CSS -->
+  <link rel="stylesheet" type="text/css" href="/de-de/test/css/ie-netappdocs.css">
+
+  
+  <link rel="stylesheet" href="/de-de/test/css/ie-landing-page.css" type="text/css">
+  <link rel="stylesheet" href="/de-de/test/css/ie-tabbed-blocks.css" type="text/css">
+  <!-- Canonical url -->
+  <link rel="canonical" href="https://docs.netapp.com/de-de/test/concept-ha.html" />
+  <link rel="alternate" hreflang="x-default" href="https://docs.netapp.com/us-en/test/concept-ha.html" />
+  <link rel="alternate" hreflang="de" href="https://docs.netapp.com/de-de/test/concept-ha.html" />
+  <link rel="alternate" hreflang="en" href="https://docs.netapp.com/us-en/test/concept-ha.html" />
+  <link rel="alternate" hreflang="ja" href="https://docs.netapp.com/ja-jp/test/concept-ha.html" />
+  <link rel="alternate" hreflang="ko" href="https://docs.netapp.com/ko-kr/test/concept-ha.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://docs.netapp.com/zh-cn/test/concept-ha.html" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://docs.netapp.com/zh-tw/test/concept-ha.html" />
+  <link rel="alternate" hreflang="es" href="https://docs.netapp.com/es-es/test/concept-ha.html" />
+  <link rel="alternate" hreflang="fr" href="https://docs.netapp.com/fr-fr/test/concept-ha.html" />
+  <link rel="alternate" hreflang="it" href="https://docs.netapp.com/it-it/test/concept-ha.html" />
+  <!-- Top level site integrations -->
+<script type="text/javascript" src="https://cdn.cookielaw.org/consent/72570c5c-fe30-465f-b0e0-b77f7fb4ae34/OtAutoBlock.js"></script>
+    <script type="text/javascript" src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" charset="UTF-8" data-document-language="true" data-domain-script="72570c5c-fe30-465f-b0e0-b77f7fb4ae34"></script>
+    <script type="text/javascript">function OptanonWrapper() { }</script>
+    <script type="text/plain" class="optanon-category-C0002" src="https://assets.adobedtm.com/60287eadf1ee/c284da483c83/launch-e9ff3acac59f.min.js"></script>
+    <script class="optanon-category-C0001">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.setAttributeNode(d.createAttribute('data-ot-ignore'));j.setAttribute('class','optanon-category-C0001');j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl+'';f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MD73T9M');</script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      const MASTHEAD_OFFSET = 65;
+      const SECTIONS = $("main h2, main h3");
+      // PAGE NAV - Init
+      if (SECTIONS.length == 0) {
+        // remove if there is no elements
+        /*
+        $("#ie-right-navbar").remove();
+        $("#ie-right-navbar-collapse").remove();
+        */
+      } else {
+        $(".page-nav-title").css('display', 'block');
+        for (var i = 0; i < SECTIONS.length; i++) {
+          var sectionId = $(SECTIONS[i]).attr('id');
+          var sectionName = $(SECTIONS[i]).text();
+          var subClass = $(SECTIONS[i]).is("h3") ? ' page-nav__sublink' : '';
+          $("#page-menu").append('<li class="page-nav-item"><a href="#' + sectionId + '" class="page-nav__link' + subClass + '">' + sectionName + '</a></li>');
+        }
+      }
+    });
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+  <!-- Used for Product Family Page Sidebar Visibility --><!-- Used to import Promise for IE. Required for SearchKit -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script><script src='/de-de/test/js/na-search.js'></script><script src='/de-de/test/js/ie-clouddocs.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script>
+    /*
+      $(document).ready(function() {
+          $("#tg-sb-link").click(function() {
+              $("#tg-sb-sidebar").toggle();
+              $("#tg-sb-content").toggleClass('col-md-9');
+              $("#tg-sb-content").toggleClass('col-md-12');
+              $("#tg-sb-icon").toggleClass('fa-toggle-on');
+              $("#tg-sb-icon").toggleClass('fa-toggle-off');
+          });
+      });
+      */
+  </script>
+  <script src='/de-de/test/js/custom-dropdown.js'></script>
+  <script src='/de-de/test/js/FileSaver.min.js'></script>
+  <script src='/de-de/test/js/jszip-utils.min.js'></script>
+  <script src='/de-de/test/js/jszip.min.js'></script><script src='/de-de/test/js/ie-pdf-ux.js'></script></head>
+
+
+  <body class role="document" data-flavor="">
+    <div class="skip-to-main">
+      <a href="#main" >Skip to main content</a>
+    </div><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MD73T9M"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="page" class="">
+      <div id="ie-phone-menu" class=""></div>
+      <div id="ie-content-wrap" class="">
+        <nav id="ie-new-header">
+    <ul>
+        <li id="ie-phone-menu-button">
+            <a href="#">
+                <image id="" src="/de-de/test/images/hamburger.svg" alt="menu" />
+            </a>
+        </li>
+
+        <li>
+            <a href="https://www.netapp.com/de/index.aspx">
+                <image id="ie-header-logo" src="/de-de/test/images/netapp_logo.svg" alt="netapp" />
+            </a>
+        </li>
+        <li id="ie-header-docs">
+            <a href="https://www.netapp.com/de/support-and-training/documentation/">Dokumente</a>
+        </li>
+
+        <!-- Empty container to push header left with or without lang selector -->
+        <li id="empty-container" style="margin-left: auto">
+        </li>
+        <!-- Start Language Selector --><li id="ie-language-dropdown">
+            <div id="language-dropdown" class="custom-dropdown custom-dropdown-lang">
+                <div class="custom-dropdown-select custom-dropdown-select-lang">
+                    <img src="/de-de/test/images/language_white_24dp.svg" class="n-globe__icon" />
+                    <span class="lang-name">Deutsch</span>
+                    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown header invisible" />
+                    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup header" />
+                    </button>
+                </div>
+
+                <ul class="custom-dropdown-menu"><li>
+                        <a href="https://docs.netapp.com/de-de/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">Deutsch</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/us-en/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">English</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/ja-jp/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">日本語</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/ko-kr/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">한국어</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/zh-cn/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">简体中文</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/zh-tw/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">繁體中文</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/es-es/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">Español</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/fr-fr/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">Français</span></a>
+                    </li><li>
+                        <a href="https://docs.netapp.com/it-it/test/concept-ha.html"
+                            target="_self"><span translate="no" class="notranslate">Italiano</span></a>
+                    </li></ul>
+            </div>
+            </li>
+        <!-- End Language Selector -->
+
+
+        <li id="ie-allnetapp">
+            <div id="allnetapp-dropdown" class="custom-dropdown custom-dropdown-allnetapp">
+                <div class="custom-dropdown-select custom-dropdown-select-allnetapp">
+                    <img src="/de-de/test/images/apps_white_24dp.svg" alt="" class="allnetapp-icon" />
+                    <span class="allnetapp-name">NetApp Komplettlösung</span>
+                    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown header invisible" />
+                    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup header" />
+                    </button>
+                </div>
+
+                <ul class="custom-dropdown-menu allnetapp-dropdown">
+                    <li>
+                        <a href="https://bluexp.netapp.com/de/"
+                            target="_self"><span translate="no" class="notranslate">BlueXP</span></a>
+                    </li>
+                    <li>
+                        <a href="https://mysupport.netapp.com/site/"
+                            target="_self"><span translate="no" class="notranslate">Support</span></a>
+                    </li>
+                    <li>
+                        <a href="https://kb.netapp.com/"
+                            target="_self"><span translate="no" class="notranslate">Knowledge Base</span></a>
+                    </li>
+                    <li>
+                        <a href="https://www.netapp.com/de/support-and-training/netapp-learning-services/"
+                            target="_self"><span translate="no" class="notranslate">Training</span></a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+
+    </ul>
+</nav>
+
+        <main id="n-main-content" class="n-main-content">
+          <!-- Start Documentation Content -->
+<div class="ie-main">
+
+<div id="ie-new-sidebar-collapse" style="display: none">
+    <img id="sidebar-expand" class="ie-searchbox-icon" src="/de-de/test/images/double_arrow.svg" alt="" />
+</div>
+<div id="ie-new-sidebar">
+    <div id="ie-product-identity-lockup">
+        <div id="sidebar-collapse" class="">
+            <img src="/de-de/test/images/double_arrow.svg" alt="" />
+        </div>
+        <div id="ie-breadcrumb" class="">
+  <ul class="ie-breadcrumb">
+    <li class="">
+      <a href="https://docs.netapp.com">Gesamte Dokumentation</a>
+    </li>
+    
+    
+    <li class="">
+      <a href="https://docs.netapp.com/us-en/cloud/">Cloud-Dokumentation</a>
+    </li>
+    
+
+    
+    <li class="">
+      <a href="https://docs.netapp.com/de-de/bluexp-family/">
+        BlueXP
+      </a>
+    </li>
+    
+  </ul>
+  
+  <div class="ie-product-name" >
+    <!--<a href="/de-de/test/">-->
+      Cloud Volumes ONTAP
+    <!--</a>-->
+  </div>
+</div>
+
+            
+<div id="ie-selectors"><div id="version-dropdown-new" class="custom-dropdown" >
+  <div class="custom-dropdown-select unselected" title=" 9.13.1">
+    <label>Version</label>
+    <span translate="no" class="notranslate">9.13.1</span>
+    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown version invisible" />
+    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup version" />
+  </div>
+
+  <ul class="custom-dropdown-menu"><li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.13.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9130-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.13.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9121-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.12.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9120-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.12.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9111-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.11.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9110-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.11.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9101-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.10.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-9100-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.10.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-991-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.9.1</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-990-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.9.0</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-98-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.8</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-97-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.7</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-96-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.6</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-95-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.5</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-94-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.4</span></span>
+      </a>
+                     
+    </li>
+    <li>
+      
+      <a href="https://docs.netapp.com/de-de/cloud-volumes-ontap-93-relnotes/concept-ha.html" target="_self">
+        <span translate="no" class="notranslate"><span class="version"> 9.3</span></span>
+      </a>
+                     
+    </li>
+    
+  </ul>
+</div>
+<div id="flavor-dropdown" class="custom-dropdown" data-url="/de-de/test/concept-ha.html">
+  
+  <div class="custom-dropdown-select unselected flavor" title="Alle Cloud-Provider">
+    <label>Cloud-Provider</label>
+    <span>Alle Cloud-Provider</span>
+    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown flavor invisible" />
+    <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup flavor" />
+  </div>
+  
+
+  <ul class="custom-dropdown-menu">
+    
+    
+    <li data-value="aws" data-url="/de-de/test/aws/concept-ha.html">Amazon Web Services
+    </li>
+    
+    
+    
+    <li data-value="gcp" data-url="/de-de/test/gcp">Google Cloud</li>
+    
+    
+    
+    <li data-value="azure" data-url="/de-de/test/azure">Microsoft Azure</li>
+    
+    
+    <li data-url="/de-de/test/concept-ha.html">Alle Cloud-Provider</li>
+  </ul>
+</div>
+</div>
+        
+        
+
+<div id="ie-searchbox" class="ie-searchbox-sidebar ">
+    <img class="ie-searchbox-icon" src="/de-de/test/images/loupe.svg" alt=""/>
+    <div id="react-search" 
+        data-search-html="/de-de/test/search.html" 
+        data-type="widget"
+        data-placeholder="Dokumentation durchsuchen"
+        data-no-results-found="Keine Ergebnisse gefunden für {query}"
+        data-did-you-mean="Suchen Sie nach {suggestion}."
+        data-no-results-found-did-you-mean="Es wurden keine Ergebnisse für {query} gefunden. Meinten Sie {suggestion}?"
+        data-results-found="{hitCount} Ergebnisse gefunden"
+        data-error-message="Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+        data-error-reset="Suche zurücksetzen"
+        data-sk-es-pf-indexes="" 
+        data-flavor="">
+    </div>
+</div>
+        
+    </div>
+    <div id="ie-new-toc"><script>
+  let sidebarAccordion = true;
+
+  /* specific css rules for Mac */
+  if(navigator.platform.match('Mac') !== null) {
+    document.body.setAttribute('class', 'OSX');
+  }
+
+</script>
+
+<div id="ie-sidebar-container">
+  <ul id="ie-sidebar-list" ><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Cloud Volumes ONTAP Dokumentation"
+      data-li-level="1#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/index.html" 
+    ><a class="ie-sidebar-menuitem-1 " href="/de-de/test/index.html">
+        Cloud Volumes ONTAP Dokumentation
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Versionshinweise"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Versionshinweise</div>-->
+         Versionshinweise
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Was ist neu"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/whats-new.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/whats-new.html">
+        Was ist neu
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Bekannte Einschränkungen"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/reference-limitations.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/reference-limitations.html">
+        Bekannte Einschränkungen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Versionshinweise zu Cloud Volumes ONTAP"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/whats-new-ontap.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/whats-new-ontap.html">
+        Versionshinweise zu Cloud Volumes ONTAP
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Los geht's"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Los geht's</div>-->
+         Los geht's
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Weitere Informationen zu Cloud Volumes ONTAP"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-overview-cvo.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/concept-overview-cvo.html">
+        Weitere Informationen zu Cloud Volumes ONTAP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Unterstützte Versionen für neue Bereitstellungen"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/reference-versions.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/reference-versions.html">
+        Unterstützte Versionen für neue Bereitstellungen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erste Schritte in Amazon Web Services"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Erste Schritte in Amazon Web Services</div>-->
+         Erste Schritte in Amazon Web Services
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Schnellstart"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-getting-started-aws.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-getting-started-aws.html">
+        Schnellstart
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Planen Sie Ihre Konfiguration"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-planning-your-config.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-planning-your-config.html">
+        Planen Sie Ihre Konfiguration
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Richten Sie Ihr Netzwerk ein"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Richten Sie Ihr Netzwerk ein</div>-->
+         Richten Sie Ihr Netzwerk ein
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Netzwerkanforderungen"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/reference-networking-aws.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/reference-networking-aws.html">
+        Netzwerkanforderungen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AWS Transit Gateway einrichten"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-setting-up-transit-gateway.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-setting-up-transit-gateway.html">
+        AWS Transit Gateway einrichten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Implementieren Sie ein HA-Paar in einem gemeinsamen Subnetz"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-deploy-aws-shared-vpc.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-deploy-aws-shared-vpc.html">
+        Implementieren Sie ein HA-Paar in einem gemeinsamen Subnetz
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Sicherheitsgruppenregeln für AWS"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/reference-security-groups.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/reference-security-groups.html">
+        Sicherheitsgruppenregeln für AWS
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AWS KMS einrichten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-setting-up-kms.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-setting-up-kms.html">
+        AWS KMS einrichten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Einrichten von IAM-Rollen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-set-up-iam-roles.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-set-up-iam-roles.html">
+        Einrichten von IAM-Rollen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Lizenzierung einrichten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-set-up-licensing-aws.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-set-up-licensing-aws.html">
+        Lizenzierung einrichten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Starten Sie Cloud Volumes ONTAP in AWS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-deploying-otc-aws.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-deploying-otc-aws.html">
+        Starten Sie Cloud Volumes ONTAP in AWS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erste Schritte in AWS C2S"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-getting-started-aws-c2s.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-getting-started-aws-c2s.html">
+        Erste Schritte in AWS C2S
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erste Schritte in Microsoft Azure"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Erste Schritte in Microsoft Azure</div>-->
+         Erste Schritte in Microsoft Azure
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Schnellstart"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-getting-started-azure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-getting-started-azure.html">
+        Schnellstart
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Planen Sie Ihre Konfiguration"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-planning-your-config-azure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-planning-your-config-azure.html">
+        Planen Sie Ihre Konfiguration
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Richten Sie Ihr Netzwerk ein"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/reference-networking-azure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/reference-networking-azure.html">
+        Richten Sie Ihr Netzwerk ein
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Richten Sie die Verschlüsselung mit Ihrem Schlüssel ein"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-set-up-azure-encryption.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-set-up-azure-encryption.html">
+        Richten Sie die Verschlüsselung mit Ihrem Schlüssel ein
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Lizenzierung einrichten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-set-up-licensing-azure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-set-up-licensing-azure.html">
+        Lizenzierung einrichten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Aktivieren Sie den Hochverfügbarkeits-Modus"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-azure-high-availability-mode.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-azure-high-availability-mode.html">
+        Aktivieren Sie den Hochverfügbarkeits-Modus
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Starten Sie Cloud Volumes ONTAP in Azure"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-deploying-otc-azure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-deploying-otc-azure.html">
+        Starten Sie Cloud Volumes ONTAP in Azure
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erste Schritte in Google Cloud"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Erste Schritte in Google Cloud</div>-->
+         Erste Schritte in Google Cloud
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Schnellstart"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-getting-started-gcp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-getting-started-gcp.html">
+        Schnellstart
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Planen Sie Ihre Konfiguration"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-planning-your-config-gcp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-planning-your-config-gcp.html">
+        Planen Sie Ihre Konfiguration
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Richten Sie Ihr Netzwerk ein"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/reference-networking-gcp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/reference-networking-gcp.html">
+        Richten Sie Ihr Netzwerk ein
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Planung von VPC Service-Kontrollen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/reference-vpc-service-controls-gcp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/reference-vpc-service-controls-gcp.html">
+        Planung von VPC Service-Kontrollen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erstellen eines Dienstkontos"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-creating-gcp-service-account.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-creating-gcp-service-account.html">
+        Erstellen eines Dienstkontos
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Nutzen Sie vom Kunden verwaltete Schlüssel"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-setting-up-gcp-encryption.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-setting-up-gcp-encryption.html">
+        Nutzen Sie vom Kunden verwaltete Schlüssel
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Lizenzierung einrichten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-set-up-licensing-google.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-set-up-licensing-google.html">
+        Lizenzierung einrichten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Starten Sie Cloud Volumes ONTAP in Google Cloud"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-deploying-gcp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-deploying-gcp.html">
+        Starten Sie Cloud Volumes ONTAP in Google Cloud
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Bildüberprüfung Der Google Cloud Platform"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Bildüberprüfung Der Google Cloud Platform</div>-->
+         Bildüberprüfung Der Google Cloud Platform
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Überblick"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-gcp-image-verification.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/concept-gcp-image-verification.html">
+        Überblick
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Konvertieren Sie das Bild in das Raw-Format auf GCP"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-gcp-convert-image-raw.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-gcp-convert-image-raw.html">
+        Konvertieren Sie das Bild in das Raw-Format auf GCP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Überprüfung der Bildsignatur"
+      data-li-level="4" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-4  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Überprüfung der Bildsignatur</div>-->
+         Überprüfung der Bildsignatur
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verifizieren von GCP signierten Bildern"
+      data-li-level="5#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-gcp-verify-signed-image.html" 
+    ><a class="ie-sidebar-menuitem-5 " href="/de-de/test/concept-gcp-verify-signed-image.html">
+        Verifizieren von GCP signierten Bildern
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Überprüfen Sie Inhalte mit OpenSSL"
+      data-li-level="5#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-verify-openssl-gcp.html" 
+    ><a class="ie-sidebar-menuitem-5 " href="/de-de/test/task-verify-openssl-gcp.html">
+        Überprüfen Sie Inhalte mit OpenSSL
+      </a></li></ul></li></ul></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verwenden Sie Cloud Volumes ONTAP"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Verwenden Sie Cloud Volumes ONTAP</div>-->
+         Verwenden Sie Cloud Volumes ONTAP
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Lizenzmanagement"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Lizenzmanagement</div>-->
+         Lizenzmanagement
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management kapazitätsbasierter Lizenzen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-manage-capacity-licenses.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-manage-capacity-licenses.html">
+        Management kapazitätsbasierter Lizenzen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Keystone Abonnements Managen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-manage-keystone.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-manage-keystone.html">
+        Keystone Abonnements Managen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management knotenbasierter Lizenzen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-manage-node-licenses.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-manage-node-licenses.html">
+        Management knotenbasierter Lizenzen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Volume- und LUN-Administration"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Volume- und LUN-Administration</div>-->
+         Volume- und LUN-Administration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Volumes erstellen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-create-volumes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-create-volumes.html">
+        Volumes erstellen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management vorhandener Volumes"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-manage-volumes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-manage-volumes.html">
+        Management vorhandener Volumes
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Tiering inaktiver Daten in Objektspeicher"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-tiering.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-tiering.html">
+        Tiering inaktiver Daten in Objektspeicher
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verbinden Sie eine LUN mit einem Host"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-connect-lun.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-connect-lun.html">
+        Verbinden Sie eine LUN mit einem Host
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Beschleunigter Datenzugriff mit FlexCache"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-accelerate-data-access.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-accelerate-data-access.html">
+        Beschleunigter Datenzugriff mit FlexCache
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Aggregatadministration"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Aggregatadministration</div>-->
+         Aggregatadministration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erstellen von Aggregaten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-create-aggregates.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-create-aggregates.html">
+        Erstellen von Aggregaten
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management vorhandener Aggregate"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-manage-aggregates.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-manage-aggregates.html">
+        Management vorhandener Aggregate
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Managen von Kapazitätseinstellungen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-manage-capacity-settings.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-manage-capacity-settings.html">
+        Managen von Kapazitätseinstellungen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Storage VM-Administration"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Storage VM-Administration</div>-->
+         Storage VM-Administration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Arbeiten Sie mit Storage VMs in BlueXP"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-managing-svms.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-managing-svms.html">
+        Arbeiten Sie mit Storage VMs in BlueXP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erstellung von Storage VMs in AWS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-managing-svms-aws.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-managing-svms-aws.html">
+        Erstellung von Storage VMs in AWS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erstellung von Storage VMs in Azure"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-managing-svms-azure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-managing-svms-azure.html">
+        Erstellung von Storage VMs in Azure
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Erstellung von Storage VMs in Google Cloud"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-managing-svms-gcp.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-managing-svms-gcp.html">
+        Erstellung von Storage VMs in Google Cloud
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Disaster Recovery für SVMs einrichten"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-manage-svm-dr.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-manage-svm-dr.html">
+        Disaster Recovery für SVMs einrichten
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Sicherheit und Datenverschlüsselung"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Sicherheit und Datenverschlüsselung</div>-->
+         Sicherheit und Datenverschlüsselung
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verschlüsselung von Volumes mit NetApp Verschlüsselung"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-encrypting-volumes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-encrypting-volumes.html">
+        Verschlüsselung von Volumes mit NetApp Verschlüsselung
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Schlüsselmanagement mit AWS Key Management Service"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-aws-key-management.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-aws-key-management.html">
+        Schlüsselmanagement mit AWS Key Management Service
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verschlüsselungsmanagement mit Azure Key Vault"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-azure-key-vault.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-azure-key-vault.html">
+        Verschlüsselungsmanagement mit Azure Key Vault
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verwalten von Schlüsseln mit Google Cloud KMS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-google-key-manager.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-google-key-manager.html">
+        Verwalten von Schlüsseln mit Google Cloud KMS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ransomware-Schutz verbessern"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-protecting-ransomware.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-protecting-ransomware.html">
+        Ransomware-Schutz verbessern
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Systemadministration"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Systemadministration</div>-->
+         Systemadministration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Upgrade von Cloud Volumes ONTAP"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-updating-ontap-cloud.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-updating-ontap-cloud.html">
+        Upgrade von Cloud Volumes ONTAP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="„Pay-as-you-go“-Systeme registrieren"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-registering.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-registering.html">
+        „Pay-as-you-go“-Systeme registrieren
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Stoppen und starten Sie ein System"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-managing-state.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-managing-state.html">
+        Stoppen und starten Sie ein System
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Systemzeit synchronisieren"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-sync-time.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-sync-time.html">
+        Systemzeit synchronisieren
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ändern Sie die Schreibgeschwindigkeit des Systems"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-modify-write-speed.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-modify-write-speed.html">
+        Ändern Sie die Schreibgeschwindigkeit des Systems
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ändern Sie das Systemkennwort"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-change-password.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-change-password.html">
+        Ändern Sie das Systemkennwort
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Hinzufügen, Entfernen oder Löschen von Systemen"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Hinzufügen, Entfernen oder Löschen von Systemen</div>-->
+         Hinzufügen, Entfernen oder Löschen von Systemen
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Fügen Sie ein vorhandenes System hinzu"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-adding-systems.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-adding-systems.html">
+        Fügen Sie ein vorhandenes System hinzu
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Entfernen Sie eine Arbeitsumgebung"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-removing.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-removing.html">
+        Entfernen Sie eine Arbeitsumgebung
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Löschen Sie ein System"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-deleting-working-env.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-deleting-working-env.html">
+        Löschen Sie ein System
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AWS Administration"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> AWS Administration</div>-->
+         AWS Administration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="EC2 Instanztyp ändern"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-change-ec2-instance.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-change-ec2-instance.html">
+        EC2 Instanztyp ändern
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ändern Sie die Routingtabellen für HA-Paare"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-change-route-tables.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-change-route-tables.html">
+        Ändern Sie die Routingtabellen für HA-Paare
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Konfigurieren Sie die Erstellung von Platzierungsgruppen"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="task-configure-placement-group-failure-aws.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-configure-placement-group-failure-aws.html">
+        Konfigurieren Sie die Erstellung von Platzierungsgruppen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Azure-Administration"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Azure-Administration</div>-->
+         Azure-Administration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Ändern Sie den Azure VM-Typ"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-change-azure-vm.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-change-azure-vm.html">
+        Ändern Sie den Azure VM-Typ
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="CIFS-Sperren überschreiben"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-overriding-cifs-locks.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-overriding-cifs-locks.html">
+        CIFS-Sperren überschreiben
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Nutzen Sie einen Azure Private Link oder einen Service-Endpunkt"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-enabling-private-link.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-enabling-private-link.html">
+        Nutzen Sie einen Azure Private Link oder einen Service-Endpunkt
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Verschieben von Ressourcengruppen"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-moving-resource-groups-azure.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-moving-resource-groups-azure.html">
+        Verschieben von Ressourcengruppen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Google Cloud-Administration"
+      data-li-level="3" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-3  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Google Cloud-Administration</div>-->
+         Google Cloud-Administration
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Maschinentyp ändern"
+      data-li-level="4#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-change-gcp-machine.html" 
+    ><a class="ie-sidebar-menuitem-4 " href="/de-de/test/task-change-gcp-machine.html">
+        Maschinentyp ändern
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Administration über System Manager"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-administer-advanced-view.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-administer-advanced-view.html">
+        Administration über System Manager
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Administration aus der CLI"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-connecting-to-otc.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-connecting-to-otc.html">
+        Administration aus der CLI
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Systemzustand und Ereignisse"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Systemzustand und Ereignisse</div>-->
+         Systemzustand und Ereignisse
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AutoSupport-Einrichtung überprüfen"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-verify-autosupport.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-verify-autosupport.html">
+        AutoSupport-Einrichtung überprüfen
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="EMS konfigurieren"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-configure-ems.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/task-configure-ems.html">
+        EMS konfigurieren
+      </a></li></ul></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Konzepte"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Konzepte</div>-->
+         Konzepte
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Lizenzierung"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-licensing.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/concept-licensing.html">
+        Lizenzierung
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Storage"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Storage</div>-->
+         Storage
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Client-Protokolle"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-client-protocols.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-client-protocols.html">
+        Client-Protokolle
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Festplatten und Aggregate"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-storage.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-storage.html">
+        Festplatten und Aggregate
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Elastische Volumes in AWS"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-aws-elastic-volumes.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-aws-elastic-volumes.html">
+        Elastische Volumes in AWS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Daten-Tiering"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-data-tiering.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-data-tiering.html">
+        Daten-Tiering
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Storage-Management"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-storage-management.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-storage-management.html">
+        Storage-Management
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Schreibgeschwindigkeit"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-write-speed.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-write-speed.html">
+        Schreibgeschwindigkeit
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Flash Cache"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-flash-cache.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-flash-cache.html">
+        Flash Cache
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="WORM-Storage"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-worm.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-worm.html">
+        WORM-Storage
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Hochverfügbarkeitspaare"
+      data-li-level="2" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-2  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Hochverfügbarkeitspaare</div>-->
+         Hochverfügbarkeitspaare
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="HA-Paare in AWS"
+      data-li-level="3#" 
+      class="  ie-sidebar-selected    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-ha.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-ha.html">
+        HA-Paare in AWS
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="HA-Paare in Azure"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-ha-azure.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-ha-azure.html">
+        HA-Paare in Azure
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="HA-Paare in GCP"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-ha-google-cloud.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-ha-google-cloud.html">
+        HA-Paare in GCP
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Maßnahmen während der Storage-Übernahme"
+      data-li-level="3#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-degraded-ha-pair.html" 
+    ><a class="ie-sidebar-menuitem-3 " href="/de-de/test/concept-degraded-ha-pair.html">
+        Maßnahmen während der Storage-Übernahme
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Sicherheit"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-security.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/concept-security.html">
+        Sicherheit
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Leistung"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-performance.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/concept-performance.html">
+        Leistung
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Management des Node-basierten BYOL"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-license-management.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/concept-license-management.html">
+        Management des Node-basierten BYOL
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="AutoSupport und Active IQ Digital Advisor"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/concept-active-iq.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/concept-active-iq.html">
+        AutoSupport und Active IQ Digital Advisor
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Standardkonfigurationen"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/reference-default-configs.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/reference-default-configs.html">
+        Standardkonfigurationen
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Wissen und Support"
+      data-li-level="1" 
+      class=" sidebar-folder    "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="" 
+    ><a class="ie-sidebar-menuitem-1  ie-sidebar-button " href="#">
+        <img class="ie-sidebar-icon ie-sidebar-button open" src="/de-de/test/images/link_expand.svg" alt="" />
+        <img class="ie-sidebar-icon ie-sidebar-button close" src="/de-de/test/images/link_collapse.svg" alt="" />
+        <!--<div class="" style="display: inline;"> Wissen und Support</div>-->
+         Wissen und Support
+      </a>
+      <ul class="">
+        <li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Für den Support anmelden"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-support-registration.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/task-support-registration.html">
+        Für den Support anmelden
+      </a></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Holen Sie sich Hilfe"
+      data-li-level="2#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/task-get-help.html" 
+    ><a class="ie-sidebar-menuitem-2 " href="/de-de/test/task-get-help.html">
+        Holen Sie sich Hilfe
+      </a></li></ul></li><li 
+      data-pdf-exists="true" 
+      data-pdf-filename="Rechtliche Hinweise"
+      data-li-level="1#" 
+      class="   "
+      dale-page-url="/concept-ha.html" 
+      dale-entry-url="/legal-notices.html" 
+    ><a class="ie-sidebar-menuitem-1 " href="/de-de/test/legal-notices.html">
+        Rechtliche Hinweise
+      </a></li></ul>
+</div>
+<script>
+
+  $(".ie-sidebar-button").click(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    expandedLI = $('li.ie-sidebar-expand')
+
+    const li = $(this).closest("li");
+
+    const parentsLI = $(li).parents('li');
+
+    expandedLI.map(element => {
+      if (sidebarAccordion && !li.hasClass('ie-sidebar-expand') && jQuery.inArray(expandedLI[element], parentsLI) == -1) {
+        $(expandedLI[element]).toggleClass('ie-sidebar-expand');
+        $(expandedLI[element]).children("ul").animate({ height: 'toggle' }, 400, function () {
+          $(li).children("ul").toggleClass('ie-sidebar-open');
+
+        })
+      }
+
+    })
+
+    $(li).toggleClass('ie-sidebar-expand');
+    $(li).children("ul").animate({ height: 'toggle' }, 400, function () {
+      $(li).children("ul").toggleClass('ie-sidebar-open');
+    })
+  });
+
+
+  
+    $("li.ie-sidebar-selected").parents('ul').toggleClass("ie-sidebar-open");
+    $("li.ie-sidebar-selected").toggleClass("ie-sidebar-expand")
+    $("ul.ie-sidebar-open").parent().toggleClass("ie-sidebar-expand");
+    $("li.ie-sidebar-selected").children('ul').toggleClass("ie-sidebar-open")
+  
+  
+</script>
+    </div>
+</div>
+<script>
+
+    
+    let sidebarScrollTopPosition = 0;
+    $("#ie-new-toc").on("scroll", function () {
+        if (sidebarScrollTopPosition == 0) {
+            $.cookie("sidebarScroll", $("#ie-new-toc").scrollTop(), {
+                path: "/de-de/test"
+            });
+        }
+
+        if ($("#ie-new-toc").scrollTop() > 0) {
+            $('#ie-product-identity-lockup').addClass('ie-addShadow');
+        } else {
+            $('#ie-product-identity-lockup').removeClass('ie-addShadow');
+        }
+    });
+
+    $(function () {
+        if ($.cookie("sidebarScroll")) {
+            $("#ie-new-toc").scrollTop($.cookie("sidebarScroll"));
+        }
+    });
+
+    function setSidebarBottom() {
+        const footerGap = PXinViewport($(".n-footer"));
+        document.getElementById("ie-new-sidebar").style.bottom = Math.max(0, footerGap) + "px";
+    }
+
+    window.onscroll = () => {
+        setSidebarBottom();
+    };
+
+    $("#sidebar-collapse").click(function (e) {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        e.preventDefault();
+        const width = $(".ie-content-pane").width();
+        const marginLeft = parseInt($(".ie-content-pane").css('marginLeft'));
+
+        if ($.cookie("sidebarScroll")) {
+            sidebarScrollTopPosition = $.cookie("sidebarScroll");
+        }
+
+        $("#ie-new-sidebar").animate({ width: 'toggle' }, 350, function () {
+            $("#ie-new-sidebar-collapse").show();
+            $("#ie-new-sidebar").removeClass("open")
+            $("#ie-new-sidebar").addClass("close")
+            $("#ie-new-sidebar").removeAttr("style")
+        });
+        $(".ie-content-pane").animate({ width: (width + sidebarWidth), marginLeft: (marginLeft - sidebarWidth) }, 350, function () {
+            resizeContent()
+        })
+
+    });
+    $("#sidebar-expand").click(function (e) {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        e.preventDefault();
+        const width = $(".ie-content-pane").width();
+        const marginLeft = parseInt($(".ie-content-pane").css('marginLeft'));
+
+        $("#ie-new-sidebar").animate({ width: 'toggle' }, 250, function () {
+            $('#ie-new-sidebar').css('display', 'flex');
+            $("#ie-new-sidebar-collapse").hide();
+            $("#ie-new-sidebar").removeClass("close")
+            $("#ie-new-sidebar").addClass("open")
+            setSidebarBottom();
+
+            if (sidebarScrollTopPosition != 0) {
+                $.cookie("sidebarScroll", sidebarScrollTopPosition, {
+                    path: "/de-de/test"
+                })
+                $("#ie-new-toc").scrollTop(sidebarScrollTopPosition);
+                sidebarScrollTopPosition = 0;
+            }
+        });
+        $(".ie-content-pane").animate({ width: (width - sidebarWidth), 'marginLeft': (marginLeft + sidebarWidth) }, 250, function () {
+            resizeContent()
+        })
+    });
+    function resizeContent() {
+        const sidebarWidth = $("#ie-new-sidebar").width() - $("#ie-new-sidebar-collapse").width();
+        const rightNavbarVisible =  $("#ie-right-navbar").css('display') && $("#ie-right-navbar").css('display') != 'none';
+        const sidebarVisible = $("#ie-new-sidebar").css('display') != 'none';
+        const rightNavbarWidth = $("#ie-right-navbar").width();
+        const rightNavbarCollapseWidth = $("#ie-right-navbar-collapse").width();
+        const rightNavbarCollapseVisible = $("#ie-right-navbar-collapse").css('display') && $("#ie-right-navbar-collapse").css('display') != 'none';
+        
+        if (rightNavbarVisible && sidebarVisible) {
+            $(".ie-content-pane").width(`calc(100% - ${sidebarWidth + rightNavbarWidth}px)`)
+            $(".ie-content-pane").css('marginLeft', `${sidebarWidth}px`)
+        } else if (sidebarVisible) {
+            $(".ie-content-pane").css('marginLeft', `${sidebarWidth}px`)
+            if (rightNavbarCollapseVisible) {
+                $(".ie-content-pane").width(`calc(100% - ${sidebarWidth + rightNavbarCollapseWidth}px)`)
+            } else {
+                $(".ie-content-pane").width(`calc(100% - ${$("#ie-new-sidebar").width()}px)`)
+            }
+
+        } else if (rightNavbarVisible) {
+            $(".ie-content-pane").css('marginLeft', `${$("#ie-new-sidebar-collapse").width()}px`)
+            $(".ie-content-pane").width(`calc(100% - ${rightNavbarWidth}px)`)
+        } else {
+            $(".ie-content-pane").css('marginLeft', `${$("#ie-new-sidebar-collapse").width()}px`)
+            if (rightNavbarCollapseVisible) {
+                $(".ie-content-pane").width(`calc(100% - ${rightNavbarCollapseWidth}px)`);
+            } else {
+                $(".ie-content-pane").width(`calc(100% - ${$("#ie-new-sidebar-collapse").width()}px) `);
+            }
+            
+        }
+    }
+    $(window).on("resize load", function () {
+        setSidebarBottom();
+        resizeContent()
+    });
+
+
+</script>
+
+<div class="ie-content-pane ie-component-detail-content ie-component-detail-content--show-code">
+    <!-- Begin of page container --><article class="page-content" id="main">
+      <!-- include utility.html -->
+      <div class="ie-info-disclaimer">
+    <span>
+      <div class="ie-info-disclaimer-container">
+        <div class="ie-info-disclaimer-icon">
+          <img src="/de-de/test/images/notification-icons.svg" class="luci-icon" alt="" />
+        </div>
+        <div class="ie-info-disclaimer-content">
+          <span> Die deutsche Sprachversion wurde als Serviceleistung für Sie durch maschinelle Übersetzung erstellt. Bei eventuellen Unstimmigkeiten hat die englische Sprachversion Vorrang. </span>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </span>
+  </div><div class="ie-component-detail-heading-wrap">
+  <h1 class="ie-component-detail-heading">Hochverfügbarkeitspaare in AWS</h1>
+</div>
+
+<div id="ie-byline">
+  
+<div class="page-details">
+    
+        
+            <time datetime="2023-09-13 15:07:22 +0000">09/13/2023</time>
+        
+    
+    
+        <span>Beitragende
+        </span>
+    
+    
+</div>
+<div class="page-controls">
+    <div id="contribute-dropdown" class="custom-dropdown custom-dropdown-contrib" >
+        <div class="custom-dropdown-select custom-dropdown-select-contrib">
+        <span class="contrib-name"><img src="/de-de/test/images/discuss-sm.svg" alt="" class="github-icon" />Änderungen vorschlagen</span>
+        <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevrondown invisible" />
+        <img src="/de-de/test/images/dropdown-arrow.svg" alt="" class="custom-icon chevronup" />
+        </div>
+        <ul class="custom-dropdown-menu suggested-changes-dropdown"><li>
+                <a target="_blank" href="https://github.com/NetAppDocs/test.de-de/issues/new?template=new-from-page.yml&page-url=https://docs.netapp.com/de-de/test/concept-ha.html&page-title=Hochverfügbarkeitspaare in AWS" class="page-nav-contribute-link" role="button">Dokumentationsänderungen anfordern</a>
+            </li><li> 
+                <a target="_blank" href="https://github.com/NetAppDocs/test/blob/main/concept-ha.adoc" class="page-nav-contribute-link" role="button">Diese Seite bearbeiten</a>
+            </li><li><a target="_blank" href="https://docs.netapp.com/us-en/contribute/" class="page-nav-contribute-link"  >So können Sie beitragen</a></li>
+        </ul>
+    </div>
+    <div id="pdf-control-container">
+        <div class="n-pdf-header">
+            <a id="toggleButtonPdf" class="n-pdf-button" type="button">
+                <img class="adobe-icon" src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>PDFs<img src="/de-de/test/images/dropdown-arrow.svg" class="custom-icon" alt="" />
+            </a>
+        </div>
+        <div class="n-pdf-body-container">
+            <ul id="toggleContainerPdf" class="n-pdf-body" style="display:none;"><li class="pdf-ux-container">
+                    
+                    
+                    
+                    <a target="_blank" class="pdf-download-link" href="/de-de/test/pdfs/fullsite-sidebar/Cloud_Volumes_ONTAP_Dokumentation.pdf" >
+                    <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>PDF dieser Dokumentationssite</a>
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Versionshinweise.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Versionshinweise
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Los_geht_s.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Los geht's
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Erste_Schritte_in_Amazon_Web_Services.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Erste Schritte in Amazon Web Services
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Richten_Sie_Ihr_Netzwerk_ein.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Richten Sie Ihr Netzwerk ein
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Erste_Schritte_in_Microsoft_Azure.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Erste Schritte in Microsoft Azure
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Erste_Schritte_in_Google_Cloud.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Erste Schritte in Google Cloud
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Bildüberprüfung_Der_Google_Cloud_Platform.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Bildüberprüfung Der Google Cloud Platform
+          </a>
+          
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Überprüfung_der_Bildsignatur.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Überprüfung der Bildsignatur
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Verwenden_Sie_Cloud_Volumes_ONTAP.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Verwenden Sie Cloud Volumes ONTAP
+          </a>
+          
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Lizenzmanagement.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Lizenzmanagement
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Volume__und_LUN_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Volume- und LUN-Administration
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Aggregatadministration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Aggregatadministration
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Storage_VM_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Storage VM-Administration
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Sicherheit_und_Datenverschlüsselung.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Sicherheit und Datenverschlüsselung
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Systemadministration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Systemadministration
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Hinzufügen__Entfernen_oder_Löschen_von_Systemen.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Hinzufügen, Entfernen oder Löschen von Systemen
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/AWS_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            AWS Administration
+          </a>
+          
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Azure_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Azure-Administration
+          </a>
+          
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Google_Cloud_Administration.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Google Cloud-Administration
+          </a>
+          
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Systemzustand_und_Ereignisse.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Systemzustand und Ereignisse
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Konzepte.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Konzepte
+          </a>
+          
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Storage.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Storage
+          </a>
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Hochverfügbarkeitspaare.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Hochverfügbarkeitspaare
+          </a>
+          
+    <ul class="subfolders" id="pdf-remove" style="display:none;"><li class="active"></li></ul>
+  
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+    
+      <ul class="subfolders" style="display:none;">
+        <li class="pdf-ux-container">
+          
+          
+          
+          <a target="_blank" class="pdf-download-link"
+            
+              href="/de-de/test/pdfs/sidebar/Wissen_und_Support.pdf" 
+            
+          >
+            <img src="/de-de/test/images/pdf-icon.png" alt="" width="16" height="16"/>
+            Wissen und Support
+          </a>
+          
+
+
+
+
+        </li>
+      </ul>
+    
+
+  
+
+
+
+</li></ul>
+            <div class="zip-pdf-link-container" style="display: none;">   
+                <a href="#" id="zipPdf">
+                <img src="/de-de/test/images/pdf-zip.png" alt="" width="16" height="16"/>
+                <pre>Sammlung separater PDF-Dokumente<span class="zip-size"></span></pre>
+                </a><div id="zip-link-popup" class="hide">
+    <div class="inner-modal">
+        <div class="downloading-progress">
+            <div class="spinner"></div>
+            <h1>Creating your file...</h1>
+            <div>This may take a few minutes. Thanks for your patience.</div>
+            <button class="cancel-download-btn" type="button">Cancel</button>
+        </div>
+        <div class="download-complete hide">
+            <div class="done-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+            </div>
+            <div>Your file is ready</div>
+            <button class="cancel-download-btn" type="button">OK</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".cancel-download-btn").click(function(){
+        $("#zip-link-popup").addClass("hide");
+        $("#zip-link-popup .downloading-progress").removeClass("hide");
+        $("#zip-link-popup .download-complete").addClass("hide");
+    });
+</script></div>
+        </div>
+    </div>        
+<script>
+$("#toggleContainerPdf li.active:last-child").parents('ul.subfolders').toggle('display');
+$("#toggleButtonPdf").on('click', function(e){ 
+    e.stopPropagation();
+    $("#toggleContainerPdf").toggle('display');
+    $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+});
+
+//hide is by clicking outside pdfcontainer
+$(document).on('click', function (e) {
+    if ($('#toggleContainerPdf').is(':visible') && !$('.n-pdf-body-container').is(e.target) && !$('.n-pdf-body-container').has(e.target).length)  {
+        
+        $("#toggleContainerPdf").toggle('display');
+        $(".n-pdf-body-container .zip-pdf-link-container").toggle('display');
+        $("#toggleButtonPdf").removeClass("active");
+    }
+});
+</script>
+<script>
+    function getPdfLocation() {
+        const pdfLocation = window.scrollX + document.querySelector('#pdf-control-container').getBoundingClientRect().left
+        if (pdfLocation < 450) {
+            $(".n-pdf-body-container").addClass("block")
+        } else {
+            $(".n-pdf-body-container").removeClass("block")
+        }
+    
+    }
+    $( window ).on( "resize", function() {
+        getPdfLocation()
+} );
+</script>
+<script>
+    const pdfButtonWidth =  $(".n-pdf-header").width();
+    const pdfMenuWidth = $(".n-pdf-body-container").width();
+    $(".n-pdf-body-container").css('margin-left', `calc(${pdfButtonWidth - pdfMenuWidth}px)`);
+</script>
+</div>
+
+    
+
+</div>
+
+
+
+
+<div class="content-to-index">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph lead">
+<p>Eine Cloud Volumes ONTAP Hochverfügbarkeitskonfiguration (HA) bietet unterbrechungsfreien Betrieb und Fehlertoleranz. In AWS werden die Daten zwischen den beiden Nodes synchron gespiegelt.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ha-komponenten">HA-Komponenten</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In AWS umfassen die Cloud Volumes ONTAP HA-Konfigurationen die folgenden Komponenten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Zwei Cloud Volumes ONTAP Nodes, deren Daten synchron gespiegelt werden.</p>
+</li>
+<li>
+<p>Eine Mediatorinstanz, die einen Kommunikationskanal zwischen den Nodes bereitstellt, um die Storage-Übernahme und die Giveback-Prozesse zu unterstützen.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="mediator">Mediator</h3>
+<div class="paragraph">
+<p>Hier einige wichtige Details zur Mediator-Instanz in AWS:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Instanztyp</dt>
+<dd>
+<p>t2-Mikro</p>
+</dd>
+<dt class="hdlist1">Festplatten</dt>
+<dd>
+<p>Eine magnetische EBS-Festplatte, die etwa 8 gib beträgt.</p>
+</dd>
+<dt class="hdlist1">Betriebssystem</dt>
+<dd>
+<p>Debian 11</p>
+<div class="openblock">
+<div class="content">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+Für Cloud Volumes ONTAP 9.10.0 und früher wurde Debian 10 auf dem Mediator installiert.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Upgrades</dt>
+<dd>
+<p>Bei einem Upgrade von Cloud Volumes ONTAP aktualisiert BlueXP auch die Mediator-Instanz nach Bedarf.</p>
+</dd>
+<dt class="hdlist1">Zugriff auf die Instanz</dt>
+<dd>
+<p>Wenn Sie ein Cloud Volumes ONTAP HA-Paar aus BlueXP erstellen, werden Sie aufgefordert, ein Schlüsselpaar für die Instanz des Mediators bereitzustellen. Sie können dieses Schlüsselpaar für SSH-Zugriff mit verwenden <code>admin</code> Benutzer:</p>
+</dd>
+<dt class="hdlist1">Agenten von Drittanbietern</dt>
+<dd>
+<p>Agents von Drittanbietern oder VM-Erweiterungen werden auf der Mediator-Instanz nicht unterstützt.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="storage-übernahme-und-giveback">Storage-Übernahme und -Giveback</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Wenn ein Node ausfällt, kann der andere Node Daten für seinen Partner bereitstellen, um einen kontinuierlichen Datenservice bereitzustellen. Clients können vom Partner-Node aus auf dieselben Daten zugreifen, da die Daten synchron zum Partner gespiegelt wurden.</p>
+</div>
+<div class="paragraph">
+<p>Nachdem der Node neu gestartet wurde, muss der Partner die Daten neu synchronisieren, bevor er den Storage zurückgeben kann. Die Zeit, die für die Neusynchronisierung von Daten benötigt wird, hängt davon ab, wie viele Daten während des Herunterfahrens des Node geändert wurden.</p>
+</div>
+<div class="paragraph">
+<p>Storage-Übernahme, -Resynchronisierung und -Rückgabe sind standardmäßig automatisch erfolgt. Es ist keine Benutzeraktion erforderlich.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rpo-und-rto">RPO und RTO</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Eine HA-Konfiguration sorgt für eine hohe Verfügbarkeit Ihrer Daten wie folgt:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Das Recovery Point Objective (RPO) beträgt 0 Sekunden.<br>
+Ihre Daten sind transaktionskonsistent und ohne Datenverlust.</p>
+</li>
+<li>
+<p>Die Recovery-Zeitvorgabe (RTO) beträgt 120 Sekunden.<br>
+Bei einem Ausfall sollten die Daten in maximal 120 Sekunden verfügbar sein.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ha-bereitstellungsmodelle">Ha-Bereitstellungsmodelle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sie können die Hochverfügbarkeit Ihrer Daten sicherstellen, indem Sie eine HA-Konfiguration über mehrere Verfügbarkeitszonen (AZS) oder in einer einzigen AZ bereitstellen. Sie sollten weitere Details zu jeder Konfiguration durchgehen, um zu entscheiden, welche für Ihre Anforderungen am besten geeignet ist.</p>
+</div>
+<div class="sect2">
+<h3 id="mehrere-verfügbarkeitszonen">Mehrere Verfügbarkeitszonen</h3>
+<div class="paragraph">
+<p>Durch die Implementierung einer HA-Konfiguration in mehreren Verfügbarkeitszonen (AZS) wird eine hohe Verfügbarkeit Ihrer Daten gewährleistet, wenn ein Ausfall bei einer AZ oder einer Instanz auftritt, die einen Cloud Volumes ONTAP Node ausführt. Sie sollten wissen, wie sich NAS-IP-Adressen auf den Datenzugriff und das Storage-Failover auswirken.</p>
+</div>
+<div class="sect3">
+<h4 id="nfs-und-cifs-datenzugriff">NFS- und CIFS-Datenzugriff</h4>
+<div class="paragraph">
+<p>Wenn eine HA-Konfiguration über mehrere Verfügbarkeitszonen verteilt ist, aktivieren <em>fließende IP-Adressen</em> den NAS-Client-Zugriff. Die unverankerten IP-Adressen, die für alle VPCs in der Region außerhalb der CIDR-Blöcke liegen müssen, können bei Ausfällen zwischen Nodes migrieren. Für Clients außerhalb der VPC sind sie nicht nativ zugänglich, es sei denn, Sie <a href="task-setting-up-transit-gateway.html">"AWS Transit Gateway einrichten"</a>.</p>
+</div>
+<div class="paragraph">
+<p>Wenn Sie kein Transit-Gateway einrichten können, sind private IP-Adressen für NAS-Clients außerhalb der VPC verfügbar. Diese IP-Adressen sind jedoch statisch und können nicht zwischen Nodes ein Failover ausführen.</p>
+</div>
+<div class="paragraph">
+<p>Bevor Sie eine HA-Konfiguration über mehrere Verfügbarkeitszonen hinweg bereitstellen, sollten Sie die Anforderungen für unverankerte IP-Adressen und Weiterleitungstabellen überprüfen. Sie müssen die unverankerten IP-Adressen angeben, wenn Sie die Konfiguration bereitstellen. Die privaten IP-Adressen werden automatisch von BlueXP erstellt.</p>
+</div>
+<div class="paragraph">
+<p>Weitere Informationen finden Sie unter <a href="https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/reference-networking-aws.html#requirements-for-ha-pairs-in-multiple-azs" target="_blank" rel="noopener">"AWS Netzwerkanforderungen für Cloud Volumes ONTAP HA in mehreren AZS"</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="iscsi-datenzugriff">ISCSI-Datenzugriff</h4>
+<div class="paragraph">
+<p>VPC-übergreifende Datenkommunikation ist kein Problem, da iSCSI keine Floating-IP-Adressen verwendet.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="takeover-und-giveback-für-iscsi">Takeover und Giveback für iSCSI</h4>
+<div class="paragraph">
+<p>Für iSCSI verwendet Cloud Volumes ONTAP Multipath I/O (MPIO) und Asymmetric Logical Unit Access (ALUA), um das Pfad-Failover zwischen den Aktiv- und Nicht-optimierten Pfaden zu managen.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+Informationen darüber, welche spezifischen Host-Konfigurationen ALUA unterstützen, finden Sie im <a href="http://mysupport.netapp.com/matrix" target="_blank" rel="noopener">"NetApp Interoperabilitäts-Matrix-Tool"</a> Sowie das Installations- und Setup-Handbuch für Host Utilities für Ihr Host-Betriebssystem.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="takeover-und-giveback-für-nas">Takeover und Giveback für NAS</h4>
+<div class="paragraph">
+<p>Wenn die Übernahme in einer NAS-Konfiguration mithilfe von Floating IPs erfolgt, stellt die fließende IP-Adresse des Node dar, über die Clients auf die zu verschiebenden Daten auf den anderen Node zugreifen. Die folgende Abbildung zeigt die Storage-Übernahme in einer NAS-Konfiguration mit Floating-IPs. Wenn Node 2 ausfällt, wird die unverankerte IP-Adresse für Node 2 zu Node 1 verschoben.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./media/diagram_takeover_giveback.png" alt="Konzeptionelles Image, das die Storage-Übernahme in einem Cloud Volumes ONTAP HA-Paar zeigt: Die Floating-IP-Adressen von Node 1 werden auf Node 2 verschoben."></span></p>
+</div>
+<div class="paragraph">
+<p>NAS-Daten-IPs, die für den externen VPC-Zugriff verwendet werden, können nicht zwischen Nodes migriert werden, wenn Fehler auftreten. Wenn ein Node offline geht, müssen Sie Volumes manuell über die IP-Adresse auf dem anderen Node auf Clients außerhalb des VPC neu mounten.</p>
+</div>
+<div class="paragraph">
+<p>Nachdem der ausgefallene Node wieder online ist, mounten Sie Clients mit der ursprünglichen IP-Adresse erneut auf Volumes. Dieser Schritt ist erforderlich, um die Übertragung unnötiger Daten zwischen zwei HA-Nodes zu vermeiden, was erhebliche Auswirkungen auf die Performance und Stabilität haben kann.</p>
+</div>
+<div class="paragraph">
+<p>Sie können die richtige IP-Adresse von BlueXP leicht erkennen, indem Sie die Lautstärke auswählen und auf <strong>Mount Command</strong> klicken.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="single-availability-zone">Single Availability Zone</h3>
+<div class="paragraph">
+<p>Durch die Implementierung einer HA-Konfiguration in einer einzelnen Verfügbarkeitszone (AZ) kann eine hohe Verfügbarkeit Ihrer Daten sichergestellt werden, wenn eine Instanz, auf der ein Cloud Volumes ONTAP Node ausgeführt wird, ausfällt. Alle Daten sind nativ von außerhalb des VPC zugänglich.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+BlueXP erstellt eine <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html" target="_blank" rel="noopener">"AWS Spread-Platzierungsgruppe"</a> Und startet die beiden HA-Nodes in dieser Platzierungsgruppe. Die Platzierungsgruppe verringert das Risiko gleichzeitiger Ausfälle, indem sie die Instanzen auf unterschiedliche zugrunde liegende Hardware verteilt. Diese Funktion verbessert die Redundanz aus Sicht des Computing und nicht aus Sicht des Festplattenausfalls.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="datenzugriff">Datenzugriff</h4>
+<div class="paragraph">
+<p>Da sich diese Konfiguration in einer einzigen AZ befindet, sind keine gleitenden IP-Adressen erforderlich. Sie können dieselbe IP-Adresse für den Datenzugriff innerhalb des VPC und außerhalb des VPC verwenden.</p>
+</div>
+<div class="paragraph">
+<p>Die folgende Abbildung zeigt eine HA-Konfiguration in einer einzigen AZ. Der Zugriff auf die Daten erfolgt innerhalb des VPC und außerhalb des VPC.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./media/diagram_single_az.png" alt="Konzeptionelles Image, das eine ONTAP HA-Konfiguration in einer einzigen Verfügbarkeitszone zeigt, die den Datenzugriff von außerhalb des VPC ermöglicht."></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="takeover-und-giveback">Takeover und Giveback</h4>
+<div class="paragraph">
+<p>Für iSCSI verwendet Cloud Volumes ONTAP Multipath I/O (MPIO) und Asymmetric Logical Unit Access (ALUA), um das Pfad-Failover zwischen den Aktiv- und Nicht-optimierten Pfaden zu managen.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+Informationen darüber, welche spezifischen Host-Konfigurationen ALUA unterstützen, finden Sie im <a href="http://mysupport.netapp.com/matrix" target="_blank" rel="noopener">"NetApp Interoperabilitäts-Matrix-Tool"</a> Sowie das Installations- und Setup-Handbuch für Host Utilities für Ihr Host-Betriebssystem.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Bei NAS-Konfigurationen können die Daten-IP-Adressen zwischen HA-Nodes migriert werden, wenn Fehler auftreten. Dadurch wird der Client-Zugriff auf Storage gewährleistet.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="funktionsweise-von-storage-in-einem-ha-paar">Funktionsweise von Storage in einem HA-Paar</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Im Gegensatz zu einem ONTAP Cluster wird Storage in einem Cloud Volumes ONTAP HA Paar nicht zwischen Nodes geteilt. Stattdessen werden die Daten synchron zwischen den Nodes gespiegelt, sodass sie im Falle eines Ausfalls verfügbar sind.</p>
+</div>
+<div class="sect2">
+<h3 id="storage-zuweisung">Storage-Zuweisung</h3>
+<div class="paragraph">
+<p>Wenn Sie ein neues Volume erstellen und zusätzliche Festplatten erforderlich sind, weist BlueXP beiden Nodes die gleiche Anzahl an Festplatten zu, erstellt ein gespiegeltes Aggregat und erstellt dann das neue Volume. Wenn zum Beispiel zwei Festplatten für das Volume benötigt werden, weist BlueXP zwei Festplatten pro Node zu insgesamt vier Festplatten zu.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="storage-konfigurationen">Storage-Konfigurationen</h3>
+<div class="paragraph">
+<p>Sie können ein HA-Paar als aktiv/aktiv-Konfiguration verwenden, in der beide Nodes Daten für Clients bereitstellen, oder als aktiv/Passiv-Konfiguration, bei der der passive Node nur dann auf Datenanfragen reagiert, wenn er Storage für den aktiven Node übernommen hat.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/note.svg" alt="Hinweis">
+</td>
+<td class="content">
+Sie können eine aktiv/aktiv-Konfiguration nur einrichten, wenn Sie BlueXP in der Storage System-Ansicht verwenden.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="leistungserwartungen">Leistungserwartungen</h3>
+<div class="paragraph">
+<p>Eine Cloud Volumes ONTAP HA-Konfiguration repliziert Daten synchron zwischen Nodes, wodurch Netzwerkbandbreite verbraucht wird. Daher können Sie im Vergleich zu einer Single Node Cloud Volumes ONTAP Konfiguration folgende Performance erwarten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Bei HA-Konfigurationen, die Daten von nur einem Node bereitstellen, ist die Lese-Performance mit der Lese-Performance einer Single-Node-Konfiguration vergleichbar, während die Schreib-Performance geringer ist.</p>
+</li>
+<li>
+<p>Bei HA-Konfigurationen, die Daten von beiden Nodes verarbeiten, ist die Lese-Performance höher als die Lese-Performance einer Single-Node-Konfiguration, und die Schreib-Performance ist gleich oder höher.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Weitere Informationen zur Performance von Cloud Volumes ONTAP finden Sie unter <a href="concept-performance.html">"Leistung"</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="client-zugriff-auf-storage">Client-Zugriff auf Storage</h3>
+<div class="paragraph">
+<p>Clients sollten über die Daten-IP-Adresse des Node, auf dem sich das Volume befindet, auf NFS- und CIFS-Volumes zugreifen. Wenn NAS-Clients über die IP-Adresse des Partner-Node auf ein Volume zugreifen, wird der Datenverkehr zwischen beiden Nodes geleitet, wodurch die Performance verringert wird.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<img src="/us-en/test/images/tip.svg" alt="Tipp">
+</td>
+<td class="content">
+Wenn Sie ein Volume zwischen Nodes in einem HA-Paar verschieben, sollten Sie das Volume mithilfe der IP-Adresse des anderen Node neu mounten. Andernfalls kann die Performance beeinträchtigt werden. Wenn Clients NFSv4-Verweise oder Ordnerumleitung für CIFS unterstützen, können Sie diese Funktionen auf den Cloud Volumes ONTAP Systemen aktivieren, um ein erneutes Mounten des Volumes zu vermeiden. Weitere Informationen finden Sie in der ONTAP Dokumentation.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Sie können die richtige IP-Adresse einfach über die Option „<em>Mount Command</em>“ im Bereich „Volumes verwalten“ in BlueXP identifizieren.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./media/screenshot_mount_option.png" alt="400">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+    </article>
+    <!-- Page Container -->
+  </div>
+
+  
+  <!-- Start Page Toolbar -->
+<div id="ie-right-navbar-collapse" class="close">
+  <img id="navbar-expand" class="ie-searchbox-icon" src="/de-de/test/images/double_arrow.svg" alt="" />
+</div>
+<div id="ie-right-navbar" class="open">
+  <div id="right-navbar-collapse">
+    <img src="/de-de/test/images/double_arrow.svg" alt="" />
+  </div>
+  <div class="page-nav-container">
+    <nav class="page-nav-fixed">
+      <div class="page-nav-title">Auf dieser seite</div>
+      <div class="page-nav-links">
+        <ul class="page-nav-inner" id="page-menu"></ul>
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+<script>
+  resizeContent();
+  function setRightBarHeight() {
+    var h = 0;
+
+    // header 1
+    h += PXinViewport($('.n-footer'));
+    h += PXinViewport($('#ie-new-header'));
+
+    if ($('#ie-right-navbar').length) {
+      $('#ie-right-navbar').css({ height: `calc(100vh - ${h}px)` });
+    }
+    if ($('.page-nav-links').length) {
+      h += 98;
+      $('.page-nav-links').css({ height: `calc(100vh - ${h}px)` });
+    }
+  }
+
+  $(document).ready(function () {
+    // PAGE NAV - Click
+    const MASTHEAD_OFFSET = 65;
+    const SECTIONS = $("main h2, main h3");
+    let calculateActiveSection = false;
+    setTimeout(() => {
+      calculateActiveSection = true;
+    }, 100)
+
+    $(".page-nav__link").click(function (event) {
+      calculateActiveSection = false;
+      $(".page-nav__link").removeClass('page-nav__link--active');
+      var target = $(event.target);
+      target.addClass('page-nav__link--active');
+      location.hash = event.target.hash;
+      setTimeout(() => {
+        calculateActiveSection = true;
+      }, 100)
+
+    });
+
+    // PAGE NAV - Scroll
+    $(window).on('resize scroll', function () {
+      if (calculateActiveSection) {
+        var activeSection = getActiveSection(SECTIONS, MASTHEAD_OFFSET);
+        if (activeSection) {
+          var activeHref = $(activeSection).attr('id');
+          $(".page-nav__link").removeClass('page-nav__link--active');
+          $("#page-menu a[href=#" + activeHref + "]").addClass('page-nav__link--active');
+          if (location.hash != "#" + activeHref) {
+            if (history.replaceState) {
+              history.replaceState(null, null, "#" + activeHref);
+            }
+          }
+        }
+      }
+    });
+
+    $(".n-pdf-button").click(function () {
+      $(this).toggleClass("active");
+    });
+
+    $.fn.isVisibleAndInViewport = function () {
+      var elementTop = $(this).offset().top;
+      var elementBottom = elementTop + $(this).outerHeight();
+
+      var viewportTop = $(window).scrollTop();
+      var viewportBottom = viewportTop + $(window).height();
+
+      return elementBottom > viewportTop && elementTop < viewportBottom && $(this).is(":visible");
+    };
+
+
+    $(window).on('resize scroll', function () {
+      setRightBarHeight();
+    });
+
+    $(window).trigger('resize');
+
+
+  });
+
+  $("#right-navbar-collapse").click(function (e) {
+    const rightNavbarWidth = $("#ie-right-navbar").width() - $("#ie-right-navbar-collapse").width();
+    e.preventDefault();
+    const width = $(".ie-content-pane").width();
+
+    $("#ie-right-navbar").animate({ width: 'toggle' }, 350, function () {
+      $("#ie-right-navbar-collapse").removeClass("close")
+      $("#ie-right-navbar-collapse").addClass("open")
+      $("#ie-right-navbar").removeClass("open")
+      $("#ie-right-navbar").addClass("close")
+    });
+    $(".ie-content-pane").animate({ width: (width + rightNavbarWidth) }, 350, function () {
+      resizeContent()
+      setSidebarBottom();
+    })
+
+  });
+  $("#navbar-expand").click(function (e) {
+    const rightNavbarWidth = $("#ie-right-navbar").width() - $("#ie-right-navbar-collapse").width();
+    e.preventDefault();
+    const width = $(".ie-content-pane").width();
+    $("#ie-right-navbar").animate({ width: 'toggle' }, 250, function () {
+      $("#ie-right-navbar-collapse").removeClass("open")
+      $("#ie-right-navbar-collapse").addClass("close")
+      $("#ie-right-navbar").removeClass("close")
+      $("#ie-right-navbar").addClass("open")
+      setRightBarHeight();
+      setSidebarBottom();
+    });
+    $(".ie-content-pane").animate({ width: (width - rightNavbarWidth) }, 250, function () {
+      resizeContent()
+    })
+  });
+
+  function navbarResize() {
+    const rightNavbarResized = $("#ie-right-navbar-collapse").hasClass('resized');
+    if (window.innerWidth < 1024) {
+      $("#ie-right-navbar").removeClass("open")
+      $("#ie-right-navbar").addClass("close")
+      $("#ie-right-navbar").removeAttr("style")
+      $("#ie-right-navbar-collapse").removeClass("close")
+      $("#ie-right-navbar-collapse").addClass("open")
+      $("#ie-right-navbar-collapse").addClass("resized")
+    } else {
+      if (rightNavbarResized) {
+        $('#ie-right-navbar').removeClass('close');
+        $('#ie-right-navbar').addClass('open');
+        $("#ie-right-navbar-collapse").removeClass("resized")
+        $("#ie-right-navbar-collapse").removeClass("open")
+        $("#ie-right-navbar-collapse").addClass("close")
+      }
+    }
+    resizeContent()
+  }
+  navbarResize();
+  $(window).on('resize load', function () {
+    navbarResize()
+  });
+
+  function getActiveSection(sections, offset) {
+    var scrollPosition = $(window).scrollTop() + offset + 5;
+    var activeSection;
+    for (var i = 0; i < sections.length; i++) {
+      var el = $(sections[i]);
+      var activePosition = el.offset().top;
+      if (activePosition > scrollPosition) {
+        break;
+      }
+
+      activeSection = sections[i];
+    }
+
+    return activeSection;
+  }
+
+  $("a[href*=#]:not([href=#])").click(function () {
+    setTimeout(() => {
+      $(window).trigger('scroll');
+    }, 105)
+  })
+
+  const hashOnLoad = location.href.split("#")[1];
+  setTimeout(function () {
+    if (hashOnLoad) {
+      $(".page-nav__link").removeClass('page-nav__link--active');
+      $("#page-menu a[href=#" + hashOnLoad + "]").addClass('page-nav__link--active');
+    }
+  }, 100)
+
+</script>
+
+
+  <div style="clear: both"></div><!-- Main needs to have height --></div>
+
+        </main>
+
+        <footer class="n-footer">
+  <div class="n-footer__bottom">
+    <div class="n-container">
+        <div class="n-footer__left">
+          <li class="n-footer__copyright-link">
+                    <a href="https://www.netapp.com/company/legal/copyright/">© 2024 NetApp, Inc.</a>
+          </li>
+        </div>
+        <div class="n-footer__center">
+          <ul class="n-footer__copyright-list">
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/terms-of-use/">Nutzungsbedingungen</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/privacy-policy/">Datenschutzrichtlinie</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a href="https://www.netapp.com/company/legal/cookie-policy/">Richtlinie zu Cookies</a>
+            </li>
+            <li class="n-footer__copyright-link">
+              <a class="ot-sdk-show-settings">Cookie-Einstellungen</a>
+            </li>
+          </ul>
+       </div>
+        <div class="n-footer__right">
+              <li class="n-footer__copyright-link">
+                <a target="_self" href="javascript:netapp_mailto()">Feedback zu dieser Seite senden</a>
+              </li>
+        </div>
+     </div>
+  </div>
+</footer>
+
+      </div><!-- Elasticsearch JS -->
+      <script type="text/javascript" src='/de-de/test/js/bundle.js'></script>
+
+      <!-- Syntax Highlighting -->
+      <script type="text/javascript" src='/de-de/test/js/prism.js'></script>
+      <script type="text/javascript" src='/de-de/test/js/prism-curl.js'></script>
+    </div>
+    <script>
+      document.body.offsetWidth=1903;
+      cookieLaw = {}
+      cookieLaw.euCountry = "US";
+      cookieLaw.invoke = function(){return false;}
+    </script>
+    <script src='/de-de/test/js/ie-tabbed-blocks.js'></script>
+    <script src='/de-de/test/js/ie-sidebar.js'></script>
+  </body>
+
+</html>
