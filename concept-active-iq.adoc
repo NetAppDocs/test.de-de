@@ -16,6 +16,8 @@ summary: Die AutoSupport-Komponente von ONTAP erfasst Telemetrie und sendet dies
 [role="lead"]
 Die AutoSupport-Komponente von ONTAP erfasst Telemetrie und sendet diese zur Analyse. Active IQ Digital Advisor analysiert die Daten von AutoSupport und bietet proaktive Betreuung und Optimierung. Mithilfe künstlicher Intelligenz erkennt Active IQ potenzielle Probleme und löst sie, bevor sie sich auf das Geschäft auswirken.
 
+Änderung für die Lokalisierung.
+
 Mit Active IQ optimieren Kunden ihre Dateninfrastruktur in der gesamten globalen Hybrid Cloud. Dazu bieten sie konkrete prädiktive Analysen und proaktiven Support über ein Cloud-basiertes Portal und eine mobile App. NetApp Kunden mit aktivem SupportEdge-Vertrag profitieren von Daten-fokussierten Einblicken und Empfehlungen von Active IQ (Funktionen variieren je nach Produkt- und Support-Tier).
 
 Folgende Möglichkeiten bietet Active IQ:
