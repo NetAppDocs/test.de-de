@@ -5185,5 +5185,5 @@ Text {startsb} und Text {endsb} Text</block>
   <block id="589a92e5ac7fd2654f5ce5d9594f5e7c" category="paragraph">Vor{zwsp}nach</block>
   <block id="d59e0b46782e48a01966e5c7ccc38d17" category="paragraph">NetApp verwendet Microsoft Entra ID als Identitätsanbieter für Authentifizierungsservices, die speziell auf Support und Lizenzierung zugeschnitten sind.</block>
   <block id="62dfedabf822fc3986bc7eb04a7ea341" category="paragraph">Die AutoSupport-Komponente von ONTAP erfasst Telemetrie und sendet diese zur Analyse. Active IQ Digital Advisor analysiert die Daten von AutoSupport und bietet proaktive Betreuung und Optimierung. Mithilfe künstlicher Intelligenz erkennt Active IQ potenzielle Probleme und löst sie, bevor sie sich auf das Geschäft auswirken. Änderung für Umstellungstest:</block>
-  <block id="58f26263dbf51ce26500991db4402398" category="paragraph">Änderung für die Lokalisierung. Aktivieren Sie die Anzeige von docbot und Test loc. Die Deaktivierung von Docbot wird getestet. Erneutes Testen von ruby-Upgrades.</block>
+  <block id="4efcacb70613c4906073fb5efb55c1c1" category="paragraph">Änderung für die Lokalisierung. Aktivieren Sie die Anzeige von docbot und Test loc. Die Deaktivierung von Docbot wird getestet. Test ruby Upgrade mit dh-Aktion neu hinzugefügt.</block>
 </blocks>
